@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MM"
+    android:background="@color/app_background" >
+
+    <RadioGroup
+        android:id="@+id/tabIndicators"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:checkedButton="@+id/tabIndexButton"
+        android:background="@drawable/bg_radio_button"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/tabFirstButton"
+            style="@style/MainTabButton"
+            android:checked="true"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/d_radio_index_button"
+            android:text="@string/tab_index_text" >
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/tabSecondButton"
+            style="@style/MainTabButton"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/d_radio_index_button"
+            android:text="@string/tab_index_text" >
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/tabThirdButton"
+            style="@style/MainTabButton"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/d_radio_index_button"
+            android:text="@string/tab_index_text" >
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/tabForthButton"
+            style="@style/MainTabButton"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/d_radio_index_button"
+            android:text="@string/tab_index_text" >
+        </RadioButton>
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabIndicators"
+        android:orientation="vertical" >
+    </FrameLayout>
+
+</RelativeLayout>

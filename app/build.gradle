@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileVersion
+    defaultConfig {
+        applicationId "com.ray.project"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 2
+        versionName "1.0.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 默认是android的渠道
+        manifestPlaceholders.put("BAIDU_CHANNEL_VALUE", "android")
+        signingConfig signingConfigs.debug
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../raykey")
+            keyAlias "raykey"
+            keyPassword "123456"
+            storePassword "123456"
+        }
+        release {
+            storeFile file("../raykey")
+            keyAlias "raykey"
+            keyPassword "123456"
+            storePassword "123456"
+        }
+    }
+
+    // 自定义打包时apk名字
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            // 输出apk名称为app_v3.0(45)_pp.apk
+            //outputFileName = "app_v${defaultConfig.versionName}(${defaultConfig.versionCode})_${variant.productFlavors[0].name}.apk"
+
+            if(variant.buildType.name.equals('release')) {
+                outputFileName = "app(${defaultConfig.versionCode})${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}.apk"
+            } else if(variant.buildType.name.equals('debug')) {
+                outputFileName = "app(${defaultConfig.versionCode})${defaultConfig.versionName}_${variant.productFlavors[0].name}_debug.apk"
+            }
+        }
+    }
+
+    // 多渠道打包
+    flavorDimensions "default"
+    productFlavors {
+        ray {
+            dimension "default"
+            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "android"]
+            signingConfig signingConfigs.release
+        }
+        rayTest {
+            dimension "default"
+            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "testRay"]
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [BAIDU_CHANNEL_VALUE: name]
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportAppcompatVersion
+    testImplementation 'junit:junit:' + rootProject.ext.junitVersion
+    androidTestImplementation 'com.android.support.test:runner:' + rootProject.ext.testRunnerVerion
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.testEspressoVersion
+    implementation 'com.jakewharton:butterknife:' + rootProject.ext.butterknifeVersion
+    annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.ext.butterknifeVersion
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    // Retrofit通过GSON将结果转换为Bean对象
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    // 让Retrofit支持RxJava
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    // RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    // 日志拦截器
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
+
+    implementation project(':photoLibrary')
+}

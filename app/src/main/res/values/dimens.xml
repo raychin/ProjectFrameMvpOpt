@@ -1,0 +1,7 @@
+<resources>
+    <!-- dp -->
+    <dimen name="title_bar_height">45dp</dimen>
+
+    <!-- sp 字体大小 -->
+    <dimen name="title_bar_text_size">20sp</dimen>
+</resources>

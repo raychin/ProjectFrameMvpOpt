@@ -1,0 +1,8 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="image_size">120dp</dimen>
+    <dimen name="space_size">2dp</dimen>
+    <dimen name="title_worlduc_sp">20sp</dimen>
+    <dimen name="textnormal_worlduc_sp">13sp</dimen>
+</resources>

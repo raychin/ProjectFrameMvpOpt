@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="transparent">#00000000</color><!-- 透明 -->
+    <color name="transparent_half">#85000000</color><!-- 半透明 -->
+    <color name="load_text_color">#ffffffff</color><!-- loading界面字体颜色 -->
+
+    <color name="top_bar_background">#0086f1</color><!-- 标题栏背景色0086f1 -->
+    <color name="app_background">#EFEFF1</color><!-- 应用背景色 -->
+
+    <!-- Tab相关颜色 -->
+    <color name="tab_border">#e3e3e3</color>
+    <color name="tab_fill">#f0f0f0</color>
+    <color name="tab_text_unpressed">#666</color>
+    <color name="tab_text_pressed">#ff6c00</color>
+    <!-- end -->
+
+    <!-- 公用颜色按颜色命名 -->
+    <color name="blue">#33a1c9</color>
+    <color name="gray">#888888</color>
+    <color name="black">#595959</color>
+    <color name="white">#ffffffff</color>
+    <color name="orange">#FF9676</color>
+    <color name="yellow">#F5A506</color>
+    <color name="red">#F95452</color>
+    <color name="green">#3aa501</color>
+    <color name="pink">#FD8AB1</color>	<!-- 粉红色 -->
+
+    <color name="c_e3e3e3">#e3e3e3</color>
+    <color name="c_666666">#666666</color>
+    <color name="c_888888">#888888</color>
+    <color name="c_3aa501">#3aa501</color>
+    <color name="c_3F51B5">#3F51B5</color>
+</resources>

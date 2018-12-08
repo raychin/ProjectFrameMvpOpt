@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ray mvp</string>
+
+    <string name="tab_index_text">首页</string>
+
+    <string name="service_label">Ray自动安装</string>
+    <string name="service_desc">自动填充安装密码，并点击确定和继续安装按钮，完成安装后打开APP</string>
+</resources>

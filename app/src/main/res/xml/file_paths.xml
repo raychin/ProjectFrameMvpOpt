@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <paths>
+        <!--external-path中，-->
+        <!--name：可以随意写，只是一个名字-->
+        <!--path：表示文件路径，.表示所有-->
+        <external-path
+            name="ray"
+            path="." />
+    </paths>
+</paths>
