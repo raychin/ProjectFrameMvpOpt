@@ -1,5 +1,7 @@
 package com.ray.project.network;
 
+import com.ray.project.model.LoginModel;
+
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -9,6 +11,10 @@ import retrofit2.http.Query;
  * @date 2018/07/05
  */
 public interface ApiService {
-    @GET("content/text.php")
-    rx.Observable<Result> text(@Query("key") String key);
+    @GET("ksj_api/getToken")
+    rx.Observable<Result<LoginModel>> getToken(
+            @Query("user") String user,
+            @Query("secret") String secret,
+            @Query("time") String time
+    );
 }

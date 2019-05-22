@@ -67,7 +67,11 @@ public class RxObserver<T> implements Observer<T> {
 
     @Override
     public void onNext(T t) {
-        Logger.e(TAG, ((Result) t).getReason());
+        if(t instanceof Result) {
+            Logger.e(TAG, ((Result) t).retMsg);
+            mResult.onResult(t);
+            return;
+        }
         /*
         if (t instanceof Result) {
             Logger.e(TAG, "data:" + String.valueOf((Result) t));

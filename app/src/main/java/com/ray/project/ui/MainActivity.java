@@ -12,6 +12,7 @@ import com.ray.project.base.BaseActivity;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.commons.ToastUtils;
+import com.ray.project.model.LoginModel;
 import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
 import com.ray.project.ui.login.LoginPresenter;
@@ -44,7 +45,7 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
 
     @Override
     public void initData() {
-        presenter.doLogin("ray", "123456");
+        presenter.doLogin("nsapp", "geostar999");
         setSelect(0);
     }
 
@@ -53,15 +54,14 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
         super.updateView(event);
 
         if(event.getCode() == 0) {
-            System.out.println("------" + event.getObj());
-            new CommonDialog(this, "您确定删除此信息？", new CommonDialog.OnCloseListener() {
+            System.out.println("---token---" + ((LoginModel) event.getObj()).getToken());
+            new CommonDialog(MainActivity.this, "您确定删除此信息？", new CommonDialog.OnCloseListener() {
                 @Override
                 public void onClick(Dialog dialog, boolean confirm) {
                     if(confirm){
                         System.out.println("------点击确定");
                         dialog.dismiss();
                     }
-
                 }
             }).setTitle("提示").show();
         }

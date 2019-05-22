@@ -5,8 +5,12 @@ import com.ray.project.base.ResultEvent;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.base.IBaseView;
 import com.ray.project.commons.Logger;
+import com.ray.project.commons.MD5;
+import com.ray.project.model.LoginModel;
+import com.ray.project.network.AndroidScheduler;
 import com.ray.project.network.Result;
 import com.ray.project.network.Net;
+import com.ray.project.network.RxApiManager;
 import com.ray.project.network.RxObserver;
 
 import rx.Subscription;
@@ -31,22 +35,30 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
     @Override
     public void doLogin(String name, String password) {
-
-        Subscription subscription = Net.getService().text("ae240f7fba620fc370b803566654949e")
+        String time = String.valueOf(System.currentTimeMillis());
+        Subscription subscription = Net.getService().getToken(
+                name,
+                MD5.hashKeyForDisk(time + password),
+                    time
+                )
+                // 指定网络请求在io后台线程中进行
                 .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new RxObserver(getActivity(), new RxObserver.RxResult<Result>() {
+                // 指定observer回调在UI主线程中进行
+                // 可使用RxAndroid中的AndroidSchedulers.mainThread()，需要添加RxAndroid依赖
+                .observeOn(AndroidScheduler.mainThread())
+                .subscribe(new RxObserver(getActivity(), new RxObserver.RxResult<Result<LoginModel>>() {
                     @Override
-                    public void onResult(Result data) {
+                    public void onResult(Result<LoginModel> data) {
                         Logger.e(TAG, data.toString());
 
                         ResultEvent event = new ResultEvent();
                         event.setCode(0);
-                        event.setObj("-----------------test = " + data.toString());
+                        event.setObj(data.data);
                         getView().updateView(event);
                     }
                 }));
         subscriptions.put("login", subscription);
+        RxApiManager.get().add("login", subscription);
     }
 
     @Override
