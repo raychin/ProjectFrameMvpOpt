@@ -167,6 +167,7 @@ public abstract class BaseActivity<P extends BasePresenter>
         if (scale != 1) {
             RelayoutTool.relayoutViewHierarchy(view, scale);
         }
+        // 由于编译版本是28，在api低于28的手机上运行则会报Rejecting re-init on previously-failed，但不影响运行
         super.setContentView(view);
     }
 

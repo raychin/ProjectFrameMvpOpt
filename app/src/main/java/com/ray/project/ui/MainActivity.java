@@ -54,12 +54,13 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
         super.updateView(event);
 
         if(event.getCode() == 0) {
-            System.out.println("---token---" + ((LoginModel) event.getObj()).getToken());
-            new CommonDialog(MainActivity.this, "您确定删除此信息？", new CommonDialog.OnCloseListener() {
+            new CommonDialog(
+                    MainActivity.this,
+                    "您的秘钥是" + ((LoginModel) event.getObj()).getToken(),
+                    new CommonDialog.OnCloseListener() {
                 @Override
                 public void onClick(Dialog dialog, boolean confirm) {
                     if(confirm){
-                        System.out.println("------点击确定");
                         dialog.dismiss();
                     }
                 }
