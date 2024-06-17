@@ -75,19 +75,19 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
 
     @OnClick({R.id.tabFirstButton, R.id.tabSecondButton, R.id.tabThirdButton, R.id.tabForthButton})
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tabFirstButton:
-                setSelect(0);
-                break;
-            case R.id.tabSecondButton:
-                setSelect(1);
-                break;
-            case R.id.tabThirdButton:
-                setSelect(2);
-                break;
-            case R.id.tabForthButton:
-                setSelect(3);
-                break;
+        int pos = -1;
+        if (view.getId() == R.id.tabFirstButton) {
+            pos = 0;
+        } else if (view.getId() == R.id.tabSecondButton) {
+            pos = 1;
+        } else if (view.getId() == R.id.tabThirdButton) {
+            pos = 2;
+        } else if (view.getId() == R.id.tabForthButton) {
+            pos = 3;
+        }
+
+        if (pos != -1) {
+            setSelect(pos);
         }
     }
 
@@ -136,7 +136,7 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
                 break;
             case 2:
                 if (mTab03 == null) {
-                    mTab03 = BaseFragment.newInstance("com.ray.project.ui.fragment.HomeFragment");
+                    mTab03 = BaseFragment.newInstance("com.ray.project.ui.fragment.WebViewFragment");
                     transaction.add(R.id.fragment_container, mTab03);
                 } else {
                     transaction.show(mTab03);

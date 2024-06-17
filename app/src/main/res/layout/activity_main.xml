@@ -35,7 +35,7 @@
             style="@style/MainTabButton"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/d_radio_index_button"
-            android:text="@string/tab_index_text" >
+            android:text="@string/tab_web_view_text" >
         </RadioButton>
 
         <RadioButton
