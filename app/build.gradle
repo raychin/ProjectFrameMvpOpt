@@ -1,10 +1,15 @@
 apply plugin: 'com.android.application'
 
-def releaseTime() {
+static def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     compileSdkVersion rootProject.ext.compileVersion
     defaultConfig {
         applicationId "com.ray.project"
@@ -34,14 +39,14 @@ android {
     }
 
     // 自定义打包时apk名字
-    android.applicationVariants.all { variant ->
-        variant.outputs.all {
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
             // 输出apk名称为app_v3.0(45)_pp.apk
             //outputFileName = "app_v${defaultConfig.versionName}(${defaultConfig.versionCode})_${variant.productFlavors[0].name}.apk"
 
-            if(variant.buildType.name.equals('release')) {
+            if(variant.buildType.name == ('release')) {
                 outputFileName = "app(${defaultConfig.versionCode})${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}.apk"
-            } else if(variant.buildType.name.equals('debug')) {
+            } else if(variant.buildType.name == ('debug')) {
                 outputFileName = "app(${defaultConfig.versionCode})${defaultConfig.versionName}_${variant.productFlavors[0].name}_debug.apk"
             }
         }
@@ -61,23 +66,23 @@ android {
             signingConfig signingConfigs.release
         }
     }
-    productFlavors.all {
+    productFlavors.configureEach {
         flavor -> flavor.manifestPlaceholders = [BAIDU_CHANNEL_VALUE: name]
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportAppcompatVersion
-    testImplementation 'junit:junit:' + rootProject.ext.junitVersion
-    androidTestImplementation 'com.android.support.test:runner:' + rootProject.ext.testRunnerVerion
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.testEspressoVersion
-    implementation 'com.jakewharton:butterknife:' + rootProject.ext.butterknifeVersion
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.ext.butterknifeVersion
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportAppcompatVersion}"
+    testImplementation "junit:junit:${rootProject.ext.junitVersion}"
+    androidTestImplementation "com.android.support.test:runner:${rootProject.ext.testRunnerVerion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.testEspressoVersion}"
+    implementation "com.jakewharton:butterknife:${rootProject.ext.butterknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.butterknifeVersion}"
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     // Retrofit通过GSON将结果转换为Bean对象
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     // 让Retrofit支持RxJava
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     // RxJava
