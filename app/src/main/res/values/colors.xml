@@ -6,7 +6,7 @@
 
     <color name="transparent">#00000000</color><!-- 透明 -->
     <color name="transparent_half">#85000000</color><!-- 半透明 -->
-    <color name="load_text_color">#ffffffff</color><!-- loading界面字体颜色 -->
+    <color name="load_text_color">#48c0a3</color><!-- loading界面字体颜色 -->
 
     <color name="top_bar_background">#0086f1</color><!-- 标题栏背景色0086f1 -->
     <color name="app_background">#EFEFF1</color><!-- 应用背景色 -->

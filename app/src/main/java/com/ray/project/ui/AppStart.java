@@ -34,7 +34,7 @@ public class AppStart extends BaseActivity {
     @Override
     public void initData() {
         // 渐变展示启动屏
-        AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
+        AlphaAnimation aa = new AlphaAnimation(0.4f, 1.0f);
         aa.setDuration(2000);
         (getWindow().getDecorView()).findViewById(R.id.start_layout).startAnimation(aa);
         aa.setAnimationListener(new Animation.AnimationListener() {
@@ -54,19 +54,8 @@ public class AppStart extends BaseActivity {
 
         });
     }
-
-    @Override
-    protected boolean isTransparentStatus() {
-        return super.isTransparentStatus();
-    }
-
     @Override
     protected boolean isImmersiveStatus() {
-        return super.isImmersiveStatus();
-    }
-
-    @Override
-    protected boolean isFullScreen() {
         return true;
     }
 }
