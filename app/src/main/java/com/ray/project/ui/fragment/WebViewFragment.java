@@ -48,7 +48,8 @@ public class WebViewFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        webView.loadUrl("http://192.168.102.8:9000/psczw-app-staffEnd/index.html#/login");
+//        webView.loadUrl("https://www.baidu.com/");
+        webView.loadUrl("file:///android_asset/web/ray-template/index.html");
         initWebView();
     }
 

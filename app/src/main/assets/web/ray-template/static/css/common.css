@@ -1,0 +1,138 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/* font-size: 16px; */
+}
+
+a {
+	text-decoration: none;
+}
+
+uni-page-body {
+	height: 100%;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+html,
+input {
+	background-color: transparent;
+}
+
+.main {
+	background: #fff;
+	height: 100%;
+}
+
+.common-arrow-right,
+.common-arrow-bottom,
+.common-arrow-top {
+	width: 20rpx;
+	height: 20rpx;
+	border-top: 1px solid #666;
+	border-right: 1px solid #666;
+}
+
+.common-arrow-right {
+	transform: rotate(45deg);
+}
+
+.common-arrow-bottom {
+	transform: rotate(135deg);
+}
+
+.common-arrow-top {
+	transform: rotate(-45deg);
+}
+
+uni-page-head .uni-page-head__title {
+	font-size: 18px !important;
+}
+
+uni-page-head .uni-page-head,
+uni-page-head {
+	height: 100rpx !important;
+	line-height: 100rpx !important;
+	border-bottom: 1px solid #eee;
+}
+
+uni-page-head .uni-page-head-bd {
+	top: 20rpx;
+	height: 60rpx;
+}
+
+uni-page-head .uni-btn-icon {
+	margin-top: 40rpx;
+}
+
+uni-page-head[uni-page-head-type=default]~uni-page-wrapper {
+	height: calc(100vh - 100rpx - env(safe-area-inset-top));
+}
+
+uni-page-head .uni-btn-icon {
+	margin-top: 30rpx;
+}
+
+.load-done {
+	text-align: center;
+	height: 80rpx;
+	line-height: 80rpx;
+	color: #999;
+}
+
+/*-----------地图相关样式开始------------------*/
+.map-my-canvas {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 99;
+	pointer-events: none;
+}
+
+.map_power {
+	position: relative;
+}
+
+.map_power_common {
+	position: absolute;
+	width: 80rpx;
+	height: 80rpx;
+	background-size: 100% 100%;
+	left: -40rpx;
+	top: -70rpx;
+	z-index: 90;
+}
+
+.map_event_pop {
+	width: 0.2rem;
+	height: 0.2rem;
+	border-radius: 50%;
+	background: white;
+
+}
+
+.map_power1 {
+	background-image: url("../imgs/map/icon_map_location1.png");
+}
+.map_power2 {
+	background-image: url("../imgs/map/icon_map_location2.png");
+}
+.map_power3 {
+	background-image: url("../imgs/map/icon_map_location3.png");
+}
+.map_power4 {
+	background-image: url("../imgs/map/icon_map_location4.png");
+}
+
+
+.map_event {
+	z-index: 1;
+}
+
+
+
+/*-----------地图相关样式结束------------------*/

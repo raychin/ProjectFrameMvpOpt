@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang=zh-CN><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><title>模板项目升级</title><link rel=stylesheet type=text/css href=./static/css/mapbox-gl.css><script>document.addEventListener('DOMContentLoaded', function() {
+                document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
+            })
+            var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
+            document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')</script><link rel=stylesheet href=./static/index.f4fc78fe.css></head><body><noscript><strong>Please enable JavaScript to continue.</strong></noscript><div id=app></div><script src=./static/js/chunk-vendors.cf2f6d10.js></script><script src=./static/js/index.7423d1af.js></script></body><script>function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if(pair[0] == variable){return pair[1];}
+            }
+            return(false);
+        }
+        // 获取链接中的userId
+        function getUrlParameter(name) {
+            name = name.replace(/[]/,"\[").replace(/[]/,"\[").replace(/[]/,"\\\]");
+            var regexS = "[\\?&]"+name+"=([^&#]*)";
+            var regex = new RegExp( regexS );
+            var results = regex.exec(window.parent.location.href);
+            if( results == null ) return ""; else {
+                return results[1];
+            }
+        };
+        function loadJS(url, callback) {
+            var script = document.createElement('script'),
+            fn = callback || function(){};
+            script.type = 'text/javascript';
+            // // IE
+            // if(script.readyState) {
+            //     script.onreadystatechange = function() {
+            //         if(script.readyState == 'loaded' || script.readyState == 'complete') {
+            //             script.onreadystatechange = null;
+            //             fn();
+            //         }
+            //     };
+            // } else {
+            //     // 其他浏览器
+            //     script.onload = function(){
+            //         fn();
+            //     };
+            // }
+            script.src = url;
+            // console.log(getQueryVariable("userId"));
+            console.log(getUrlParameter("userId"));
+            console.log(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent));
+            if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                console.log("---加载此处----");
+                document.getElementsByTagName('head')[0].appendChild(script);
+            }
+        }
+        // loadJS('./static/js/xxx.js', function() {
+        //     // alert(1);
+        // });</script><script src=./static/js/mapbox-gl.js></script><script src=./static/js/GeoGlobeJS.min.js></script><script src=./static/js/gmapx.min.js></script></html>
