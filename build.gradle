@@ -3,7 +3,7 @@
 buildscript {
     ext {
         compileVersion = 28
-        minSdkVersion = 19
+        minSdkVersion = 21
         targetSdkVersion = 28
         buildVersion = '28.0.0'
         supportVersion = '28.0.0'
@@ -18,6 +18,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        // Luban
+        jcenter()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
@@ -30,7 +32,7 @@ buildscript {
 
 allprojects {
     // 可能加快 Android Studio 编译的办法
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         // 使在一个单独的守护进程编译
         options.fork = true
         // 增量编译
@@ -40,11 +42,12 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // Luban
+        jcenter()
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
-
 
