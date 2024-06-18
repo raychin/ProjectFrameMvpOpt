@@ -62,17 +62,64 @@ android {
     productFlavors {
         ray {
             dimension "default"
+            // 修改包名
+            // applicationId "com.xxx"
             manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "android"]
             signingConfig signingConfigs.release
         }
         rayTest {
             dimension "default"
+            // 修改包名
+            // applicationId "com.xxx"
             manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "testRay"]
             signingConfig signingConfigs.release
         }
     }
     productFlavors.configureEach {
         flavor -> flavor.manifestPlaceholders = [BAIDU_CHANNEL_VALUE: name]
+    }
+
+    buildTypes {
+        debug {
+            manifestPlaceholders =
+                    [LAUNCHER_MODE: "android.intent.category.LAUNCHER"]
+        }
+
+        release {
+            manifestPlaceholders =
+                    [LAUNCHER_MODE: "android.intent.category.LAUNCHER"]
+            // true - 打开混淆
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "releasePackage", "true"
+        }
+    }
+
+    // 移除lint检测的error
+    lintOptions {
+        abortOnError false
+    }
+
+    //    splits {
+    //        abi {
+    //            enable true
+    //            reset()
+    //            include 'x86', 'armeabi-v7a','x86_64'
+    //            universalApk true
+    //        }
+    //    }
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+        }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
