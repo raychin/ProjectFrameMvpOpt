@@ -26,15 +26,15 @@
             android:id="@+id/tabSecondButton"
             style="@style/MainTabButton"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/d_radio_index_button"
-            android:text="@string/tab_index_text" >
+            android:drawableTop="@drawable/d_radio_contact_button"
+            android:text="@string/tab_contact_text" >
         </RadioButton>
 
         <RadioButton
             android:id="@+id/tabThirdButton"
             style="@style/MainTabButton"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/d_radio_index_button"
+            android:drawableTop="@drawable/d_radio_browser_button"
             android:text="@string/tab_web_view_text" >
         </RadioButton>
 
@@ -42,8 +42,8 @@
             android:id="@+id/tabForthButton"
             style="@style/MainTabButton"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/d_radio_index_button"
-            android:text="@string/tab_index_text" >
+            android:drawableTop="@drawable/d_radio_more_button"
+            android:text="@string/tab_more_text" >
         </RadioButton>
 
     </RadioGroup>
