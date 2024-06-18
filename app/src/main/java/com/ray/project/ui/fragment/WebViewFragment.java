@@ -1,6 +1,7 @@
 package com.ray.project.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,9 +10,12 @@ import android.webkit.WebView;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.commons.Typefaces;
 import com.ray.project.web.JsInteraction;
 import com.ray.project.web.RayWebViewChromeClient;
 import com.ray.project.web.RayWebViewClient;
+import com.ray.project.widget.titanic.Titanic;
+import com.ray.project.widget.titanic.TitanicTextView;
 
 /**
  * 更多功能界面fragment
@@ -20,6 +24,7 @@ import com.ray.project.web.RayWebViewClient;
  */
 public class WebViewFragment extends BaseFragment {
     private WebView webView;
+    private TitanicTextView tvLoading;
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -34,6 +39,11 @@ public class WebViewFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         webView = mContentView.findViewById(R.id.webView);
+        tvLoading = mContentView.findViewById(R.id.my_text_view);
+        tvLoading.setTypeface(Typefaces.get(mActivity, "Satisfy-Regular.ttf"));
+        // activity_start animation
+        Titanic titanic = new Titanic();
+        titanic.start(tvLoading);
     }
 
     @Override
@@ -63,7 +73,17 @@ public class WebViewFragment extends BaseFragment {
             }
         ), JsInteraction.JS_INTERFACE);
         webView.setWebChromeClient(new RayWebViewChromeClient(mActivity));
-        webView.setWebViewClient(new RayWebViewClient(mActivity));
+        webView.setWebViewClient(new RayWebViewClient(mActivity, new RayWebViewClient.OnWebViewClientListener() {
+            @Override
+            public void onReceivedStart(WebView view, String url, Bitmap favicon) {
+                tvLoading.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onReceivedFinish(WebView webView, String url) {
+                tvLoading.setVisibility(View.GONE);
+            }
+        }));
 
         WebSettings webSettings = webView.getSettings();
         // 允许使用js

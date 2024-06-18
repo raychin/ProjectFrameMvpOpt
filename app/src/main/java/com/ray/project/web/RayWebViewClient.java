@@ -22,15 +22,22 @@ import com.ray.project.commons.ToastUtils;
  */
 public class RayWebViewClient extends WebViewClient {
     private BaseActivity mActivity;
+    private OnWebViewClientListener mListener;
 
     public RayWebViewClient(BaseActivity activity) {
         mActivity = activity;
+    }
 
+    public RayWebViewClient(BaseActivity activity, OnWebViewClientListener listener) {
+        mActivity = activity;
+        mListener = listener;
     }
 
     @Override public void onPageFinished(WebView webView, String url) {
         // 页面加载完成
-
+        if (null != mListener) {
+            mListener.onReceivedFinish(webView, url);
+        }
         webView.getSettings().setBlockNetworkImage(false);
         //////创建一个json对象
         //JsonObject jsonContainer = new JsonObject();
@@ -54,6 +61,9 @@ public class RayWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         // 页面开始加载
+        if (null != mListener) {
+            mListener.onReceivedStart(view, url, favicon);
+        }
     }
 
 
@@ -102,5 +112,10 @@ public class RayWebViewClient extends WebViewClient {
             webView.loadUrl(url);
         }
         return super.shouldOverrideUrlLoading(webView, url);
+    }
+
+    public interface OnWebViewClientListener {
+        void onReceivedStart(WebView view, String url, Bitmap favicon);
+        void onReceivedFinish(WebView webView, String url);
     }
 }
