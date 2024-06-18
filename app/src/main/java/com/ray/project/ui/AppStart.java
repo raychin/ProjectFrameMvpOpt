@@ -15,7 +15,6 @@ import com.ray.project.widget.titanic.TitanicTextView;
  * @date 2018/07/03
  */
 public class AppStart extends BaseActivity {
-    private Titanic titanic;
 
     @Override
     public int initLayout() {
@@ -28,7 +27,7 @@ public class AppStart extends BaseActivity {
         // set fancy typeface
         tv.setTypeface(Typefaces.get(this, "Satisfy-Regular.ttf"));
         // activity_start animation
-        titanic = new Titanic();
+        Titanic titanic = new Titanic();
         titanic.start(tv);
     }
 

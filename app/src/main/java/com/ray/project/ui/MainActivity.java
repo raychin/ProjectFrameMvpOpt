@@ -2,6 +2,7 @@ package com.ray.project.ui;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -17,6 +18,8 @@ import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
 import com.ray.project.ui.login.LoginPresenter;
 import com.ray.project.widget.CommonDialog;
+
+import java.util.List;
 
 import butterknife.OnClick;
 
@@ -92,12 +95,13 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
     }
 
     private long touchTime;
+    @SuppressWarnings("rawtypes")
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN
                 && KeyEvent.KEYCODE_BACK == keyCode) {
 
-            BaseFragment current = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            BaseFragment current = getVisibleFragment();
 
             if (current != null) {
                 if (current.onKeyDown(keyCode, event)) {
@@ -118,10 +122,19 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
         return super.onKeyDown(keyCode, event);
     }
 
-    private BaseFragment mTab01;
-    private BaseFragment mTab02;
-    private BaseFragment mTab03;
-    private BaseFragment mTab04;
+    @SuppressWarnings("rawtypes")
+    public BaseFragment getVisibleFragment(){
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for(Fragment fragment : fragments){
+            if(fragment != null && fragment.isVisible())
+                return (BaseFragment) fragment;
+        }
+        return null;
+    }
+
+    @SuppressWarnings("rawtypes")
+    private BaseFragment mTab01, mTab02, mTab03, mTab04;
     private void setSelect(int i) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();

@@ -27,6 +27,7 @@ import com.ray.project.commons.ToastUtils;
 import com.ray.project.config.AppConfig;
 import com.ray.project.config.AppManager;
 import com.ray.project.config.ProjectApplication;
+import com.ray.project.web.WebCameraHelper;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
@@ -68,7 +69,7 @@ public abstract class BaseActivity<P extends BasePresenter>
 
     /**
      * 是否填充状态栏高度
-     * @return
+     * @return 默认为不是
      */
     protected boolean isImmersiveStatusHeight() { return false; }
 
@@ -284,9 +285,7 @@ public abstract class BaseActivity<P extends BasePresenter>
     public abstract void initData();
 
     @Override
-    public void updateView(ResultEvent event) {
-
-    }
+    public void updateView(ResultEvent event) {}
 
     /**
      * 添加状态栏占位视图
@@ -344,6 +343,12 @@ public abstract class BaseActivity<P extends BasePresenter>
         }
     }
 
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        WebCameraHelper.getInstance().onActivityResult(requestCode, resultCode, data);
+    }
+
     public void nextActivityByPackageName(String packageName) {
         Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
         startActivity(intent);
@@ -364,9 +369,7 @@ public abstract class BaseActivity<P extends BasePresenter>
     @Override
     public void finish() {
         super.finish();
-        if (true) {
-            overridePendingTransition(0, R.anim.push_right_out);
-        }
+        overridePendingTransition(0, R.anim.push_right_out);
     }
 
     /**
@@ -391,7 +394,7 @@ public abstract class BaseActivity<P extends BasePresenter>
      * @param permissions
      */
     public void checkPermissions(String[] permissions) {
-        for(int i = 0; i < permissions.length; i ++) {
+        for (int i = 0; i < permissions.length; i ++) {
             checkPermission(permissions[i]);
         }
     }
@@ -399,7 +402,7 @@ public abstract class BaseActivity<P extends BasePresenter>
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) {
+        if (requestCode == 1 || requestCode == WebCameraHelper.TYPE_REQUEST_PERMISSION) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(grantResults.length == 0) { return; }
                 // grantResults数组与权限字符串数组对应，里面存放权限申请结果
@@ -418,6 +421,9 @@ public abstract class BaseActivity<P extends BasePresenter>
                 } else {
                     ToastUtils.showToast(this, "权限获取成功", 1);
                     AppConfig.getAppConfig(this);
+                    if (requestCode == WebCameraHelper.TYPE_REQUEST_PERMISSION) {
+                        WebCameraHelper.getInstance().toCamera(this);
+                    }
                 }
             }
         }

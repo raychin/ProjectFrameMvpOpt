@@ -116,7 +116,7 @@ public class WebCameraHelper {
 
         if (Build.VERSION.SDK_INT >= 24) {
             fileUri = FileProvider.getUriForFile(ProjectApplication.get(),
-                    ProjectApplication.get().getPackageName() + ".fileprovider",
+                    ProjectApplication.get().getPackageName() + ".fileProvider",
                     mTempFile);
         } else {
             fileUri = Uri.fromFile(mTempFile);
@@ -287,7 +287,7 @@ public class WebCameraHelper {
                         Uri fileUri;//file转uri
                         if (Build.VERSION.SDK_INT >= 24) {
                             fileUri = FileProvider.getUriForFile(ProjectApplication.get(),
-                                    ProjectApplication.get().getPackageName() + ".fileprovider",
+                                    ProjectApplication.get().getPackageName() + ".fileProvider",
                                     file);
                         } else {
                             fileUri = Uri.fromFile(file);
@@ -351,7 +351,7 @@ public class WebCameraHelper {
                         Uri fileUri;//file转uri
                         if (Build.VERSION.SDK_INT >= 24) {
                             fileUri = FileProvider.getUriForFile(ProjectApplication.get(),
-                                    ProjectApplication.get().getPackageName() + ".fileprovider",
+                                    ProjectApplication.get().getPackageName() + ".fileProvider",
                                     file);
                         } else {
                             fileUri = Uri.fromFile(file);

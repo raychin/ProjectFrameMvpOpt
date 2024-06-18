@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import com.ray.project.network.Net;
 
+import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.UUID;
@@ -125,14 +128,23 @@ public class ProjectApplication extends Application {
 
     /**
      * 利用反射获取状态栏高度
-     * @return
+     * @return 状态栏高度
      */
     public int getStatusBarHeight() {
-        int result = 0;
-        //获取状态栏高度的资源id
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
+        int result = 24;
+//        // 获取状态栏高度的资源id
+//        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+//        if (resourceId > 0) {
+//            result = getResources().getDimensionPixelSize(resourceId);
+//        }
+        try {
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            Object object = c.newInstance();
+            Field field = c.getField("status_bar_height");
+            int x = (Integer) field.get(object);
+            result = getResources().getDimensionPixelSize(x);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return result;
     }
