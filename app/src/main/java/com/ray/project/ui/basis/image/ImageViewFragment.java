@@ -1,6 +1,7 @@
 package com.ray.project.ui.basis.image;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -48,5 +49,10 @@ public class ImageViewFragment extends BaseFragment {
         options.centerCrop()
                 .error(R.drawable.icon_loadfail);
         Glide.with(mActivity).load(url).apply(options).into(imageView);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return false;
     }
 }

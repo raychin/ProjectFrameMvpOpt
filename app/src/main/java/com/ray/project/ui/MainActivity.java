@@ -96,6 +96,15 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN
                 && KeyEvent.KEYCODE_BACK == keyCode) {
+
+            BaseFragment current = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+            if (current != null) {
+                if (current.onKeyDown(keyCode, event)) {
+                    return true;
+                }
+            }
+
             long currentTime = System.currentTimeMillis();
             if ((currentTime - touchTime) >= 2000) {
                 ToastUtils.showCustomToast(this, "再点一次退出", 1 / 2);

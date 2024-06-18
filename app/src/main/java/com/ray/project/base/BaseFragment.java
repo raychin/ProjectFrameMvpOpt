@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.KeyEvent;
 
 import com.ray.project.R;
 import com.ray.project.commons.Logger;
@@ -37,7 +38,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     protected BaseActivity mActivity;
 
-    private View mContentView;
+    protected View mContentView;
 
     /**
      * 是否开启MVP模式
@@ -72,6 +73,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * 设置数据
      */
     protected abstract void initData(Bundle savedInstanceState);
+    // onKeyDown
+    public abstract boolean onKeyDown(int keyCode, KeyEvent event);
 
     @Override
     public void onAttach(Activity activity) {

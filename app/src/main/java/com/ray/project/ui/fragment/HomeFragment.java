@@ -1,6 +1,7 @@
 package com.ray.project.ui.fragment;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.ray.project.R;
@@ -32,5 +33,10 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return false;
     }
 }
