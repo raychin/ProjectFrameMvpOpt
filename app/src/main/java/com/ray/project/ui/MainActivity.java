@@ -2,6 +2,7 @@ package com.ray.project.ui;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -117,7 +118,10 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
                 break;
             case 2:
                 if (mTab03 == null) {
+                    Bundle args = new Bundle();
+                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "http://www.baidu.com/");
                     mTab03 = BaseFragment.newInstance("com.ray.project.ui.fragment.WebViewFragment");
+                    mTab03.setArguments(args);
                     transaction.add(R.id.fragment_container, mTab03);
                 } else {
                     transaction.show(mTab03);
@@ -125,7 +129,9 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
                 break;
             case 3:
                 if (mTab04 == null) {
-                    mTab04 = BaseFragment.newInstance(MoreFragment.class);
+                    Bundle args = new Bundle();
+                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "http://www.baidu.com/");
+                    mTab04 = BaseFragment.newInstance(MoreFragment.class, args);
                     transaction.add(R.id.fragment_container, mTab04);
                 } else {
                     transaction.show(mTab04);
