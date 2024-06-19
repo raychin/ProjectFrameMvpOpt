@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -27,12 +29,14 @@ import com.ray.project.commons.ToastUtils;
 import com.ray.project.config.AppConfig;
 import com.ray.project.config.AppManager;
 import com.ray.project.config.ProjectApplication;
+import com.ray.project.ui.MainActivity;
 import com.ray.project.web.WebCameraHelper;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -427,5 +431,49 @@ public abstract class BaseActivity<P extends BasePresenter>
                 }
             }
         }
+    }
+
+    protected boolean exitApp () { return false; }
+
+    private long touchTime;
+    @SuppressWarnings("rawtypes")
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN
+                && KeyEvent.KEYCODE_BACK == keyCode) {
+
+            BaseFragment current = getVisibleFragment();
+
+            if (current != null) {
+                if (current.onKeyDown(keyCode, event)) {
+                    return true;
+                }
+            }
+
+            if (exitApp()) {
+                long currentTime = System.currentTimeMillis();
+                if ((currentTime - touchTime) >= 2000) {
+                    ToastUtils.showCustomToast(this, "再点一次退出", 1 / 2);
+                    touchTime = currentTime;
+                } else {
+                    finish();
+                    System.exit(0);
+                }
+                return true;
+            }
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @SuppressWarnings("rawtypes")
+    protected BaseFragment getVisibleFragment(){
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for(Fragment fragment : fragments){
+            if(fragment != null && fragment.isVisible())
+                return (BaseFragment) fragment;
+        }
+        return null;
     }
 }

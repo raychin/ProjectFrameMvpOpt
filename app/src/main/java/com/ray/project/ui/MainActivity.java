@@ -2,24 +2,19 @@ package com.ray.project.ui;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.View;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.base.BaseFragment;
-import com.ray.project.commons.ToastUtils;
 import com.ray.project.model.LoginModel;
 import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
 import com.ray.project.ui.login.LoginPresenter;
 import com.ray.project.widget.CommonDialog;
-
-import java.util.List;
 
 import butterknife.OnClick;
 
@@ -94,44 +89,8 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
         }
     }
 
-    private long touchTime;
-    @SuppressWarnings("rawtypes")
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN
-                && KeyEvent.KEYCODE_BACK == keyCode) {
-
-            BaseFragment current = getVisibleFragment();
-
-            if (current != null) {
-                if (current.onKeyDown(keyCode, event)) {
-                    return true;
-                }
-            }
-
-            long currentTime = System.currentTimeMillis();
-            if ((currentTime - touchTime) >= 2000) {
-                ToastUtils.showCustomToast(this, "再点一次退出", 1 / 2);
-                touchTime = currentTime;
-            } else {
-                finish();
-                System.exit(0);
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @SuppressWarnings("rawtypes")
-    public BaseFragment getVisibleFragment(){
-        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
-        List<Fragment> fragments = fragmentManager.getFragments();
-        for(Fragment fragment : fragments){
-            if(fragment != null && fragment.isVisible())
-                return (BaseFragment) fragment;
-        }
-        return null;
-    }
+    protected boolean exitApp () { return true; }
 
     @SuppressWarnings("rawtypes")
     private BaseFragment mTab01, mTab02, mTab03, mTab04;
