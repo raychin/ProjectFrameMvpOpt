@@ -33,12 +33,7 @@ public class HomeFragment extends BaseFragment {
     protected void initView(View view) {
         mActivity.setTitleText("首页");
         mTvTitle = view.findViewById(R.id.my_text_view);
-        mTvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mActivity.nextActivity(WebViewActivity.class);
-            }
-        });
+        mTvTitle.setOnClickListener(viewTitle -> mActivity.nextActivity(WebViewActivity.class));
     }
 
     @Override
