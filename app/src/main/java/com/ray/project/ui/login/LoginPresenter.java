@@ -63,8 +63,6 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
 
     @Override
     public void onStop() {
-        System.out.println("执行了这里。。。");
         cancelAll();
-        System.out.println("执行了这里2。。。");
     }
 }

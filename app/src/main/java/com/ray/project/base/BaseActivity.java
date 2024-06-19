@@ -29,13 +29,13 @@ import com.ray.project.commons.ToastUtils;
 import com.ray.project.config.AppConfig;
 import com.ray.project.config.AppManager;
 import com.ray.project.config.ProjectApplication;
-import com.ray.project.ui.MainActivity;
 import com.ray.project.web.WebCameraHelper;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -58,6 +58,7 @@ public abstract class BaseActivity<P extends BasePresenter>
      * 获取TAG的activity名称
      */
     protected final String TAG = this.getClass().getSimpleName();
+    protected HashMap<String, Integer> baseMap = new HashMap<>();
 
     /**
      * 是否透明化状态栏
@@ -151,6 +152,20 @@ public abstract class BaseActivity<P extends BasePresenter>
         }
         // 设置数据
         initData();
+
+        lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
+    }
+
+    protected void lifecycleShow (String lifeCycle) {
+        String key = TAG + lifeCycle;
+        if (baseMap.containsKey(key)) {
+            int code = baseMap.get(key);
+            code ++;
+            baseMap.put(key, code);
+        } else {
+            baseMap.put(key, 1);
+        }
+        ToastUtils.showToast(appContext, TAG + "-" + lifeCycle + "第" + baseMap.get(key) + "次", 2000);
     }
 
     /******** 基准分辨率 **********/
@@ -306,36 +321,42 @@ public abstract class BaseActivity<P extends BasePresenter>
     @Override
     protected void onRestart() {
         super.onRestart();
+        lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if (presenter != null) { presenter.onRestart(); }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if(presenter != null) { presenter.onStart(); }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if(presenter != null) { presenter.onResume(); }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if(presenter != null) { presenter.onPause(); }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if(presenter != null) { presenter.onStop(); }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if(presenter != null) { presenter.onDestroy(); }
         bind.unbind();
         AppManager.getAppManager().finishActivity(this);
