@@ -26,10 +26,13 @@ import com.ray.project.R;
 import com.ray.project.commons.Logger;
 import com.ray.project.commons.RelayoutTool;
 import com.ray.project.commons.ToastUtils;
+import com.ray.project.commons.Typefaces;
 import com.ray.project.config.AppConfig;
 import com.ray.project.config.AppManager;
 import com.ray.project.config.ProjectApplication;
 import com.ray.project.web.WebCameraHelper;
+import com.ray.project.widget.titanic.Titanic;
+import com.ray.project.widget.titanic.TitanicTextView;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
@@ -53,6 +56,18 @@ public abstract class BaseActivity<P extends BasePresenter>
 
     public ProjectApplication appContext;
     protected FragmentManager mFragmentManager;
+    private TitanicTextView tvLoading;
+    public void pageLoading() {
+        if (null == tvLoading) {
+            tvLoading = findViewById(R.id.pageLoading);
+            tvLoading.setTypeface(Typefaces.get(this, "Satisfy-Regular.ttf"));
+            Titanic titanic = new Titanic();
+            titanic.start(tvLoading);
+        }
+//        tvLoading.bringToFront();
+        int flag = tvLoading.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+        tvLoading.setVisibility(flag);
+    }
 
     /**
      * 获取TAG的activity名称
@@ -86,9 +101,10 @@ public abstract class BaseActivity<P extends BasePresenter>
 
     /**
      * 是否使用状态栏深色主题
-     * @return 默认非深色主题
+     * 设置了导航栏颜色时可以修改setStatusBar方法
+     * @return 默认深色主题
      */
-    protected boolean isConvertStatusBarColor() { return false; }
+    protected boolean isConvertStatusBarColor() { return true; }
 
     /**
      * 设置标题栏背景色
@@ -152,6 +168,7 @@ public abstract class BaseActivity<P extends BasePresenter>
         setTitleNavigationShow(showTitleNavigation());
         // 初始化控件
         initView();
+
         // 初始化present view
         if(isMvp()) {
             initPresent();
@@ -252,7 +269,7 @@ public abstract class BaseActivity<P extends BasePresenter>
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void setImmersiveStatus() {
+    protected void setImmersiveStatus() {
         Window win = getWindow();
         win.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                 | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -298,7 +315,7 @@ public abstract class BaseActivity<P extends BasePresenter>
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && useStatusBarColor) {
             // android6.0以后可以对状态栏文字颜色和图标进行修改
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
@@ -325,14 +342,25 @@ public abstract class BaseActivity<P extends BasePresenter>
     public void updateView(ResultEvent event) {}
 
     /**
-     * 添加状态栏占位视图
+     * 添加状态栏占位视图颜色
      */
-    private void setStatusViewWithColor(int color) {
+    protected void setStatusViewWithColor(int color) {
         View statusBarView = findViewById(R.id.status);
         if(statusBarView == null) { return; }
         ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
         lp.height = isImmersiveStatusHeight() ? ProjectApplication.get().getStatusBarHeight() : 0;
-        if(color != 0) { statusBarView.setBackgroundColor(color); };
+        statusBarView.setBackgroundColor(color);
+        statusBarView.setLayoutParams(lp);
+    }
+
+    /**
+     * 添加状态栏占位视图
+     */
+    protected void setStatusView() {
+        View statusBarView = findViewById(R.id.status);
+        if(statusBarView == null) { return; }
+        ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
+        lp.height = ProjectApplication.get().getStatusBarHeight();
         statusBarView.setLayoutParams(lp);
     }
 

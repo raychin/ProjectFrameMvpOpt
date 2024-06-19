@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
             case 2:
                 if (mTab03 == null) {
                     Bundle args = new Bundle();
-                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "http://www.baidu.com/");
+//                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "http://www.baidu.com/");
                     mTab03 = BaseFragment.newInstance("com.ray.project.ui.fragment.WebViewFragment");
                     mTab03.setArguments(args);
                     transaction.add(R.id.fragment_container, mTab03);

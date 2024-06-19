@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.KeyEvent;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.ray.project.R;
 import com.ray.project.commons.Logger;
 import com.ray.project.commons.RelayoutTool;
-import com.ray.project.config.ProjectApplication;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -54,10 +52,17 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * @return
      */
     protected boolean isImmersiveStatusHeight() { return false; }
+    protected void setImmersiveStatusHeight () {
+        if (null != mActivity) {
+            mActivity.setStatusView();
+        }
+    }
 
     protected boolean showTitleNavigation() { return false; }
     protected void setTitleNavigationShow (boolean show) {
-        mContentView.findViewById(R.id.titleRl).setVisibility(show ? View.VISIBLE : View.GONE);
+        if (null != mActivity) {
+            mActivity.setTitleNavigationShow(show);
+        }
     }
 
     /**
@@ -89,9 +94,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     public void setTitleText(String text) {
-        TextView title = mContentView.findViewById(R.id.title);
-        if(title != null) {
-            title.setText(text);
+        if (null != mActivity) {
+            mActivity.setTitleText(text);
         }
     }
 
@@ -119,12 +123,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        mContentView = inflater.inflate(initLayout(), container, false);
-        mContentView = inflater.inflate(R.layout.activity_container, container, false);
+        mContentView = inflater.inflate(R.layout.fragment_container, container, false);
 
         View view = View.inflate(mActivity, initLayout(), null);
-        RelativeLayout rootLayout = mContentView.findViewById(R.id.projectMainContainer);
+        RelativeLayout rootLayout = mContentView.findViewById(R.id.projectFragmentContainer);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        lp.addRule(RelativeLayout.BELOW, R.id.common_title);
+//        lp.addRule(RelativeLayout.BELOW, R.id.common_title);
         rootLayout.addView(view, lp);
 
         if (mActivity.scale == 0) {
@@ -135,11 +139,30 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
 
         bind = ButterKnife.bind(this, mContentView);
-        setStatusViewWithColor(statusColor());
 
+        setStatusViewWithColor(statusColor());
         setTitleNavigationShow(showTitleNavigation());
+        if (isImmersiveStatusHeight()) { setImmersiveStatusHeight(); }
 
         return mContentView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        // onHiddenChanged只有在FragmentTransaction执行hide和show时调用
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            // 隐藏
+        } else {
+            // 显示
+            setStatusViewWithColor(statusColor());
+            setTitleNavigationShow(showTitleNavigation());
+            if (isImmersiveStatusHeight()) { setImmersiveStatusHeight(); }
+        }
     }
 
     @Override
@@ -200,13 +223,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * 添加状态栏占位视图
      */
     private void setStatusViewWithColor(int color) {
-        View statusBarView = mContentView.findViewById(R.id.status);
-        if(statusBarView == null) { return; }
-        ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
-        lp.height =
-                isImmersiveStatusHeight() ? ProjectApplication.get().getStatusBarHeight() : 0;
-        if(color != 0) { statusBarView.setBackgroundColor(color); };
-        statusBarView.setLayoutParams(lp);
+        if (null != mActivity) {
+            mActivity.setStatusViewWithColor(color);
+        }
     }
 
     // 登记式单例实现单例模式的继承
