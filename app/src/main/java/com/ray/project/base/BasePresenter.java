@@ -111,9 +111,13 @@ public abstract class BasePresenter<V extends IBaseView, T extends BaseActivity>
         return activityRef != null && activityRef.get() != null;
     }
 
-
     @Override
     public void onCreate() {
+
+    }
+
+    @Override
+    public void onRestart() {
 
     }
 

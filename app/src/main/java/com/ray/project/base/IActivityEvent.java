@@ -7,6 +7,7 @@ package com.ray.project.base;
  */
 public interface IActivityEvent {
     void onCreate();
+    void onRestart();
     void onStart();
     void onResume();
     void onPause();

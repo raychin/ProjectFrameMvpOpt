@@ -304,6 +304,12 @@ public abstract class BaseActivity<P extends BasePresenter>
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (presenter != null) { presenter.onRestart(); }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         if(presenter != null) { presenter.onStart(); }
