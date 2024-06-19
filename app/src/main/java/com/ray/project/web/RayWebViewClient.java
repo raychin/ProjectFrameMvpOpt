@@ -5,8 +5,6 @@ import static com.ray.project.commons.AppTools.hasInstalled;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.util.Log;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -72,7 +70,6 @@ public class RayWebViewClient extends WebViewClient {
         // 重写此方法表明点击网页里面的链接还是在当前的WebView里跳转，不另跳浏览器
         // 在2.3上面不加这句话，可以加载出页面，在4.0上面必须要加入，不然出现白屏
         Logger.e("xxxxx url = ", url);
-        ToastUtils.showToast(mActivity, ("url:" + url), 1000);
 //        if (url.startsWith("http://") || url.startsWith("https://")) {
 //            webView.loadUrl(url);
 //            webView.stopLoading();

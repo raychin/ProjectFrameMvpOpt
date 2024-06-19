@@ -30,6 +30,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBaseView {
 
     protected P presenter;
+    public static final String WEB_VIEW_URL_KEY = "webViewUrl";
 
     /**
      * 获取TAG的activity名称
@@ -103,6 +104,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
         bind = ButterKnife.bind(this, mContentView);
         setStatusViewWithColor(statusColor());
+
         return mContentView;
     }
 
@@ -209,6 +211,31 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
                     T instance = null;
                     try {
                         instance = clazz.newInstance();
+                    } catch (java.lang.InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    return instance;
+                }
+            }
+        }
+        return (T) registryMap.get(clazzName);
+    }
+
+    public static <T extends BaseFragment> T newInstance(final Class<T> clazz, Bundle args) {
+        String clazzName = clazz.getName();
+        if(!registryMap.containsKey(clazzName)){
+            synchronized(registryMap){
+                if(!registryMap.containsKey(clazzName)){
+                    T instance = null;
+                    try {
+                        instance = clazz.newInstance();
+                        if (args != null) {
+                            args.setClassLoader(instance.getClass().getClassLoader());
+                            // 设置参数，然后我们就可以用getArgument方法获取了
+                            instance.setArguments(args);
+                        }
                     } catch (java.lang.InstantiationException e) {
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {

@@ -10,6 +10,7 @@ import android.webkit.WebView;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.commons.Logger;
 import com.ray.project.commons.Typefaces;
 import com.ray.project.web.JsInteraction;
 import com.ray.project.web.RayWebViewChromeClient;
@@ -25,6 +26,7 @@ import com.ray.project.widget.titanic.TitanicTextView;
 public class WebViewFragment extends BaseFragment {
     private WebView webView;
     private TitanicTextView tvLoading;
+    private String webUrl = "file:///android_asset/web/ray-template/index.html";
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -48,8 +50,15 @@ public class WebViewFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-//        webView.loadUrl("https://www.baidu.com/");
-        webView.loadUrl("file:///android_asset/web/ray-template/index.html");
+        Bundle bundle = getArguments();
+        if (null != bundle) {
+            if (bundle.containsKey(WEB_VIEW_URL_KEY)) {
+                webUrl = bundle.getString(WEB_VIEW_URL_KEY);
+            }
+        }
+        Logger.e(TAG, "333333333");
+        Logger.e(TAG, webUrl);
+        webView.loadUrl(webUrl);
         initWebView();
     }
 

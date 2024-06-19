@@ -165,7 +165,9 @@ public abstract class BaseActivity<P extends BasePresenter>
         } else {
             baseMap.put(key, 1);
         }
-        ToastUtils.showToast(appContext, TAG + "-" + lifeCycle + "第" + baseMap.get(key) + "次", 2000);
+        String msg = TAG + "-" + lifeCycle + "第" + baseMap.get(key) + "次";
+        // ToastUtils.showToast(appContext, msg, 2000);
+        Logger.d(TAG, msg);
     }
 
     /******** 基准分辨率 **********/

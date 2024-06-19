@@ -1,8 +1,10 @@
 package com.ray.project.ui;
 
 import android.Manifest;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.ray.project.R;
@@ -18,6 +20,7 @@ import butterknife.OnClick;
  * @date 2018/07/03
  */
 public class WebViewActivity extends BaseActivity {
+    private String webUrl = "";
 
     @Override
     protected boolean isImmersiveStatus() {
@@ -58,6 +61,11 @@ public class WebViewActivity extends BaseActivity {
 
         if (webViewFragment == null) {
             webViewFragment = BaseFragment.newInstance("com.ray.project.ui.fragment.WebViewFragment");
+            Bundle args = new Bundle();
+            if (!TextUtils.isEmpty(webUrl)) {
+                args.putString(BaseFragment.WEB_VIEW_URL_KEY, webUrl);
+            }
+            webViewFragment.setArguments(args);
             transaction.add(R.id.fragment_container, webViewFragment);
         } else {
             transaction.show(webViewFragment);
