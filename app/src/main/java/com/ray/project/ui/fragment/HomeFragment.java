@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.ui.WebViewActivity;
+import com.ray.project.widget.titanic.TitanicTextView;
 
 /**
  * 首页界面fragment
@@ -13,6 +15,8 @@ import com.ray.project.base.BaseFragment;
  * @date 2018/07/03
  */
 public class HomeFragment extends BaseFragment {
+
+    private TitanicTextView mTvTitle;
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -28,6 +32,13 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         mActivity.setTitleText("首页");
+        mTvTitle = view.findViewById(R.id.my_text_view);
+        mTvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.nextActivity(WebViewActivity.class);
+            }
+        });
     }
 
     @Override

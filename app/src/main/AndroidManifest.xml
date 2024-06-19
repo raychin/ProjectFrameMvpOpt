@@ -62,6 +62,11 @@
             android:launchMode="singleTask">
         </activity>
 
+        <activity
+            android:name="com.ray.project.ui.WebViewActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+
         <!--authorities：app的包名.fileProvider （fileProvider可以随便写）,上面采用的是gradle的替换直接写成包名也可以，但是推荐这种方式，多渠道分包的时候不用关心了-->
         <!--grantUriPermissions：必须是true，表示授予 URI 临时访问权限-->
         <!--exported：必须是false-->
