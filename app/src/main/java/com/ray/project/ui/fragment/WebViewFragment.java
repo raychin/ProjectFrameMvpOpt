@@ -56,8 +56,6 @@ public class WebViewFragment extends BaseFragment {
                 webUrl = bundle.getString(WEB_VIEW_URL_KEY);
             }
         }
-        Logger.e(TAG, "333333333");
-        Logger.e(TAG, webUrl);
         webView.loadUrl(webUrl);
         initWebView();
     }

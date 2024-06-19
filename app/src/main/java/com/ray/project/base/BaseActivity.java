@@ -119,6 +119,11 @@ public abstract class BaseActivity<P extends BasePresenter>
      */
     public int statusColor() { return 0; }
 
+    protected boolean showTitleNavigation() { return false; }
+    protected void setTitleNavigationShow (boolean show) {
+        findViewById(R.id.titleRl).setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
     private Unbinder bind;
 
     @Override
@@ -142,6 +147,9 @@ public abstract class BaseActivity<P extends BasePresenter>
         setContentView(initLayout());
         bind = ButterKnife.bind(this);
         if(isImmersiveStatus()) { setStatusViewWithColor(statusColor()); }
+
+//        if (showTitleNavigation()) { setTitleNavigationShow(); }
+        setTitleNavigationShow(showTitleNavigation());
         // 初始化控件
         initView();
         // 初始化present view
@@ -177,7 +185,15 @@ public abstract class BaseActivity<P extends BasePresenter>
     @Override
     public void setContentView(int layoutResID) {
         View view = View.inflate(this, layoutResID, null);
-        this.setContentView(view);
+
+        View viewContainer = View.inflate(this, R.layout.activity_container, null);
+        RelativeLayout container = viewContainer.findViewById(R.id.projectMainContainer);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lp.addRule(RelativeLayout.BELOW, R.id.common_title);
+        container.addView(view, lp);
+        this.setContentView(viewContainer);
+
+//        this.setContentView(view);
     }
 
     @Override

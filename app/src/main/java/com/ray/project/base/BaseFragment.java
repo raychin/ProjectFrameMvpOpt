@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.KeyEvent;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ray.project.R;
 import com.ray.project.commons.Logger;
@@ -53,6 +55,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      */
     protected boolean isImmersiveStatusHeight() { return false; }
 
+    protected boolean showTitleNavigation() { return false; }
+    protected void setTitleNavigationShow (boolean show) {
+        mContentView.findViewById(R.id.titleRl).setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
     /**
      * 设置布局
      *
@@ -69,6 +76,24 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * 沉浸式添加顶部占位颜色
      */
     public int statusColor() { return 0; };
+
+    /**
+     * 设置标题栏背景色
+     * @param resId
+     */
+    protected void setTitleBarBackground(int resId) {
+        RelativeLayout titleRl = mContentView.findViewById(R.id.titleRl);
+        if(titleRl != null) {
+            titleRl.setBackgroundResource(resId);
+        }
+    }
+
+    public void setTitleText(String text) {
+        TextView title = mContentView.findViewById(R.id.title);
+        if(title != null) {
+            title.setText(text);
+        }
+    }
 
     /**
      * 设置数据
@@ -93,7 +118,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mContentView = inflater.inflate(initLayout(), container, false);
+//        mContentView = inflater.inflate(initLayout(), container, false);
+        mContentView = inflater.inflate(R.layout.activity_container, container, false);
+
+        View view = View.inflate(mActivity, initLayout(), null);
+        RelativeLayout rootLayout = mContentView.findViewById(R.id.projectMainContainer);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lp.addRule(RelativeLayout.BELOW, R.id.common_title);
+        rootLayout.addView(view, lp);
 
         if (mActivity.scale == 0) {
             mActivity.initScreenScale();
@@ -104,6 +136,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
         bind = ButterKnife.bind(this, mContentView);
         setStatusViewWithColor(statusColor());
+
+        setTitleNavigationShow(showTitleNavigation());
 
         return mContentView;
     }
@@ -169,7 +203,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         View statusBarView = mContentView.findViewById(R.id.status);
         if(statusBarView == null) { return; }
         ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
-        lp.height = isImmersiveStatusHeight() ? ProjectApplication.get().getStatusBarHeight() : 0;
+        lp.height =
+                isImmersiveStatusHeight() ? ProjectApplication.get().getStatusBarHeight() : 0;
         if(color != 0) { statusBarView.setBackgroundColor(color); };
         statusBarView.setLayoutParams(lp);
     }

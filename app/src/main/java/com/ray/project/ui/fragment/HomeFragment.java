@@ -23,6 +23,15 @@ public class HomeFragment extends BaseFragment {
         return true;
     }
 
+    @Override
+    public int statusColor() {
+        return getResources().getColor(R.color.top_bar_background);
+    }
+
+    @Override
+    protected boolean showTitleNavigation() {
+        return true;
+    }
 
     @Override
     protected int initLayout() {
@@ -31,7 +40,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        mActivity.setTitleText("首页");
+        setTitleText("首页");
         mTvTitle = view.findViewById(R.id.my_text_view);
         mTvTitle.setOnClickListener(viewTitle -> mActivity.nextActivity(WebViewActivity.class));
     }
