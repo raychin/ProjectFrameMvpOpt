@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.text.TextUtils;
-import android.view.WindowManager;
 
 import com.ray.project.network.Net;
 
