@@ -48,7 +48,8 @@ public class Net {
     private static final int READ_TIME_OUT = 20;
     private static final int WRITE_TIME_OUT = 20;
 
-    public static final String BASE_API = "http://10.200.66.39:9000/";
+//    public static final String BASE_API = "http://10.200.66.39:9000/";
+    public static final String BASE_API = "http://192.168.102.8:8005";
     private static Retrofit retrofit;
     private static ApiService apiService;
 

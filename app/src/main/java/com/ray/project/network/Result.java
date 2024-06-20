@@ -15,4 +15,7 @@ public class Result<T> implements Serializable {
     public String errorCode;
 
     public T data;
+
+    public String state;
+    public int code;
 }

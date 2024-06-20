@@ -1,4 +1,6 @@
 package com.ray.project.entity;
 
-public class BaseBean {
+import java.io.Serializable;
+
+public class BaseBean implements Serializable {
 }

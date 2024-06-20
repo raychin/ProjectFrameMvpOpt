@@ -1,4 +1,6 @@
 package com.ray.project.model;
 
-public class BaseModel {
+import java.io.Serializable;
+
+public class BaseModel implements Serializable {
 }

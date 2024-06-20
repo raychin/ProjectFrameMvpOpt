@@ -44,7 +44,8 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
 
     @Override
     public void initData() {
-        presenter.doLogin("nsapp", "geostar999");
+//        presenter.doLogin("nsapp", "geostar999");
+        presenter.doLogin("admin", "!Sh291623");
         setSelect(0);
     }
 
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
         if(event.getCode() == 0) {
             new CommonDialog(
                     MainActivity.this,
-                    "您的秘钥是" + ((LoginModel) event.getObj()).getToken(),
+                    "您的秘钥是" + ((LoginModel) event.getObj()).accessToken,
                     new CommonDialog.OnCloseListener() {
                 @Override
                 public void onClick(Dialog dialog, boolean confirm) {
