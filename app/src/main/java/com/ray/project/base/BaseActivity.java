@@ -6,13 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,6 +14,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.ray.project.R;
 import com.ray.project.commons.Logger;
@@ -38,6 +39,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -541,8 +543,10 @@ public abstract class BaseActivity<P extends BasePresenter>
 
     @SuppressWarnings("rawtypes")
     protected BaseFragment getVisibleFragment(){
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-        List<Fragment> fragments = fragmentManager.getFragments();
+        if (null == mFragmentManager) {
+            mFragmentManager = getSupportFragmentManager();
+        }
+        List<Fragment> fragments = mFragmentManager.getFragments();
         for(Fragment fragment : fragments){
             if(fragment != null && fragment.isVisible())
                 return (BaseFragment) fragment;

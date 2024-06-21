@@ -71,7 +71,7 @@
         <!--grantUriPermissions：必须是true，表示授予 URI 临时访问权限-->
         <!--exported：必须是false-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

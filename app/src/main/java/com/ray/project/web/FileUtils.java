@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
@@ -34,6 +33,8 @@ import java.util.Properties;
 
 import static android.os.Environment.MEDIA_MOUNTED;
 import static android.os.Environment.isExternalStorageEmulated;
+
+import androidx.annotation.RequiresApi;
 
 import com.ray.project.commons.Logger;
 import com.ray.project.config.ProjectApplication;

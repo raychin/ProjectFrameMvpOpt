@@ -1,9 +1,10 @@
 package com.ray.project.network;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ray.project.commons.Loading;
 import com.ray.project.commons.Logger;

@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.photo.select.ImageLoader;
 import com.photo.select.R;
@@ -96,7 +96,7 @@ public class MultiImgShowActivity extends Activity implements ZoomImageView.OnIs
                 return mImageView.length;
             }
         });
-        viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int arg0) {
                 current = arg0;

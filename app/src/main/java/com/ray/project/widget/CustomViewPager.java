@@ -1,9 +1,10 @@
 package com.ray.project.widget;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * 自定义viewPager
@@ -57,5 +58,8 @@ public class CustomViewPager extends ViewPager {
 
     public void setPagingEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public void setOnPageChangeListener(androidx.viewpager.widget.ViewPager.OnPageChangeListener onPageChangeListener) {
     }
 }

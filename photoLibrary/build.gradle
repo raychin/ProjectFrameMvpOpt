@@ -23,10 +23,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportAppcompatVersion
-    testImplementation 'junit:junit:' + rootProject.ext.junitVersion
-    androidTestImplementation 'com.android.support.test:runner:' + rootProject.ext.testRunnerVerion
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.testEspressoVersion
+//    compileOnly 'com.android.support:appcompat-v7:' + rootProject.ext.supportAppcompatVersion
+    compileOnly "androidx.appcompat:appcompat:${rootProject.ext.supportAppcompatVersion}"
+    compileOnly "junit:junit:${rootProject.ext.junitVersion}"
+    compileOnly "com.android.support.test:runner:${rootProject.ext.testRunnerVerion}"
+    compileOnly "com.android.support.test.espresso:espresso-core:${rootProject.ext.testEspressoVersion}"
 }

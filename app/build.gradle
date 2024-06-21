@@ -123,9 +123,26 @@ android {
     }
 }
 
+configurations.configureEach {
+//    resolutionStrategy {
+//        force "com.android.support:support-v4:28.0.0"
+//    }
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            print(requested.name)
+            details.useVersion '28.0.0'
+//            if (!requested.name.startsWith("multidex")) {
+//
+//            }
+        }
+    }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportAppcompatVersion}"
+//    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportAppcompatVersion}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.supportAppcompatVersion}"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     testImplementation "junit:junit:${rootProject.ext.junitVersion}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.ext.testRunnerVerion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.testEspressoVersion}"

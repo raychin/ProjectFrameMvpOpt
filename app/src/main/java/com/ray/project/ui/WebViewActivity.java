@@ -2,10 +2,10 @@ package com.ray.project.ui;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
@@ -55,8 +55,10 @@ public class WebViewActivity extends BaseActivity {
     @SuppressWarnings("rawtypes")
     private BaseFragment webViewFragment;
     private void setSelect() {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
+        if (null == mFragmentManager) {
+            mFragmentManager = getSupportFragmentManager();
+        }
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
         hideFragment(transaction);
 
         if (webViewFragment == null) {

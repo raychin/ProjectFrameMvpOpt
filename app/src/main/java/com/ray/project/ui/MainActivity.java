@@ -3,9 +3,9 @@ package com.ray.project.ui;
 import android.Manifest;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
@@ -97,8 +97,10 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
     @SuppressWarnings("rawtypes")
     private BaseFragment mTab01, mTab02, mTab03, mTab04;
     private void setSelect(int i) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
+        if (null == mFragmentManager) {
+            mFragmentManager = getSupportFragmentManager();
+        }
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
         hideFragment(transaction);
         switch (i) {
             case 0:

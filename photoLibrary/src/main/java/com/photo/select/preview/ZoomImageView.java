@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -15,6 +14,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageView;
+
+import androidx.viewpager.widget.ViewPager;
 
 //自定义ImageView,需要找到ImageView加载完图片的一个回调，所以实现了OnGlobalLayoutListener这个接口
 public class ZoomImageView extends ImageView implements OnGlobalLayoutListener,

@@ -9,12 +9,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.ray.project.commons.Logger;
 import com.ray.project.config.AppConfig;
