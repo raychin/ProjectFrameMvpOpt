@@ -11,6 +11,8 @@ import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.commons.Logger;
+import com.ray.project.db.AppDatabase;
 import com.ray.project.model.LoginModel;
 import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
@@ -47,6 +49,27 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
 //        presenter.doLogin("nsapp", "geostar999");
         presenter.doLogin("admin", "!Sh291623");
         setSelect(0);
+
+        com.ray.project.entity.User user = new com.ray.project.entity.User();
+        user.firstName = "Ray";
+        user.lastName = "Chin";
+//        AppDatabase.getInstance(this).userDao().insertUser(user);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase.getInstance(MainActivity.this).userDao().insertUser(user);
+                Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().toString());
+                if (AppDatabase.getInstance(MainActivity.this).userDao().getAll().size() > 0) {
+                    Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().get(0).firstName);
+                }
+            }
+        }).start();
+//        db.runInTransaction(new Runnable() {
+//            @Override
+//            public void run() {
+//                db.userDao().insertUser(user);
+//            }
+//        });
     }
 
     @Override

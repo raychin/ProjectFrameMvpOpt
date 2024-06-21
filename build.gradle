@@ -14,6 +14,8 @@ buildscript {
         testEspressoVersion = '3.0.2'
         butterknifeVersion = '10.2.3'
         gradleVersion = '3.6.3'
+        // java8版本支持，不可升级
+        room_version = "2.3.0"
     }
     
     repositories {

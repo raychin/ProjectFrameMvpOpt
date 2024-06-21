@@ -163,4 +163,10 @@ dependencies {
     implementation 'top.zibin:Luban:1.1.8'
 
     implementation project(':photoLibrary')
+
+    implementation "androidx.room:room-runtime:${rootProject.ext.room_version}"
+    annotationProcessor "androidx.room:room-compiler:${rootProject.ext.room_version}"
+    // For Kotlin use kapt instead of annotationProcessor
+    // 对于Kotlin来说，使用kapt而不是annotationProcessor
+    // kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
 }
