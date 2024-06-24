@@ -19,11 +19,6 @@ import com.ray.project.databinding.FragmentSecondBinding;
 public class SecondFragment extends BaseFragment<FragmentSecondBinding, BasePresenter> {
 
     @Override
-    protected FragmentSecondBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
-        return FragmentSecondBinding.inflate(layoutInflater, container, false);
-    }
-
-    @Override
     protected boolean isImmersiveStatusHeight() {
         return true;
     }

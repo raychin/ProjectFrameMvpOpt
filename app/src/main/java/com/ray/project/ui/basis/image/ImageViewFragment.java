@@ -12,11 +12,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
-import com.ray.project.databinding.FragmentImageviewBinding;
+import com.ray.project.databinding.FragmentImageViewBinding;
 
 import butterknife.BindView;
 
-public class ImageViewFragment extends BaseFragment<FragmentImageviewBinding, BasePresenter> {
+public class ImageViewFragment extends BaseFragment<FragmentImageViewBinding, BasePresenter> {
 
     @BindView(R.id.image_view)
     ImageView imageView;
@@ -32,13 +32,8 @@ public class ImageViewFragment extends BaseFragment<FragmentImageviewBinding, Ba
     }
 
     @Override
-    protected FragmentImageviewBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
-        return FragmentImageviewBinding.inflate(layoutInflater, container, false);
-    }
-
-    @Override
     protected int initLayout() {
-        return R.layout.fragment_imageview;
+        return R.layout.fragment_image_view;
     }
 
     @Override

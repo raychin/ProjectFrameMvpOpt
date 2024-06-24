@@ -98,11 +98,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
         return true;
     }
 
-    @Override
-    protected ActivityMainBinding inflateViewBinding(LayoutInflater layoutInflater) {
-        return ActivityMainBinding.inflate(layoutInflater);
-    }
-
     @OnClick({R.id.tabFirstButton, R.id.tabSecondButton, R.id.tabThirdButton, R.id.tabForthButton})
     public void onClick(View view) {
         int pos = -1;

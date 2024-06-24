@@ -52,11 +52,6 @@ public class ImageViewActivity extends BaseActivity<ActivityImageBinding, BasePr
     }
 
     @Override
-    protected ActivityImageBinding inflateViewBinding(LayoutInflater layoutInflater) {
-        return ActivityImageBinding.inflate(layoutInflater);
-    }
-
-    @Override
     public int initLayout() {
         return R.layout.activity_image;
     }

@@ -40,6 +40,7 @@ import com.ray.project.widget.titanic.TitanicTextView;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
@@ -147,7 +148,6 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
     private Unbinder bind;
 
     protected VB mBinding;
-    protected abstract VB inflateViewBinding(LayoutInflater layoutInflater);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -221,7 +221,8 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         // 未使用ViewBinding，直接初始化化view
         //        container.addView(view, lp);
 
-        mBinding = mBinding == null ? inflateViewBinding(getLayoutInflater()) : mBinding;
+        // 通过反射实例化ViewBinding
+        initViewBinding();
         container.addView(mBinding.getRoot(), lp);
 
         mConainerView = viewContainer;
@@ -286,6 +287,30 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 通过反射实例化ViewBinding
+     */
+    private void initViewBinding() {
+        try {
+            // 获取当前new对象的泛型的父类类型
+            ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
+            Class clazz = (Class<VB>) parameterizedType.getActualTypeArguments()[0];
+            if (null == clazz) {
+                Logger.d(TAG, "clazz ==>> 缺少构造参数");
+                return;
+            }
+            Logger.d(TAG, "clazz ==>> " + clazz);
+            Method method = clazz.getDeclaredMethod("inflate", LayoutInflater.class);
+            mBinding = (VB) method.invoke(null, getLayoutInflater());
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 

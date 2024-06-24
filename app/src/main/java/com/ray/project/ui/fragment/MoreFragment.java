@@ -19,11 +19,6 @@ import com.ray.project.databinding.FragmentMoreBinding;
 public class MoreFragment extends BaseFragment<FragmentMoreBinding, BasePresenter> {
 
     @Override
-    protected FragmentMoreBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
-        return FragmentMoreBinding.inflate(layoutInflater, container, false);
-    }
-
-    @Override
     protected boolean isImmersiveStatusHeight() {
         return true;
     }

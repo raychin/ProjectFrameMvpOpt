@@ -21,11 +21,6 @@ import com.ray.project.widget.titanic.TitanicTextView;
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresenter> {
 
     @Override
-    protected FragmentHomeBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
-        return FragmentHomeBinding.inflate(layoutInflater, container, false);
-    }
-
-    @Override
     protected boolean isImmersiveStatusHeight() {
         return true;
     }

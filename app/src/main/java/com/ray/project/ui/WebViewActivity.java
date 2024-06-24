@@ -31,11 +31,6 @@ public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePr
     }
 
     @Override
-    protected ActivityWebViewBinding inflateViewBinding(LayoutInflater layoutInflater) {
-        return ActivityWebViewBinding.inflate(layoutInflater);
-    }
-
-    @Override
     public int initLayout() {
         return R.layout.activity_web_view;
     }

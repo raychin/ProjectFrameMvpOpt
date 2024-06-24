@@ -17,6 +17,7 @@ import com.ray.project.commons.RelayoutTool;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,6 @@ public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresent
     protected View mContentView;
 
     protected VB mBinding;
-    protected abstract VB inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container);
 
     /**
      * 是否开启MVP模式
@@ -138,7 +138,8 @@ public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresent
         // 未使用ViewBinding，直接初始化化view
         //        rootLayout.addView(view, lp);
 
-        mBinding = mBinding == null ? inflateViewBinding(inflater, container) : mBinding;
+        // 反射实例化ViewBinding
+        initViewBinding(inflater, container);
         rootLayout.addView(mBinding.getRoot(), lp);
 
         if (mActivity.scale == 0) {
@@ -222,6 +223,30 @@ public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresent
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 通过反射实例化ViewBinding
+     */
+    private void initViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
+        try {
+            // 获取当前new对象的泛型的父类类型
+            ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
+            Class clazz = (Class<VB>) parameterizedType.getActualTypeArguments()[0];
+            if (null == clazz) {
+                Logger.d(TAG, "clazz ==>> 缺少构造参数");
+                return;
+            }
+            Logger.d(TAG, "clazz ==>> " + clazz);
+            Method method = clazz.getDeclaredMethod("inflate", LayoutInflater.class, ViewGroup.class, boolean.class);
+            mBinding = (VB) method.invoke(null, layoutInflater, container, false);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 

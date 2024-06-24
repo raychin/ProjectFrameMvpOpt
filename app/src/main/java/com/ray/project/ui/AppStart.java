@@ -62,8 +62,4 @@ public class AppStart extends BaseActivity<ActivityStartBinding, BasePresenter> 
         return true;
     }
 
-    @Override
-    protected ActivityStartBinding inflateViewBinding(LayoutInflater layoutInflater) {
-        return ActivityStartBinding.inflate(layoutInflater);
-    }
 }

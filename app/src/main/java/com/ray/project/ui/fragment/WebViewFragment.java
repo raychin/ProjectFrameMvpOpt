@@ -28,11 +28,6 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
     private String webUrl = "file:///android_asset/web/ray-template/index.html";
 
     @Override
-    protected FragmentWebViewBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
-        return FragmentWebViewBinding.inflate(layoutInflater, container, false);
-    }
-
-    @Override
     protected boolean isImmersiveStatusHeight() {
         return true;
     }
