@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -13,6 +14,8 @@ import com.ray.project.base.BaseActivity;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.commons.Logger;
+import com.ray.project.commons.ToastUtils;
+import com.ray.project.config.MMKVManager;
 import com.ray.project.databinding.ActivityMainBinding;
 import com.ray.project.db.AppDatabase;
 import com.ray.project.model.LoginModel;
@@ -79,6 +82,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
         super.updateView(event);
 
         if(event.getCode() == 0) {
+            MMKVManager.getInstance().encode("token", ((LoginModel) event.getObj()).accessToken);
             new CommonDialog(
                     MainActivity.this,
                     "您的秘钥是" + ((LoginModel) event.getObj()).accessToken,
@@ -90,6 +94,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
                     }
                 }
             }).setTitle("提示").show();
+            ToastUtils.showToast(MainActivity.this, MMKVManager.getInstance().decodeString("token"), Toast.LENGTH_SHORT);
         }
     }
 

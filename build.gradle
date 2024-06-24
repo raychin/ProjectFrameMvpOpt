@@ -3,7 +3,7 @@
 buildscript {
     ext {
         compileVersion = 28
-        minSdkVersion = 21
+        minSdkVersion = 23
         targetSdkVersion = 28
         buildVersion = '28.0.3'
         supportVersion = '28.0.0'
@@ -15,7 +15,8 @@ buildscript {
         butterknifeVersion = '10.2.3'
         gradleVersion = '3.6.3'
         // java8版本支持，不可升级
-        room_version = "2.3.0"
+        roomVersion = "2.3.0"
+        mmkvVersion = "1.3.5"
     }
     
     repositories {

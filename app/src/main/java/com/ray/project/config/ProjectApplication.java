@@ -34,6 +34,7 @@ public class ProjectApplication extends Application {
         sInstance = this;
         AppConfig.getAppConfig(this);
         Net.init(this);
+        MMKVManager.getInstance();
         handleSSLHandshake();
     }
 
