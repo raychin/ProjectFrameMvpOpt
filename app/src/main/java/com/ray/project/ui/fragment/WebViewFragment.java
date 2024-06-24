@@ -4,12 +4,16 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.base.BasePresenter;
+import com.ray.project.databinding.FragmentWebViewBinding;
 import com.ray.project.web.JsInteraction;
 import com.ray.project.web.RayWebViewChromeClient;
 import com.ray.project.web.RayWebViewClient;
@@ -19,9 +23,14 @@ import com.ray.project.web.RayWebViewClient;
  * @author ray
  * @date 2018/07/03
  */
-public class WebViewFragment extends BaseFragment {
+public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePresenter> {
     private WebView webView;
     private String webUrl = "file:///android_asset/web/ray-template/index.html";
+
+    @Override
+    protected FragmentWebViewBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
+        return FragmentWebViewBinding.inflate(layoutInflater, container, false);
+    }
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -35,7 +44,8 @@ public class WebViewFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        webView = mContentView.findViewById(R.id.webView);
+        webView = mBinding.webView;
+//        webView = mContentView.findViewById(R.id.webView);
     }
 
     @Override
@@ -82,7 +92,7 @@ public class WebViewFragment extends BaseFragment {
             @Override
             public void onReceivedFinish(WebView webView, String url) {
                 if (null != mActivity) {
-//                    mActivity.pageLoading();
+                    mActivity.pageLoading();
                 }
             }
         }));

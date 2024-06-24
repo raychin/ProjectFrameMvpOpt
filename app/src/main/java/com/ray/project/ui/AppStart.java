@@ -1,11 +1,14 @@
 package com.ray.project.ui;
 
+import android.view.LayoutInflater;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
+import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.Typefaces;
+import com.ray.project.databinding.ActivityStartBinding;
 import com.ray.project.widget.titanic.Titanic;
 import com.ray.project.widget.titanic.TitanicTextView;
 
@@ -14,7 +17,7 @@ import com.ray.project.widget.titanic.TitanicTextView;
  * @author ray
  * @date 2018/07/03
  */
-public class AppStart extends BaseActivity {
+public class AppStart extends BaseActivity<ActivityStartBinding, BasePresenter> {
 
     @Override
     public int initLayout() {
@@ -23,7 +26,7 @@ public class AppStart extends BaseActivity {
 
     @Override
     public void initView() {
-        TitanicTextView tv = (TitanicTextView) findViewById(R.id.my_text_view);
+        TitanicTextView tv = findViewById(R.id.my_text_view);
         // set fancy typeface
         tv.setTypeface(Typefaces.get(this, "Satisfy-Regular.ttf"));
         // activity_start animation
@@ -57,5 +60,10 @@ public class AppStart extends BaseActivity {
     @Override
     protected boolean isImmersiveStatus() {
         return true;
+    }
+
+    @Override
+    protected ActivityStartBinding inflateViewBinding(LayoutInflater layoutInflater) {
+        return ActivityStartBinding.inflate(layoutInflater);
     }
 }

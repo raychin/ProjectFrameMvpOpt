@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -22,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewbinding.ViewBinding;
 
 import com.ray.project.R;
 import com.ray.project.commons.Logger;
@@ -39,7 +41,6 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,17 +52,18 @@ import butterknife.Unbinder;
  * @author ray
  * @date 2018/06/22
  */
-public abstract class BaseActivity<P extends BasePresenter>
+public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresenter>
         extends AppCompatActivity implements IBaseView {
 
     protected P presenter;
 
     public ProjectApplication appContext;
+    protected View mConainerView;
     protected FragmentManager mFragmentManager;
     private TitanicTextView tvLoading;
     public void pageLoading() {
         if (null == tvLoading) {
-            tvLoading = findViewById(R.id.pageLoading);
+            tvLoading = mConainerView.findViewById(R.id.pageLoading);
             tvLoading.setTypeface(Typefaces.get(this, "Satisfy-Regular.ttf"));
             Titanic titanic = new Titanic();
             titanic.start(tvLoading);
@@ -113,14 +115,14 @@ public abstract class BaseActivity<P extends BasePresenter>
      * @param resId
      */
     protected void setTitleBarBackground(int resId) {
-        RelativeLayout titleRl = findViewById(R.id.titleRl);
+        RelativeLayout titleRl = mConainerView.findViewById(R.id.titleRl);
         if(titleRl != null) {
             titleRl.setBackgroundResource(resId);
         }
     }
 
     public void setTitleText(String text) {
-        TextView title = findViewById(R.id.title);
+        TextView title = mConainerView.findViewById(R.id.title);
         if(title != null) {
             title.setText(text);
         }
@@ -139,10 +141,13 @@ public abstract class BaseActivity<P extends BasePresenter>
 
     protected boolean showTitleNavigation() { return false; }
     protected void setTitleNavigationShow (boolean show) {
-        findViewById(R.id.titleRl).setVisibility(show ? View.VISIBLE : View.GONE);
+        mConainerView.findViewById(R.id.titleRl).setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private Unbinder bind;
+
+    protected VB mBinding;
+    protected abstract VB inflateViewBinding(LayoutInflater layoutInflater);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,6 +168,7 @@ public abstract class BaseActivity<P extends BasePresenter>
         appContext = ProjectApplication.get();
         // 设置布局
         setContentView(initLayout());
+
         bind = ButterKnife.bind(this);
         if(isImmersiveStatus()) { setStatusViewWithColor(statusColor()); }
 
@@ -204,15 +210,24 @@ public abstract class BaseActivity<P extends BasePresenter>
     @Override
     public void setContentView(int layoutResID) {
         View view = View.inflate(this, layoutResID, null);
+        // 未使用ViewBinding，无根布局
+        //        this.setContentView(view);
 
         View viewContainer = View.inflate(this, R.layout.activity_container, null);
         RelativeLayout container = viewContainer.findViewById(R.id.projectMainContainer);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         lp.addRule(RelativeLayout.BELOW, R.id.common_title);
-        container.addView(view, lp);
+
+        // 未使用ViewBinding，直接初始化化view
+        //        container.addView(view, lp);
+
+        mBinding = mBinding == null ? inflateViewBinding(getLayoutInflater()) : mBinding;
+        container.addView(mBinding.getRoot(), lp);
+
+        mConainerView = viewContainer;
+
         this.setContentView(viewContainer);
 
-//        this.setContentView(view);
     }
 
     @Override
@@ -251,7 +266,11 @@ public abstract class BaseActivity<P extends BasePresenter>
         try {
             // 获取当前new对象的泛型的父类类型
             ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
-            Class clazz = (Class<P>) parameterizedType.getActualTypeArguments()[0];
+            Class clazz = (Class<P>) parameterizedType.getActualTypeArguments()[1];
+            if (null == clazz) {
+                Logger.d(TAG, "clazz ==>> 缺少构造参数");
+                return;
+            }
             Logger.d(TAG, "clazz ==>> " + clazz);
             //this.presenter = (P) clazz.newInstance();
             // 获取有参构造
@@ -347,7 +366,7 @@ public abstract class BaseActivity<P extends BasePresenter>
      * 添加状态栏占位视图颜色
      */
     protected void setStatusViewWithColor(int color) {
-        View statusBarView = findViewById(R.id.status);
+        View statusBarView = mConainerView.findViewById(R.id.status);
         if(statusBarView == null) { return; }
         ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
         lp.height = isImmersiveStatusHeight() ? ProjectApplication.get().getStatusBarHeight() : 0;
@@ -359,7 +378,7 @@ public abstract class BaseActivity<P extends BasePresenter>
      * 添加状态栏占位视图
      */
     protected void setStatusView() {
-        View statusBarView = findViewById(R.id.status);
+        View statusBarView = mConainerView.findViewById(R.id.status);
         if(statusBarView == null) { return; }
         ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
         lp.height = ProjectApplication.get().getStatusBarHeight();
@@ -406,7 +425,9 @@ public abstract class BaseActivity<P extends BasePresenter>
         super.onDestroy();
         lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if(presenter != null) { presenter.onDestroy(); }
+        // 释放持有，防止泄露
         bind.unbind();
+        mBinding = null;
         AppManager.getAppManager().finishActivity(this);
     }
 

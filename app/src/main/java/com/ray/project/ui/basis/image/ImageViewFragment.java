@@ -2,17 +2,21 @@ package com.ray.project.ui.basis.image;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.base.BasePresenter;
+import com.ray.project.databinding.FragmentImageviewBinding;
 
 import butterknife.BindView;
 
-public class ImageViewFragment extends BaseFragment {
+public class ImageViewFragment extends BaseFragment<FragmentImageviewBinding, BasePresenter> {
 
     @BindView(R.id.image_view)
     ImageView imageView;
@@ -25,6 +29,11 @@ public class ImageViewFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    protected FragmentImageviewBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
+        return FragmentImageviewBinding.inflate(layoutInflater, container, false);
     }
 
     @Override

@@ -181,6 +181,8 @@
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
+#项目中对应模块中的proguard-rules.pro中加入，这样上述优化中的反射，在混淆中就不会出问题
+-keep class * extends androidx.viewbinding.ViewBinding {*;}
 
 # EventBus
 -keepattributes *Annotation*

@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.view.KeyEvent;
 import android.widget.RelativeLayout;
 
-
 import androidx.fragment.app.Fragment;
+import androidx.viewbinding.ViewBinding;
 
 import com.ray.project.R;
 import com.ray.project.commons.Logger;
@@ -29,7 +29,7 @@ import butterknife.Unbinder;
  * @author ray
  * @date 2018/06/25
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBaseView {
+public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresenter> extends Fragment implements IBaseView {
 
     protected P presenter;
     public static final String WEB_VIEW_URL_KEY = "webViewUrl";
@@ -42,6 +42,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     protected BaseActivity mActivity;
 
     protected View mContentView;
+
+    protected VB mBinding;
+    protected abstract VB inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container);
 
     /**
      * 是否开启MVP模式
@@ -124,14 +127,19 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        mContentView = inflater.inflate(initLayout(), container, false);
+        // 未使用ViewBinding，无根布局
+        //        mContentView = inflater.inflate(initLayout(), container, false);
         mContentView = inflater.inflate(R.layout.fragment_container, container, false);
 
         View view = View.inflate(mActivity, initLayout(), null);
         RelativeLayout rootLayout = mContentView.findViewById(R.id.projectFragmentContainer);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        lp.addRule(RelativeLayout.BELOW, R.id.common_title);
-        rootLayout.addView(view, lp);
+
+        // 未使用ViewBinding，直接初始化化view
+        //        rootLayout.addView(view, lp);
+
+        mBinding = mBinding == null ? inflateViewBinding(inflater, container) : mBinding;
+        rootLayout.addView(mBinding.getRoot(), lp);
 
         if (mActivity.scale == 0) {
             mActivity.initScreenScale();
@@ -188,6 +196,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public void onDestroy() {
         super.onDestroy();
         bind.unbind();
+        mBinding = null;
     }
 
     /**
@@ -197,7 +206,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         try {
             // 获取当前new对象的泛型的父类类型
             ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
-            Class clazz = (Class<P>) parameterizedType.getActualTypeArguments()[0];
+            Class clazz = (Class<P>) parameterizedType.getActualTypeArguments()[1];
             Logger.d(TAG, "clazz ==>> " + clazz);
             //this.presenter = (P) clazz.newInstance();
             // 获取有参构造

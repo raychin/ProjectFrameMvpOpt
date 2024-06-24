@@ -1,6 +1,7 @@
 package com.ray.project.ui.basis.image;
 
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +11,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
+import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.ToastUtils;
+import com.ray.project.databinding.ActivityImageBinding;
 import com.ray.project.widget.CustomViewPager;
 
 import java.util.List;
@@ -25,7 +28,7 @@ import butterknife.BindView;
      intent.putExtra("index", index + 1);    // 第几张开始
      startActivity(intent);
  */
-public class ImageViewActivity extends BaseActivity {
+public class ImageViewActivity extends BaseActivity<ActivityImageBinding, BasePresenter> {
 
     List<String> urlList;
     @BindView(R.id.viewpager)
@@ -46,6 +49,11 @@ public class ImageViewActivity extends BaseActivity {
     @Override
     protected boolean isImmersiveStatusHeight() {
         return true;
+    }
+
+    @Override
+    protected ActivityImageBinding inflateViewBinding(LayoutInflater layoutInflater) {
+        return ActivityImageBinding.inflate(layoutInflater);
     }
 
     @Override

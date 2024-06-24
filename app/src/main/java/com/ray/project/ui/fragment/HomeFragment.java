@@ -2,10 +2,14 @@ package com.ray.project.ui.fragment;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.base.BasePresenter;
+import com.ray.project.databinding.FragmentHomeBinding;
 import com.ray.project.ui.WebViewActivity;
 import com.ray.project.widget.titanic.TitanicTextView;
 
@@ -14,9 +18,12 @@ import com.ray.project.widget.titanic.TitanicTextView;
  * @author ray
  * @date 2018/07/03
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresenter> {
 
-    private TitanicTextView mTvTitle;
+    @Override
+    protected FragmentHomeBinding inflateViewBinding(LayoutInflater layoutInflater, ViewGroup container) {
+        return FragmentHomeBinding.inflate(layoutInflater, container, false);
+    }
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -41,8 +48,9 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         setTitleText("首页");
-        mTvTitle = view.findViewById(R.id.my_text_view);
-        mTvTitle.setOnClickListener(viewTitle -> mActivity.nextActivity(WebViewActivity.class));
+//        TitanicTextView myTextView = mContentView.findViewById(R.id.my_text_view);
+//        myTextView.setOnClickListener(viewTitle -> mActivity.nextActivity(WebViewActivity.class));
+        mBinding.myTextView.setOnClickListener(viewTitle -> mActivity.nextActivity(WebViewActivity.class));
     }
 
     @Override

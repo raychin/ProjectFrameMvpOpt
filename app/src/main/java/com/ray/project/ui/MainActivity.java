@@ -3,6 +3,7 @@ package com.ray.project.ui;
 import android.Manifest;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import com.ray.project.base.BaseActivity;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.commons.Logger;
+import com.ray.project.databinding.ActivityMainBinding;
 import com.ray.project.db.AppDatabase;
 import com.ray.project.model.LoginModel;
 import com.ray.project.ui.fragment.HomeFragment;
@@ -26,7 +28,7 @@ import butterknife.OnClick;
  * @author ray
  * @date 2018/07/03
  */
-public class MainActivity extends BaseActivity<LoginPresenter> {
+public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresenter> {
 
     @Override
     protected boolean isImmersiveStatus() {
@@ -94,6 +96,11 @@ public class MainActivity extends BaseActivity<LoginPresenter> {
     @Override
     protected boolean isMvp() {
         return true;
+    }
+
+    @Override
+    protected ActivityMainBinding inflateViewBinding(LayoutInflater layoutInflater) {
+        return ActivityMainBinding.inflate(layoutInflater);
     }
 
     @OnClick({R.id.tabFirstButton, R.id.tabSecondButton, R.id.tabThirdButton, R.id.tabForthButton})

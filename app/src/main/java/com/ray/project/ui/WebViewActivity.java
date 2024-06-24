@@ -3,6 +3,7 @@ package com.ray.project.ui;
 import android.Manifest;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -10,7 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
 import com.ray.project.base.BaseFragment;
+import com.ray.project.base.BasePresenter;
 import com.ray.project.base.ResultEvent;
+import com.ray.project.databinding.ActivityWebViewBinding;
 
 import butterknife.OnClick;
 
@@ -19,12 +22,17 @@ import butterknife.OnClick;
  * @author ray
  * @date 2018/07/03
  */
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePresenter> {
     private String webUrl = "";
 
     @Override
     protected boolean isImmersiveStatus() {
         return true;
+    }
+
+    @Override
+    protected ActivityWebViewBinding inflateViewBinding(LayoutInflater layoutInflater) {
+        return ActivityWebViewBinding.inflate(layoutInflater);
     }
 
     @Override
