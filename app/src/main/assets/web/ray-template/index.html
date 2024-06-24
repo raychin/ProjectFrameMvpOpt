@@ -1,8 +1,8 @@
-<!DOCTYPE html><html lang=zh-CN><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><title>模板项目升级</title><link rel=stylesheet type=text/css href=./static/css/mapbox-gl.css><script>document.addEventListener('DOMContentLoaded', function() {
+<!DOCTYPE html><html lang=zh-CN><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><title>Ray移动</title><link rel=stylesheet type=text/css href=./static/css/mapbox-gl.css><script>document.addEventListener('DOMContentLoaded', function() {
                 document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
             })
             var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
-            document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')</script><link rel=stylesheet href=./static/index.f4fc78fe.css></head><body><noscript><strong>Please enable JavaScript to continue.</strong></noscript><div id=app></div><script src=./static/js/chunk-vendors.cf2f6d10.js></script><script src=./static/js/index.7423d1af.js></script></body><script>function getQueryVariable(variable) {
+            document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')</script><link rel=stylesheet href=./static/index.f4fc78fe.css></head><body><noscript><strong>Please enable JavaScript to continue.</strong></noscript><div id=app></div><script src=./static/js/chunk-vendors.cf2f6d10.js></script><script src=./static/js/index.a9c2d8df.js></script></body><script>function getQueryVariable(variable) {
             var query = window.location.search.substring(1);
             var vars = query.split("&");
             for (var i = 0; i < vars.length; i++) {
@@ -50,4 +50,35 @@
         }
         // loadJS('./static/js/xxx.js', function() {
         //     // alert(1);
-        // });</script><script src=./static/js/mapbox-gl.js></script><script src=./static/js/GeoGlobeJS.min.js></script><script src=./static/js/gmapx.min.js></script></html>
+        // });</script><script src=./static/js/mapbox-gl.js></script><script src=./static/js/GeoGlobeJS.min.js></script><script src=./static/js/gmapx.min.js></script><script>setInterval(function() {
+                check()
+            }, 2000);
+            var check = function() {
+                function doCheck(a) {
+                    if (("" + a / a)["length"] !== 1 || a % 20 === 0) {
+                        (function() {}
+                        ["constructor"]("debugger")())
+                    } else {
+                        (function() {}
+                        ["constructor"]("debugger")())
+                    }
+                    doCheck(++a)
+                }
+                try {
+                    doCheck(0)
+                } catch (err) {}
+            };
+            check();</script><script src=./static/js/disable-devtool.min.js></script><script>DisableDevtool({
+                url: 'about:blank',
+                timeOutUrl: 'about:blank',
+                disableMenu: false,
+                tkName: 'ray',
+                md5: "070dd72385b8b2b205db53237da57200",
+                ondevtoolopen(type, next){
+                    // alert('Devtool opened with type:' + type);
+                    var ht = document.getElementById('app');
+                    ht.innerHTML = "<h1>检测到非法调试,请关闭后刷新重试</h1>"
+                    alert('检测到非法调试,请关闭后刷新重试');
+                    next();
+                }
+            })</script></html>
