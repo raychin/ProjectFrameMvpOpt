@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp">
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userInputLayout"
                 android:textColorHint="#c5c5c5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -77,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passWordInputLayout"
                     android:textColorHint="#c5c5c5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

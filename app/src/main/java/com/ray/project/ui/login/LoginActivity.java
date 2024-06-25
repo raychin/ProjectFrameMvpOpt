@@ -1,15 +1,19 @@
 package com.ray.project.ui.login;
 
 import android.app.ActivityOptions;
+import android.app.Dialog;
 import android.content.Intent;
 import android.transition.Explode;
+import android.widget.Toast;
 
-import androidx.core.app.ActivityOptionsCompat;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
+import com.ray.project.base.ResultEvent;
+import com.ray.project.commons.ToastUtils;
+import com.ray.project.config.MMKVManager;
 import com.ray.project.databinding.ActivityLoginBinding;
-import com.ray.project.ui.MainActivity;
+import com.ray.project.model.LoginModel;
 import com.ray.project.ui.register.RegisterActivity;
 
 /**
@@ -45,6 +49,27 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginPrese
         });
 
         mBinding.btGo.setOnClickListener(v -> {
+            String user = mBinding.etUsername.getText().toString().trim();
+            String password = mBinding.etPassword.getText().toString().trim();
+            if (user.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //        presenter.doLogin("nsapp", "geostar999");
+            presenter.doLogin("admin", "!Sh291623");
+        });
+
+    }
+
+    @Override
+    public void updateView(ResultEvent event) {
+        super.updateView(event);
+
+        if(event.getCode() == 0) {
+            MMKVManager.getInstance().encode("token", ((LoginModel) event.getObj()).accessToken);
+            MMKVManager.getInstance().encode("user", event.getObj());
+            ToastUtils.showToast(this, getString(R.string.tip_login_success), Toast.LENGTH_SHORT);
             Explode explode = new Explode();
             explode.setDuration(500);
 
@@ -54,8 +79,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginPrese
 //            Intent i2 = new Intent(this, MainActivity.class);
 //            startActivity(i2, oc2.toBundle());
             finish();
-        });
-
+        }
     }
 
     @Override

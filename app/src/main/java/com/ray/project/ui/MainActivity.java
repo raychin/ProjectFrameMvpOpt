@@ -51,8 +51,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
 
     @Override
     public void initData() {
-//        presenter.doLogin("nsapp", "geostar999");
-        presenter.doLogin("admin", "!Sh291623");
         setSelect(0);
 
         com.ray.project.entity.User user = new com.ray.project.entity.User();
@@ -75,27 +73,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
 //                db.userDao().insertUser(user);
 //            }
 //        });
-    }
-
-    @Override
-    public void updateView(ResultEvent event) {
-        super.updateView(event);
-
-        if(event.getCode() == 0) {
-            MMKVManager.getInstance().encode("token", ((LoginModel) event.getObj()).accessToken);
-            new CommonDialog(
-                    MainActivity.this,
-                    "您的秘钥是" + ((LoginModel) event.getObj()).accessToken,
-                    new CommonDialog.OnCloseListener() {
-                @Override
-                public void onClick(Dialog dialog, boolean confirm) {
-                    if(confirm){
-                        dialog.dismiss();
-                    }
-                }
-            }).setTitle("提示").show();
-            ToastUtils.showToast(MainActivity.this, MMKVManager.getInstance().decodeString("token"), Toast.LENGTH_SHORT);
-        }
     }
 
     @Override
