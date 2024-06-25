@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
+import com.ray.project.commons.Loading;
 import com.ray.project.databinding.FragmentWebViewBinding;
 import com.ray.project.web.JsInteraction;
 import com.ray.project.web.RayWebViewChromeClient;
@@ -81,6 +82,7 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
             public void onReceivedStart(WebView view, String url, Bitmap favicon) {
                 if (null != mActivity) {
                     mActivity.pageLoading();
+                    Loading.show(mActivity);
                 }
             }
 
@@ -88,6 +90,7 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
             public void onReceivedFinish(WebView webView, String url) {
                 if (null != mActivity) {
                     mActivity.pageLoading();
+                    Loading.dismiss();
                 }
             }
         }));

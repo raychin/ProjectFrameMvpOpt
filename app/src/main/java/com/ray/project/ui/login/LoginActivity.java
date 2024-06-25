@@ -1,7 +1,6 @@
 package com.ray.project.ui.login;
 
 import android.app.ActivityOptions;
-import android.app.Dialog;
 import android.content.Intent;
 import android.transition.Explode;
 import android.widget.Toast;
@@ -10,6 +9,7 @@ import android.widget.Toast;
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
 import com.ray.project.base.ResultEvent;
+import com.ray.project.commons.Loading;
 import com.ray.project.commons.ToastUtils;
 import com.ray.project.config.MMKVManager;
 import com.ray.project.databinding.ActivityLoginBinding;
@@ -55,7 +55,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginPrese
                 Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
-
+            Loading.show(this, "登录中...");
             //        presenter.doLogin("nsapp", "geostar999");
             presenter.doLogin("admin", "!Sh291623");
         });

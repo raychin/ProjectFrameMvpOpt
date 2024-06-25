@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.SearchView.OnCloseListener;
 import android.widget.TextView;
 
 import com.ray.project.R;
