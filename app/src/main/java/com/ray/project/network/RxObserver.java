@@ -54,13 +54,13 @@ public class RxObserver<T> implements Observer<T> {
 
     @Override
     public void onCompleted() {
-        Loading.dismiss();
+        Loading.getInstance().dismiss();
     }
 
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        Loading.dismiss();
+        Loading.getInstance().dismiss();
         if (mSr != null) { mSr.setRefreshing(false); }
         if (mBtn != null) { mBtn.setEnabled(true); }
         ToastUtils.showToast(mContext, "网络异常", Toast.LENGTH_SHORT);

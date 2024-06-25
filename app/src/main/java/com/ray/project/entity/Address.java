@@ -3,7 +3,7 @@ package com.ray.project.entity;
 import com.ray.project.entity.BaseBean;
 
 /**
- * @Description: 类说明
+ * @Description: 本地地址实体
  * @Author: ray
  * @Date: 21/6/2024
  */

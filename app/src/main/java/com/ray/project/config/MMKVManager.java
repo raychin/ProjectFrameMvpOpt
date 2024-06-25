@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class MMKVManager {
 
-    private static MMKVManager instance;
+    private static volatile MMKVManager instance;
     private static MMKV mv;
 
     private MMKVManager() {
@@ -28,7 +28,7 @@ public class MMKVManager {
      * 单一实例
      */
     public static MMKVManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             synchronized (MMKVManager.class) {
                 if (instance == null) {
                     instance = new MMKVManager();

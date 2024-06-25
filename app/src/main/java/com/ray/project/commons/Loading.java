@@ -11,10 +11,23 @@ import com.ray.project.widget.LoadingDialog;
  * @date 2018/07/03
  */
 public class Loading {
-//    private static ProgressDialog mDialog;
-    private static LoadingDialog mDialog;
+    private static volatile Loading instance;
 
-    public static void show(Context context) {
+//    private static ProgressDialog mDialog;
+    private LoadingDialog mDialog;
+
+    private Loading() {}
+    public static Loading getInstance() {
+        if (instance == null) {
+            synchronized (Loading.class) {
+                if (instance == null) {
+                    instance = new Loading();
+                }
+            }
+        }
+        return instance;
+    }
+    public void show(Context context) {
         dismiss();
 //        mDialog = new ProgressDialog(context);
 //        mDialog.setMessage(msg);
@@ -24,7 +37,7 @@ public class Loading {
         }
     }
 
-    public static void show(Context context, String msg) {
+    public void show(Context context, String msg) {
         dismiss();
 //        mDialog = new ProgressDialog(context);
 //        mDialog.setMessage(msg);
@@ -34,7 +47,7 @@ public class Loading {
         }
     }
 
-    public static void dismiss() {
+    public void dismiss() {
         if (mDialog != null) {
             if (mDialog.isShowing()) {
                 mDialog.dismiss();

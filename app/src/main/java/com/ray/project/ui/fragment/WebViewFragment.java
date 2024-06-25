@@ -82,7 +82,7 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
             public void onReceivedStart(WebView view, String url, Bitmap favicon) {
                 if (null != mActivity) {
                     mActivity.pageLoading();
-                    Loading.show(mActivity);
+                    Loading.getInstance().show(mActivity);
                 }
             }
 
@@ -90,7 +90,7 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
             public void onReceivedFinish(WebView webView, String url) {
                 if (null != mActivity) {
                     mActivity.pageLoading();
-                    Loading.dismiss();
+                    Loading.getInstance().dismiss();
                 }
             }
         }));

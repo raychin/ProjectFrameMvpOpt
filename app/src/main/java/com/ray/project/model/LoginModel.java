@@ -1,7 +1,7 @@
 package com.ray.project.model;
 
 /**
- * 登录数据处理层
+ * 服务器返回登录数据实体
  */
 public class LoginModel extends BaseModel {
 

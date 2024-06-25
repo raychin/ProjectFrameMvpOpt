@@ -4,8 +4,8 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -13,16 +13,13 @@ import com.bumptech.glide.request.RequestOptions;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
-import com.ray.project.commons.ToastUtils;
-import com.ray.project.config.MMKVManager;
+import com.ray.project.commons.LiveDataBus;
 import com.ray.project.databinding.FragmentMoreBinding;
 import com.ray.project.model.LoginModel;
-import com.ray.project.ui.MainActivity;
 import com.ray.project.ui.login.LoginActivity;
 import com.ray.project.widget.CommonDialog;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * 更多功能界面fragment
@@ -44,6 +41,26 @@ public class MoreFragment extends BaseFragment<FragmentMoreBinding, BasePresente
 
     @Override
     protected void initView(View view) {
+        // 消费者订阅消息
+        LiveDataBus.getInstance().with("user", LoginModel.class)
+                .observe(this, new Observer<LoginModel>() {
+                    @Override
+                    public void onChanged(LoginModel user) {
+                        new CommonDialog(
+                                mActivity,
+                                "您的秘钥是" + user.accessToken,
+                                new CommonDialog.OnCloseListener() {
+                                    @Override
+                                    public void onClick(Dialog dialog, boolean confirm) {
+                                        if(confirm){
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                }).setTitle("提示").show();
+
+                    }
+                });
+
         mBinding.btToLogin.setOnClickListener(v -> {
             mActivity.nextActivity(LoginActivity.class);
         });
@@ -62,23 +79,6 @@ public class MoreFragment extends BaseFragment<FragmentMoreBinding, BasePresente
                 .load(R.drawable.bg_gradient)
                 .apply(RequestOptions.bitmapTransform(new BlurTransformation(25)))
                 .into(mBinding.ivBgHead);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ToastUtils.showToast(mActivity, MMKVManager.getInstance().decodeString("token"), Toast.LENGTH_SHORT);
-        new CommonDialog(
-                mActivity,
-                "您的秘钥是" + MMKVManager.getInstance().decodeString("token"),
-                new CommonDialog.OnCloseListener() {
-                    @Override
-                    public void onClick(Dialog dialog, boolean confirm) {
-                        if(confirm){
-                            dialog.dismiss();
-                        }
-                    }
-                }).setTitle("提示").show();
     }
 
     @Override

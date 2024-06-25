@@ -12,15 +12,19 @@ import java.util.Stack;
 public class AppManager {
 
     private static Stack<Activity> activityStack;
-    private static AppManager instance;
+    private static volatile AppManager instance;
 
     private AppManager() {}
     /**
      * 单一实例
      */
     public static AppManager getAppManager() {
-        if(instance == null) {
-            instance = new AppManager();
+        if (instance == null) {
+            synchronized (AppManager.class) {
+                if (instance == null) {
+                    instance = new AppManager();
+                }
+            }
         }
         return instance;
     }

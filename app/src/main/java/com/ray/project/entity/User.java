@@ -9,7 +9,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
- * @Description: room数据库User表
+ * @Description: 本地room数据库User表
  * 默认情况下，Room 将类名称用作数据库表名称
  * 如果希望表具有不同的名称，请设置 @Entity 注释的 tableName 属性【个人建议】
  * @Author: ray
