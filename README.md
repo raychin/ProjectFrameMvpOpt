@@ -5,12 +5,13 @@
 基于android平台，采用mvp架构，实现项目基本框架。集成包括androidx、retrofit2、glide4.5、Luban1.8、mmkv1.3.5、room2.3.0等开源框架
 
 <div>
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171135839.png" alt="image-20240625171135839" style="zoom:15%;" />
-	<img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171227927.png" alt="image-20240625171227927" style="zoom:15%;" />
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171418584.png" alt="image-20240625171418584" style="zoom:15%;" />
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171606099.png" alt="image-20240625171606099" style="zoom:15%;" />
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171457865.png" alt="image-20240625171457865" style="zoom:15%;" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171135839.png" alt="image-20240625171135839" width="15%" height="15%" />
+	<img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171227927.png" alt="image-20240625171227927" width="15%" height="15%" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171418584.png" alt="image-20240625171418584" width="15%" height="15%" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171606099.png" alt="image-20240625171606099" width="15%" height="15%" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171457865.png" alt="image-20240625171457865" width="15%" height="15%" />
 </div>
+
 
 
 
