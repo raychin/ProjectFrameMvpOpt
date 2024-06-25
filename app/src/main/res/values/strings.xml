@@ -9,4 +9,13 @@
 
     <string name="service_label">Ray自动安装</string>
     <string name="service_desc">自动填充安装密码，并点击确定和继续安装按钮，完成安装后打开APP</string>
+
+    <string name="login">登录</string>
+    <string name="user_name">请输入用户名</string>
+    <string name="pass_word">请输入密码</string>
+    <string name="repeat_password">请重新输入密码</string>
+    <string name="btn_login">登录</string>
+    <string name="forgot_your_password">忘记密码</string>
+    <string name="register">注册</string>
+    <string name="btn_register">注册</string>
 </resources>

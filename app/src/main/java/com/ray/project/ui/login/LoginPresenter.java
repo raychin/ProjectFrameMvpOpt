@@ -82,7 +82,7 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
                 .subscribe(new RxObserver(getActivity(), new RxObserver.RxResult<Result<LoginModel>>() {
                     @Override
                     public void onResult(Result<LoginModel> data) {
-                        LoginModel loginModel = (LoginModel) data.data;
+                        LoginModel loginModel = data.data;
                         if (!loginModel.loginCode.equals("00")) {
                             ToastUtils.showToast(getActivity(), loginModel.loginMsg, Toast.LENGTH_SHORT);
                             return;
