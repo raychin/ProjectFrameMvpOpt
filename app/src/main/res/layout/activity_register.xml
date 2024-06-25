@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
     tools:context=".ui.register.RegisterActivity">
 
     <FrameLayout
@@ -144,6 +145,8 @@
             </androidx.cardview.widget.CardView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
+            android:backgroundTint="#2ea67f"
+            app:backgroundTint="#2ea67f"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabSize="normal"
