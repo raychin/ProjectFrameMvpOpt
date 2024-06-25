@@ -162,6 +162,9 @@ dependencies {
     // 日志拦截器
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     implementation 'com.github.bumptech.glide:glide:4.5.0'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+    // If you want to use the GPU Filters
+    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
     implementation 'top.zibin:Luban:1.1.8'
 
     implementation "com.tencent:mmkv:${rootProject.ext.mmkvVersion}"
