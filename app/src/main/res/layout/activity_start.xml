@@ -14,7 +14,7 @@
         android:layout_marginBottom="80dp"
         android:gravity="center"
         android:textColor="@color/load_text_color"
-        android:textSize="30sp"
+        android:textSize="@dimen/splash_loading"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:layout_alignParentBottom="true"

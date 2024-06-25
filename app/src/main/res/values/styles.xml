@@ -54,7 +54,7 @@
         <item name="android:textColor">@drawable/color_radio_button_text</item>
         <item name="android:clickable">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/tab_size</item>
         <item name="android:paddingTop">2dp</item>
         <item name="android:paddingBottom">2dp</item>
         <item name="android:drawablePadding">3dp</item>
@@ -79,6 +79,12 @@
     <style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorControlActivated">#FFCC00</item>
+    </style>
+
+    <style name="BtnCustomStyle">
+        <item name="android:height">@dimen/btn_custom_height</item>
+        <item name="android:width">0dp</item>
+        <item name="android:textSize">@dimen/btn_custom</item>
     </style>
 
 </resources>

@@ -36,7 +36,7 @@
                    android:layout_marginStart="50dp"
                    android:text="@string/register"
                    android:textColor="#fff"
-                   android:textSize="16sp"
+                   android:textSize="@dimen/title_custom"
                    android:textStyle="bold"
                    />
                <LinearLayout
@@ -64,7 +64,7 @@
                            android:paddingBottom="2dp"
                            android:textColor="#f0f7f4"
                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                           android:textSize="13sp"
+                           android:textSize="@dimen/input_custom"
                            tools:ignore="TouchTargetSizeCheck" />
                    </com.google.android.material.textfield.TextInputLayout>
                </LinearLayout>
@@ -94,7 +94,7 @@
                            android:paddingBottom="2dp"
                            android:textColor="#f0f7f4"
                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                           android:textSize="13sp"
+                           android:textSize="@dimen/input_custom"
                            tools:ignore="TouchTargetSizeCheck" />
                    </com.google.android.material.textfield.TextInputLayout>
                </LinearLayout>
@@ -124,7 +124,7 @@
                            android:paddingBottom="2dp"
                            android:textColor="#f0f7f4"
                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                           android:textSize="13sp"
+                           android:textSize="@dimen/input_custom"
                            tools:ignore="TouchTargetSizeCheck" />
                    </com.google.android.material.textfield.TextInputLayout>
                </LinearLayout>
@@ -132,12 +132,14 @@
                    android:layout_marginTop="20dp"
                    android:layout_gravity="center_horizontal"
                    android:id="@+id/bt_go"
+                   style="@style/BtnCustomStyle"
                    android:background="@drawable/bt_shape_2"
                    android:stateListAnimator="@drawable/state_list_animator_z"
                    android:layout_width="150dp"
                    android:layout_height="50dp"
                    android:text="@string/btn_register"
                    android:textColor="#2fa881"
+                   android:textSize="@dimen/btn_custom"
                    >
                </Button>
 

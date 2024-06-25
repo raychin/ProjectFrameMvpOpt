@@ -37,7 +37,7 @@
                 android:layout_marginStart="50dp"
                 android:text="@string/login"
                 android:textColor="#FFCC00"
-                android:textSize="18sp"
+                android:textSize="@dimen/title_custom"
                 android:textStyle="bold"
                 />
         </RelativeLayout>
@@ -66,7 +66,7 @@
                     android:paddingBottom="2dp"
                     android:textColor="#2fa881"
                     android:textCursorDrawable="@drawable/bg_input_cursor"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/input_custom"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -93,7 +93,7 @@
                         android:paddingBottom="2dp"
                         android:textColor="#2fa881"
                         android:textCursorDrawable="@drawable/bg_input_cursor"
-                        android:textSize="13sp"
+                        android:textSize="@dimen/input_custom"
                         tools:ignore="TouchTargetSizeCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -104,12 +104,14 @@
                 android:layout_height="60dp">
                 <Button
                     android:id="@+id/bt_go"
+                    style="@style/BtnCustomStyle"
                     android:background="@drawable/bt_shape"
                     android:stateListAnimator="@drawable/state_list_animator_z"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:text="@string/btn_login"
-                    android:textColor="#d3d3d3"
+                    android:textSize="@dimen/btn_custom"
+                    android:textColor="#b3b3b3"
                     >
                 </Button>
             </RelativeLayout>
@@ -117,7 +119,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#9a9a9a"
-                android:textSize="12sp"
+                android:textSize="@dimen/tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/forgot_your_password"

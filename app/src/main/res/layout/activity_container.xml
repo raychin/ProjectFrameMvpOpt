@@ -18,7 +18,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/load_text_color"
-        android:textSize="18sp"
+        android:textSize="@dimen/page_loading"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:layout_centerVertical="true"

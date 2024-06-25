@@ -12,7 +12,7 @@
         android:gravity="center_horizontal"
         android:padding="12dp"
         android:layout_marginTop="12dp"
-        android:textSize="16sp"
+        android:textSize="@dimen/title_custom"
         android:textColor="@color/c_666666"/>
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="30dp"
-        android:textSize="12sp"
+        android:textSize="@dimen/content_custom"
         android:textColor="@color/c_888888"/>
     <View
         android:layout_width="match_parent"
@@ -45,8 +45,8 @@
             android:background="@drawable/bg_dialog_left_white"
             android:layout_weight="1.0"
             android:gravity="center"
-            android:text="取消"
-            android:textSize="12sp"
+            android:text="@string/cancel"
+            android:textSize="@dimen/btn_custom"
             android:textColor="@color/c_3F51B5"/>
 
         <View
@@ -61,8 +61,8 @@
             android:background="@drawable/bg_dialog_right_white"
             android:gravity="center"
             android:layout_weight="1.0"
-            android:text="确定"
-            android:textSize="12sp"
+            android:text="@string/sure"
+            android:textSize="@dimen/btn_custom"
             android:textColor="@color/c_3aa501"/>
 
     </LinearLayout>
