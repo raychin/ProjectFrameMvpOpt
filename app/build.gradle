@@ -36,6 +36,11 @@ android {
         manifestPlaceholders.put("VERSION_CODE", rootProject.ext.appVersionCode)
         manifestPlaceholders.put("BUGLY_APPID", "188c656545")
         manifestPlaceholders.put("BUGLY_APPKEY", "b208da69-93d8-45c6-b5ee-0d48ae0dfd32")
+
+        buildConfigField "String", "SHIPLY_APPID", "\"c6097cfbf6\""
+        buildConfigField "String", "SHIPLY_APPKEY", "\"0cbb7413-6a79-4925-af9d-84ecc2e57ea8\""
+        manifestPlaceholders.put("SHIPLY_APPID", "c6097cfbf6")
+        manifestPlaceholders.put("SHIPLY_APPKEY", "0cbb7413-6a79-4925-af9d-84ecc2e57ea8")
     }
 
     signingConfigs {
@@ -190,11 +195,17 @@ dependencies {
     implementation project(':photoLibrary')
 
     implementation "androidx.room:room-runtime:${rootProject.ext.roomVersion}"
-    annotationProcessor "androidx.room:room-compiler:${rootProject.ext.roomVersion}"
     // For Kotlin use kapt instead of annotationProcessor
-    // 对于Kotlin来说，使用kapt而不是annotationProcessor
-    // kapt "androidx.room:room-compiler:${rootProject.ext.room_version}"
+    annotationProcessor "androidx.room:room-compiler:${rootProject.ext.roomVersion}"
 
     // 其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如4.0.0
-    implementation 'com.tencent.bugly:crashreport:4.0.0'
+    implementation "com.tencent.bugly:crashreport:${rootProject.ext.buglyVersion}"
+
+    // shiply 配置与开关发布
+    implementation "com.tencent.shiply:upgrade:${rootProject.ext.shiplyVersion}"
+    // shiply hotfix
+    implementation "com.tencent.rfix:RFix-android-lib:${rootProject.ext.shiplyHotFixVersion}"
+    compileOnly "com.tencent.rfix:RFix-android-anno:${rootProject.ext.shiplyHotFixVersion}"
+    // For Kotlin use kapt instead of annotationProcessor
+    annotationProcessor "com.tencent.rfix:RFix-android-anno:${rootProject.ext.shiplyHotFixVersion}"
 }

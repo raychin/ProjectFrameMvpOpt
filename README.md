@@ -36,6 +36,9 @@
 ### 2024年06月26日集成
 
 -   集成腾讯bugly错误日志功能框架
+    https://bugly.qq.com/
+-   集成腾讯热修复shiply框架
+    https://shiply.tds.qq.com/
 
 
 

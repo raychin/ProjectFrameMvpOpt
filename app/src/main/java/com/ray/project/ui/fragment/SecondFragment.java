@@ -2,14 +2,13 @@ package com.ray.project.ui.fragment;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.databinding.FragmentSecondBinding;
+import com.ray.project.ui.RFixDevActivity;
 
 /**
  * 第二个界面fragment
@@ -35,7 +34,7 @@ public class SecondFragment extends BaseFragment<FragmentSecondBinding, BasePres
 
     @Override
     protected void initView(View view) {
-
+        mBinding.myTextView.setOnClickListener(v -> mActivity.nextActivity(RFixDevActivity.class));
     }
 
     @Override

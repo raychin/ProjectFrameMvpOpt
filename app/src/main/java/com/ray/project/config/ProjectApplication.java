@@ -2,15 +2,21 @@ package com.ray.project.config;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
 
 import com.ray.project.BuildConfig;
-import com.ray.project.commons.Logger;
 import com.ray.project.network.Net;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.rfix.anno.ApplicationProxy;
+import com.tencent.rfix.entry.DefaultRFixApplicationLike;
+import com.tencent.rfix.entry.RFixApplicationLike;
+import com.tencent.rfix.loader.entity.RFixLoadResult;
+import com.tencent.upgrade.bean.UpgradeConfig;
+import com.tencent.upgrade.core.UpgradeManager;
 
 import java.lang.reflect.Field;
 import java.security.SecureRandom;
@@ -29,6 +35,7 @@ import javax.net.ssl.X509TrustManager;
  * @author ray
  * @date 2018/06/22
  */
+@ApplicationProxy(application = ".ProjectProxyApplication")
 public class ProjectApplication extends Application {
     private static ProjectApplication sInstance;
 
@@ -37,15 +44,29 @@ public class ProjectApplication extends Application {
         super.onCreate();
         sInstance = this;
 
-        String buglyId = getPlaceHolderValue("BUGLY_APPID");
+        final String buglyId = getPlaceHolderValue("BUGLY_APPID");
+        final String buglyKey = getPlaceHolderValue("BUGLY_APPKEY");
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
 //        strategy.setDeviceID("userdefinedId");
         CrashReport.initCrashReport(getApplicationContext(), buglyId, BuildConfig.releasePackage, strategy);
+
+        UpgradeConfig.Builder builder = new UpgradeConfig.Builder();
+        UpgradeConfig config = builder.appId(buglyId).appKey(buglyKey).build();
+        UpgradeManager.getInstance().init(this, config);
 
         AppConfig.getAppConfig(this);
         Net.init(this);
         MMKVManager.getInstance();
         handleSSLHandshake();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        // 初始化RFix组件
+//        final RFixApplicationLike applicationLike = DefaultRFixApplicationLike.createApplicationLike(this);
+        final RFixApplicationLike applicationLike = new DefaultRFixApplicationLike(this, new RFixLoadResult() {});
+        ProjectApplicationLike.initRFixAsync(applicationLike);
     }
 
     @SuppressLint("TrulyRandom")
