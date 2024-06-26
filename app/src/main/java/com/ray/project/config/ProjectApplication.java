@@ -2,11 +2,15 @@ package com.ray.project.config;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
 
+import com.ray.project.BuildConfig;
+import com.ray.project.commons.Logger;
 import com.ray.project.network.Net;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.lang.reflect.Field;
 import java.security.SecureRandom;
@@ -32,6 +36,12 @@ public class ProjectApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
+        String buglyId = getPlaceHolderValue("BUGLY_APPID");
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+//        strategy.setDeviceID("userdefinedId");
+        CrashReport.initCrashReport(getApplicationContext(), buglyId, BuildConfig.releasePackage, strategy);
+
         AppConfig.getAppConfig(this);
         Net.init(this);
         MMKVManager.getInstance();
@@ -146,5 +156,21 @@ public class ProjectApplication extends Application {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public <T> T getPlaceHolderValue(String key) {
+        T value = (T) "";
+        try {
+            // Application中
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            // // Activity中
+            // ActivityInfo appInfo = getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA);
+            // services receiver只是改个名字类似
+            value = (T) appInfo.metaData.getString(key);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return value;
     }
 }

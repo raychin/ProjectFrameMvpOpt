@@ -41,7 +41,24 @@
         <!-- 多渠道打包 -->
         <meta-data
             android:name="BAIDU_CHANNEL_VALUE"
-            android:value="${BAIDU_CHANNEL_VALUE}" />
+            android:value="${RAY_CHANNEL_VALUE}" />
+
+        <!-- 配置bugly -->
+        <meta-data
+            android:name="BUGLY_APPID"
+            android:value="${BUGLY_APPID}" />
+        <!-- 配置APP版本号 -->
+        <meta-data
+            android:name="BUGLY_APP_VERSION"
+            android:value="${VERSION_CODE}" />
+        <!-- 配置APP渠道号 -->
+        <meta-data
+            android:name="BUGLY_APP_CHANNEL"
+            android:value="${RAY_CHANNEL_VALUE}" />
+        <!-- 配置Bugly调试模式（true或者false）-->
+        <meta-data
+            android:name="BUGLY_ENABLE_DEBUG"
+            android:value="${RELEASE_PACKAGE}" />
 
         <activity
             android:name="com.ray.project.ui.AppStart"
