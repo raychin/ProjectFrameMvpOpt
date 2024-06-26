@@ -1,6 +1,7 @@
 package com.ray.project.commons;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -69,8 +70,9 @@ public class ToastUtils {
     private static Toast makeCustomToast(Context context, String msg, int duration) {
         View toastRoot = LayoutInflater.from(context).inflate(R.layout.toast, null);
         Toast toast = new Toast(context);
+        toast.setGravity(Gravity.CENTER, 0, 800);
         toast.setView(toastRoot);
-        TextView tv = (TextView)toastRoot.findViewById(R.id.TextViewInfo);
+        TextView tv = toastRoot.findViewById(R.id.TextViewInfo);
         tv.setText(msg);
         toast.setDuration(duration);
         return toast;
