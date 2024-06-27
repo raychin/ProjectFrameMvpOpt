@@ -468,6 +468,18 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         }
     }
 
+    public void nextActivity(Class<?> clazz, boolean isPlayAnim, String name, String s) {
+        Intent intent = new Intent();
+        intent.setClass(this, clazz);
+        if (null != name && !name.trim().equals("")) {
+            intent.putExtra(name, s);
+        }
+        startActivity(intent);
+        if (isPlayAnim) {
+            overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+        }
+    }
+
     protected void onActivityResult(int requestCode, int resultCode,
                                     @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -488,6 +500,10 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
     }
 
     public void nextActivity(Class<?> clazz, String name, Serializable s) {
+        nextActivity(clazz, true, name, s);
+    }
+
+    public void nextActivity(Class<?> clazz, String name, String s) {
         nextActivity(clazz, true, name, s);
     }
 

@@ -13,8 +13,6 @@ import com.ray.project.databinding.ActivityMainBinding;
 import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
 import com.ray.project.ui.login.LoginPresenter;
-import com.tencent.upgrade.core.DefaultUpgradeStrategyRequestCallback;
-import com.tencent.upgrade.core.UpgradeManager;
 
 import butterknife.OnClick;
 
@@ -37,14 +35,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
 
     @Override
     public void initView() {
-        checkPermissions(new String[]{
+        checkPermissions(
+            new String[] {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_FINE_LOCATION
-        });
-
-        // APP首次启动时自动检查更新
-        UpgradeManager.getInstance().checkUpgrade(false, null, new DefaultUpgradeStrategyRequestCallback());
+            }
+        );
     }
 
     @Override

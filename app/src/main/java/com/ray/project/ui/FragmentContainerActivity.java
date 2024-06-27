@@ -1,10 +1,8 @@
 package com.ray.project.ui;
 
-import android.Manifest;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -13,17 +11,20 @@ import com.ray.project.base.BaseActivity;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.base.ResultEvent;
+import com.ray.project.commons.ToastUtils;
 import com.ray.project.databinding.ActivityWebViewBinding;
 
 import butterknife.OnClick;
 
 /**
- * WebView主界面
+ * fragment container activity
  * @author ray
  * @date 2018/07/03
  */
-public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePresenter> {
-    private String webUrl = "";
+public class FragmentContainerActivity extends BaseActivity<ActivityWebViewBinding, BasePresenter> {
+
+    public static final String FRAGMENT_PATH = "fragmentPath";
+    private String fragmentPath = "";
 
     @Override
     protected boolean isImmersiveStatus() {
@@ -32,13 +33,11 @@ public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePr
 
     @Override
     public int initLayout() {
-        return R.layout.activity_web_view;
+        return R.layout.activity_fragment_container;
     }
 
     @Override
     public void initView() {
-        checkPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_FINE_LOCATION});
     }
 
     @Override
@@ -56,31 +55,32 @@ public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePr
     }
 
     @SuppressWarnings("rawtypes")
-    private BaseFragment webViewFragment;
+    private BaseFragment viewFragment;
     private void setSelect() {
+        fragmentPath = getIntent().getStringExtra(FRAGMENT_PATH);
+        if (TextUtils.isEmpty(fragmentPath)) {
+            ToastUtils.showCustomToast(this, "请配置Fragment路径", Toast.LENGTH_SHORT);
+            finish();
+            return;
+        }
         if (null == mFragmentManager) {
             mFragmentManager = getSupportFragmentManager();
         }
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         hideFragment(transaction);
 
-        if (webViewFragment == null) {
-            webViewFragment = BaseFragment.newInstance("com.ray.project.ui.fragment.WebViewFragment");
-            Bundle args = new Bundle();
-            if (!TextUtils.isEmpty(webUrl)) {
-                args.putString(BaseFragment.WEB_VIEW_URL_KEY, webUrl);
-            }
-            webViewFragment.setArguments(args);
-            transaction.add(R.id.fragment_container, webViewFragment);
+        if (viewFragment == null) {
+            viewFragment = BaseFragment.newInstance(fragmentPath);
+            transaction.add(R.id.fragment_container, viewFragment);
         } else {
-            transaction.show(webViewFragment);
+            transaction.show(viewFragment);
         }
         transaction.commitAllowingStateLoss();
     }
 
     private void hideFragment(FragmentTransaction transaction) {
-        if (webViewFragment != null) {
-            transaction.hide(webViewFragment);
+        if (viewFragment != null) {
+            transaction.hide(viewFragment);
         }
     }
 }

@@ -134,22 +134,24 @@ public class LocationUtils {
             getLngAndLatWithNetwork();
         }
         // 监视地理位置变化，第二个和第三个参数分别为更新的最短时间minTime和最短距离minDistace
-        //LocationManager 每隔 5 秒钟会检测一下位置的变化情况，当移动距离超过 10 米的时候，
+        // LocationManager 每隔 5 秒钟会检测一下位置的变化情况，当移动距离超过 10 米的时候，
         // 就会调用 LocationListener 的 onLocationChanged() 方法，并把新的位置信息作为参数传入。
         locationManager.requestLocationUpdates(locationProvider, 5000, 10, locationListener);
     }
 
     //获取经纬度
     private void showLocation() {
-        if(location == null){
+        if (location == null) {
             getLocation();
-        }else {
-            double latitude = location.getLatitude();//纬度
-            double longitude = location.getLongitude();//经度
+        } else {
+            // 纬度
+            double latitude = location.getLatitude();
+            // 经度
+            double longitude = location.getLongitude();
 //            for(AddressCallback addressCallback:addressCallbacks){
 //                addressCallback.onGetLocation(latitude,longitude);
 //            }
-            if(addressCallback != null){
+            if (addressCallback != null){
                 addressCallback.onGetLocation(latitude,longitude);
             }
             getAddress(latitude, longitude);
@@ -217,18 +219,18 @@ public class LocationUtils {
         public void onProviderDisabled(String provider) {
         }
 
-        //当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
+        // 当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
         @Override
         public void onLocationChanged(Location loc) {
             System.out.println("==onLocationChanged==");
-//            location = loc;
-//            showLocation();
+            location = loc;
+            showLocation();
         }
     };
 
-    //从网络获取经纬度
+    // 从网络获取经纬度
     private void getLngAndLatWithNetwork() {
-        //添加用户权限申请判断
+        // 添加用户权限申请判断
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -240,7 +242,7 @@ public class LocationUtils {
     }
     public interface AddressCallback{
         void onGetAddress(Address address);
-        void onGetLocation(double lat,double lng);
+        void onGetLocation(double lat, double lng);
     }
 }
 

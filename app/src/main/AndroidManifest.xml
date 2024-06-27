@@ -87,6 +87,11 @@
         </activity>
 
         <activity
+            android:name="com.ray.project.ui.FragmentContainerActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+
+        <activity
             android:name="com.ray.project.ui.login.LoginActivity"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">

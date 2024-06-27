@@ -13,10 +13,13 @@ import androidx.core.content.ContextCompat;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
+import com.ray.project.commons.Logger;
 import com.ray.project.commons.ToastUtils;
 import com.ray.project.databinding.FragmentHomeBinding;
+import com.ray.project.ui.FragmentContainerActivity;
 import com.ray.project.ui.WebViewActivity;
 import com.ray.project.ui.sample.RFixDevActivity;
+import com.tencent.upgrade.bean.UpgradeStrategy;
 import com.tencent.upgrade.core.UpgradeManager;
 import com.tencent.upgrade.core.UpgradeReqCallbackForUserManualCheck;
 
@@ -42,13 +45,19 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             map = new HashMap<>();
             map.put("name", "Shiply Upgrade");
             map.put("type", "shiplyUpgrade");
-            map.put("activity", RFixDevActivity.class);
             add(map);
 
             map = new HashMap<>();
             map.put("name", "Shiply Hot fix");
             map.put("type", "intent");
             map.put("activity", RFixDevActivity.class);
+            add(map);
+
+            map = new HashMap<>();
+            map.put("name", "定位");
+            map.put("type", "intentFragment");
+            map.put("activity", FragmentContainerActivity.class);
+            map.put("fragment", "com.ray.project.ui.sample.fragment.LocationFragment");
             add(map);
         }
     };
@@ -82,7 +91,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             button.setBackgroundResource(R.drawable.bt_shape_blue);
             button.setId(Integer.parseInt("100") + i);
             button.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
-            button.setText(Objects.requireNonNull(map.get("name")).toString());
+            button.setText((String) map.get("name"));
+            button.setAllCaps(false);
             ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(20, 20, 20, 20);
             if (i != 0) {
@@ -95,7 +105,34 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
                             mActivity.nextActivity((Class<?>) map.get("activity"));
                             break;
                         case "shiplyUpgrade":
-                            UpgradeManager.getInstance().checkUpgrade(true, null, new UpgradeReqCallbackForUserManualCheck());
+                            UpgradeManager.getInstance().checkUpgrade(true, null, new UpgradeReqCallbackForUserManualCheck() {
+                                @Override
+                                public void onReceiveStrategy(UpgradeStrategy upgradeStrategy) {
+                                    super.onReceiveStrategy(upgradeStrategy);
+                                    Logger.e(TAG, upgradeStrategy.toString());
+                                }
+
+                                @Override
+                                public void onFail(int i, String s) {
+                                    super.onFail(i, s);
+                                    Logger.e(TAG, i + " " + s);
+                                }
+
+                                @Override
+                                public void onReceivedNoStrategy() {
+                                    super.onReceivedNoStrategy();
+                                }
+
+                                @Override
+                                public void tryPopUpgradeDialog(UpgradeStrategy upgradeStrategy) {
+                                    super.tryPopUpgradeDialog(upgradeStrategy);
+                                    Logger.e(TAG, upgradeStrategy.toString());
+                                }
+                            });
+                            break;
+                        case "intentFragment":
+                            Logger.e(TAG, (String) map.get("fragment"));
+                            mActivity.nextActivity((Class<?>) map.get("activity"), FragmentContainerActivity.FRAGMENT_PATH, (String) map.get("fragment"));
                             break;
                         default:
                             break;

@@ -16,6 +16,7 @@ import com.tencent.rfix.entry.DefaultRFixApplicationLike;
 import com.tencent.rfix.entry.RFixApplicationLike;
 import com.tencent.rfix.loader.entity.RFixLoadResult;
 import com.tencent.upgrade.bean.UpgradeConfig;
+import com.tencent.upgrade.core.DefaultUpgradeStrategyRequestCallback;
 import com.tencent.upgrade.core.UpgradeManager;
 
 import java.lang.reflect.Field;
@@ -44,6 +45,11 @@ public class ProjectApplication extends Application {
         super.onCreate();
         sInstance = this;
 
+        AppConfig.getAppConfig(this);
+        Net.init(this);
+        MMKVManager.getInstance();
+        handleSSLHandshake();
+
         final String buglyId = getPlaceHolderValue("BUGLY_APPID");
         final String buglyKey = getPlaceHolderValue("BUGLY_APPKEY");
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
@@ -53,11 +59,9 @@ public class ProjectApplication extends Application {
         UpgradeConfig.Builder builder = new UpgradeConfig.Builder();
         UpgradeConfig config = builder.appId(buglyId).appKey(buglyKey).build();
         UpgradeManager.getInstance().init(this, config);
+        // APP首次启动时自动检查更新
+        UpgradeManager.getInstance().checkUpgrade(false, null, new DefaultUpgradeStrategyRequestCallback());
 
-        AppConfig.getAppConfig(this);
-        Net.init(this);
-        MMKVManager.getInstance();
-        handleSSLHandshake();
     }
 
     @Override
