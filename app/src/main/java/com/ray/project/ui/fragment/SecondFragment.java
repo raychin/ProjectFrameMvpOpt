@@ -8,7 +8,7 @@ import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.databinding.FragmentSecondBinding;
-import com.ray.project.ui.RFixDevActivity;
+import com.ray.project.ui.sample.RFixDevActivity;
 
 /**
  * 第二个界面fragment

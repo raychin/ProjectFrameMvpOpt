@@ -1,28 +1,18 @@
 package com.ray.project.ui;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
-import com.ray.project.base.ResultEvent;
 import com.ray.project.base.BaseFragment;
-import com.ray.project.commons.Logger;
-import com.ray.project.commons.ToastUtils;
-import com.ray.project.config.MMKVManager;
 import com.ray.project.databinding.ActivityMainBinding;
-import com.ray.project.db.AppDatabase;
-import com.ray.project.model.LoginModel;
 import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
 import com.ray.project.ui.login.LoginPresenter;
-import com.ray.project.widget.CommonDialog;
 import com.tencent.upgrade.core.DefaultUpgradeStrategyRequestCallback;
 import com.tencent.upgrade.core.UpgradeManager;
 
@@ -53,6 +43,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
                 Manifest.permission.ACCESS_FINE_LOCATION
         });
 
+        // APP首次启动时自动检查更新
         UpgradeManager.getInstance().checkUpgrade(false, null, new DefaultUpgradeStrategyRequestCallback());
     }
 
@@ -60,26 +51,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
     public void initData() {
         setSelect(0);
 
-        com.ray.project.entity.User user = new com.ray.project.entity.User();
-        user.firstName = "Ray";
-        user.lastName = "Chin";
-//        AppDatabase.getInstance(this).userDao().insertUser(user);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabase.getInstance(MainActivity.this).userDao().insertUser(user);
-                Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().toString());
-                if (AppDatabase.getInstance(MainActivity.this).userDao().getAll().size() > 0) {
-                    Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().get(0).firstName);
-                }
-            }
-        }).start();
-//        db.runInTransaction(new Runnable() {
+//        com.ray.project.entity.User user = new com.ray.project.entity.User();
+//        user.firstName = "Ray";
+//        user.lastName = "Chin";
+////        AppDatabase.getInstance(this).userDao().insertUser(user);
+//        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
-//                db.userDao().insertUser(user);
+//                AppDatabase.getInstance(MainActivity.this).userDao().insertUser(user);
+//                Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().toString());
+//                if (AppDatabase.getInstance(MainActivity.this).userDao().getAll().size() > 0) {
+//                    Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().get(0).firstName);
+//                }
 //            }
-//        });
+//        }).start();
+////        db.runInTransaction(new Runnable() {
+////            @Override
+////            public void run() {
+////                db.userDao().insertUser(user);
+////            }
+////        });
     }
 
     @Override

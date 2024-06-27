@@ -80,7 +80,7 @@ public class LoadingDialog extends Dialog {
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f
         );
-        rotateAnimation.setDuration(1000);
+        rotateAnimation.setDuration(1500);
         rotateAnimation.setInterpolator(new LinearInterpolator());
         rotateAnimation.setRepeatCount(Animation.INFINITE);
         viewBinding.loadingImg.startAnimation(rotateAnimation);

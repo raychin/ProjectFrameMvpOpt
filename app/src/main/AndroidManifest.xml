@@ -17,9 +17,14 @@
     <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <!--定位相关权限-->
+    <!-- 通过WiFi或移动基站的方式获取用户错略的经纬度信息，定位精度大概误差在30~1500米 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 通过GPS芯片接收卫星的定位信息，定位精度达10米以内 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 允许程序访问额外的定位提供者指令 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <!--后台位置信息 Android 10 (API level 29) 或更高版本 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
 <!--    <uses-feature android:name="android.hardware.telephony" android:required="false" />-->
 <!--    <uses-permission android:name="android.com.baidu.lbsapipermission.REQUEST_INSTALL_PACKAGES"/>-->
@@ -82,12 +87,6 @@
         </activity>
 
         <activity
-            android:name="com.ray.project.ui.RFixDevActivity"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleInstance">
-        </activity>
-
-        <activity
             android:name="com.ray.project.ui.login.LoginActivity"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">
@@ -125,7 +124,6 @@
         <!-- 图片预览 -->
         <activity
             android:name="com.ray.project.ui.basis.image.ImageViewActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan">
@@ -145,5 +143,12 @@
                 android:name="android.accessibility service"
                 android:resource="@xml/accessibility_config" />
         </service>
+
+        <!-- 样例界面 -->
+        <activity
+            android:name="com.ray.project.ui.sample.RFixDevActivity"
+            android:theme="@style/AppTheme"
+            android:launchMode="singleInstance">
+        </activity>
     </application>
 </manifest>
