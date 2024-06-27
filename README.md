@@ -12,11 +12,13 @@
 
 <div>
     <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171135839.png" alt="image-20240625171135839" width="15%" height="15%" />
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171606099.png" alt="image-20240625171606099" width="15%" height="15%" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240627153650231.png" alt="image-20240625171606099" width="15%" height="15%" />
     <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171457865.png" alt="image-20240625171457865" width="15%" height="15%" />
 	<img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171227927.png" alt="image-20240625171227927" width="15%" height="15%" />
     <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171418584.png" alt="image-20240625171418584" width="15%" height="15%" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240625171606099.png" alt="image-20240625171606099" width="15%" height="15%" />
 </div>
+
 
 
 
@@ -41,6 +43,39 @@
     https://bugly.qq.com/
 -   集成腾讯热修复shiply框架
     https://shiply.tds.qq.com/
+
+
+
+### 2024年06月27日集成定位功能
+
+-   LocationUtils使用
+
+    ```java
+    LocationUtils.getInstance(mActivity).setAddressCallback(new LocationUtils.AddressCallback() {
+        @Override
+        public void onGetAddress(Address address) {
+            String countryName = address.getCountryName();//国家
+            String adminArea = address.getAdminArea();//省
+            String locality = address.getLocality();//市
+            String subLocality = address.getSubLocality();//区
+            String featureName = address.getFeatureName();//街道
+            Logger.d("定位地址", countryName + adminArea + locality + subLocality + featureName);
+        }
+    
+        @Override
+        public void onGetLocation(double lat, double lng) {
+            Logger.d("定位经纬度", lat + ", " + lng);
+        }
+    });
+    
+    
+    @Override
+    public void onStop() {
+        super.onStop();
+        // 销毁定位，避免持续定位耗电
+        LocationUtils.getInstance(mActivity).clearAddressCallback();
+    }
+    ```
 
 
 
