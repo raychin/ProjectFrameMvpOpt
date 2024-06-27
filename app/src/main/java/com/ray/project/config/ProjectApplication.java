@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.ray.project.BuildConfig;
@@ -16,12 +17,15 @@ import com.tencent.rfix.entry.DefaultRFixApplicationLike;
 import com.tencent.rfix.entry.RFixApplicationLike;
 import com.tencent.rfix.loader.entity.RFixLoadResult;
 import com.tencent.upgrade.bean.UpgradeConfig;
+import com.tencent.upgrade.callback.Logger;
 import com.tencent.upgrade.core.DefaultUpgradeStrategyRequestCallback;
 import com.tencent.upgrade.core.UpgradeManager;
 
 import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.net.ssl.HostnameVerifier;
@@ -50,18 +54,85 @@ public class ProjectApplication extends Application {
         MMKVManager.getInstance();
         handleSSLHandshake();
 
+        // bugly初始化
         final String buglyId = getPlaceHolderValue("BUGLY_APPID");
         final String buglyKey = getPlaceHolderValue("BUGLY_APPKEY");
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
-//        strategy.setDeviceID("userdefinedId");
+        strategy.setDeviceID("000000");
         CrashReport.initCrashReport(getApplicationContext(), buglyId, BuildConfig.releasePackage, strategy);
 
+        // shiply更新功能初始化
         UpgradeConfig.Builder builder = new UpgradeConfig.Builder();
-        UpgradeConfig config = builder.appId(buglyId).appKey(buglyKey).build();
+        Map<String, String> map = new HashMap<>();
+        map.put("UserGender", "Male");
+        UpgradeConfig config = builder.appId(BuildConfig.SHIPLY_APPID).appKey(BuildConfig.SHIPLY_APPKEY)
+                // 用户手机系统版本，用于匹配shiply前端创建任务时设置的系统版本下发条件
+                .systemVersion(String.valueOf(Build.VERSION.SDK_INT))
+                // 自定义属性键值对，用于匹配shiply前端创建任务时设置的自定义下发条件
+                .customParams(map)
+                // 是否由sdk内部初始化mmkv(调用MMKV.initialize()),业务方如果已经初始化过mmkv可以设置为false
+                .internalInitMMKVForRDelivery(false)
+                // 设置用户ID，用于下发规则控制
+                .userId("123456")
+                // 日志实现接口，建议对接到业务方的日志接口，方便排查问题
+                .customLogger(new CustumLogger())
+                .build();
         UpgradeManager.getInstance().init(this, config);
         // APP首次启动时自动检查更新
         UpgradeManager.getInstance().checkUpgrade(false, null, new DefaultUpgradeStrategyRequestCallback());
 
+    }
+
+    private static class CustumLogger implements Logger {
+        @Override
+        public void v(String s, String s1) {
+            com.ray.project.commons.Logger.v(s, s1);
+        }
+
+        @Override
+        public void v(String s, String s1, Throwable throwable) {
+            com.ray.project.commons.Logger.v(s, s1);
+        }
+
+        @Override
+        public void d(String s, String s1) {
+            com.ray.project.commons.Logger.d(s, s1);
+        }
+
+        @Override
+        public void d(String s, String s1, Throwable throwable) {
+            com.ray.project.commons.Logger.d(s, s1);
+        }
+
+        @Override
+        public void i(String s, String s1) {
+            com.ray.project.commons.Logger.i(s, s1);
+        }
+
+        @Override
+        public void i(String s, String s1, Throwable throwable) {
+            com.ray.project.commons.Logger.i(s, s1);
+        }
+
+        @Override
+        public void w(String s, String s1) {
+            com.ray.project.commons.Logger.e(s, s1);
+        }
+
+        @Override
+        public void w(String s, String s1, Throwable throwable) {
+            com.ray.project.commons.Logger.e(s, s1);
+        }
+
+        @Override
+        public void e(String s, String s1) {
+            com.ray.project.commons.Logger.e(s, s1);
+        }
+
+        @Override
+        public void e(String s, String s1, Throwable throwable) {
+            com.ray.project.commons.Logger.e(s, s1);
+        }
     }
 
     @Override
