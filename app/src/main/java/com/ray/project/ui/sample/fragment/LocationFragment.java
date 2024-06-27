@@ -92,13 +92,18 @@ public class LocationFragment extends BaseFragment<FragmentSampleBinding, BasePr
                 @Override
                 public void onGetAddress(Address address) {
                     Loading.getInstance().dismiss();
-                    String countryName = address.getCountryName();//国家
-                    String adminArea = address.getAdminArea();//省
-                    String locality = address.getLocality();//市
-                    String subLocality = address.getSubLocality();//区
-                    String featureName = address.getFeatureName();//街道
+                    // 国家
+                    String countryName = address.getCountryName();
+                    // 省
+                    String adminArea = address.getAdminArea();
+                    // 市
+                    String locality = address.getLocality();
+                    // 区
+                    String subLocality = address.getSubLocality();
+                    // 街道，可能为空
+                    String featureName = address.getFeatureName();
                     Logger.d("定位地址", countryName + adminArea + locality + subLocality + featureName);
-                    sb.append("\n").append("定位地址: ").append(countryName).append(adminArea).append(locality).append(subLocality).append(featureName);
+                    sb.append("\n").append("定位地址: ").append(countryName).append(adminArea).append(locality).append(subLocality);
                     textView.setText(sb.toString());
                 }
 
