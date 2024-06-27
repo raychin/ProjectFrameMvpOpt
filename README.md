@@ -7,7 +7,7 @@
 基于android平台，采用mvp架构，实现androidx项目基本框架。
 
 集成包括androidx、retrofit2、glide4.5、Luban1.8、mmkv1.3.5、room2.3.0等开源框架，
-[主下载地址](https://common.shiply-cdn.qq.com/gray/c6097cfbf6/prod/1719389187/app1.0.1_2_ray_2024-06-26.apk)
+[主下载地址](https://common.shiply-cdn.qq.com/gray/c6097cfbf6/prod/1719479273/app1.0.4_4_ray_2024-06-27.apk)
 [备用地址](https://github.com/raychin/ProjectFrameMvpOpt/releases/download/untagged-05cfadbb50456ff0749f/app1.0.1_2_ray_2024-06-25.apk)
 
 <div>
