@@ -201,11 +201,10 @@ dependencies {
     // 其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如4.0.0
     implementation "com.tencent.bugly:crashreport:${rootProject.ext.buglyVersion}"
 
-    // shiply 配置与开关发布
+    // shiply 全量更新、灰度更新、配置与开关发布
     implementation "com.tencent.shiply:upgrade:${rootProject.ext.shiplyVersion}"
-    // shiply hotfix
-    implementation "com.tencent.rfix:RFix-android-lib:${rootProject.ext.shiplyHotFixVersion}"
-    compileOnly "com.tencent.rfix:RFix-android-anno:${rootProject.ext.shiplyHotFixVersion}"
-    // For Kotlin use kapt instead of annotationProcessor
-    annotationProcessor "com.tencent.rfix:RFix-android-anno:${rootProject.ext.shiplyHotFixVersion}"
 }
+
+//// 接入RFix补丁组件
+//apply from: rootProject.file('shiply/gradle/android-rfix-integration.gradle')
+//apply from: rootProject.file('shiply/gradle/android-auto-backup.gradle')
