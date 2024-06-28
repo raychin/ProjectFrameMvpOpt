@@ -32,9 +32,12 @@ public interface UserDao {
             + "last_name LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
+    @Query("SELECT * FROM users WHERE uid = :uId")
+    User findById(long uId);
+
     @Insert
-    void insertUser(User user);
+    long insertUser(User user);
 
     @Delete
-    void delete(User user);
+    int delete(User user);
 }

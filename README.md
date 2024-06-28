@@ -32,6 +32,7 @@
 
 -   网络请求封装
 -   持久化MMKV，替换SharePreferences方案
+    MMKV 是基于 mmap 内存映射的 key-value 组件，底层序列化/反序列化使用 protobuf 实现，性能高，稳定性强。也是腾讯微信团队使用的技术。MMKV使用了一些技术手段，如mmap文件映射和跨进程通信的共享内存，以实现更高效的数据存取操作。MMKV的性能比SharedPreferences快数十倍，尤其在读写大量数据时效果更加明显。
 -   数据库room操作封装
 -   WebView封装，支持原生应用同vue、uni小程序交互；支持图片选取及压缩
 

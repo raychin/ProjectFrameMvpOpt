@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conRl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_round_white">
+
+    <EditText
+        android:id="@+id/et_key"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_bg_edit"
+        android:hint="请输入key"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:minHeight="42dp"
+        android:paddingBottom="2dp"
+        android:textColor="#2fa881"
+        android:textCursorDrawable="@drawable/bg_input_cursor"
+        android:textSize="@dimen/input_custom"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/et_value"
+        android:layout_marginStart="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/selector_bg_edit"
+        android:hint="请输入value"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:minHeight="42dp"
+        android:paddingBottom="2dp"
+        android:textColor="#2fa881"
+        android:textCursorDrawable="@drawable/bg_input_cursor"
+        android:textSize="@dimen/input_custom"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/bt_save"
+        style="@style/BtnCustomStyle"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/bt_shape"
+        android:stateListAnimator="@drawable/state_list_animator_z"
+        android:layout_width="48dp"
+        android:layout_height="36dp"
+        android:text="保存"
+        android:textSize="@dimen/btn_custom"
+        android:textColor="#b3b3b3"
+        >
+    </Button>
+    <Button
+        android:id="@+id/bt_add"
+        style="@style/BtnCustomStyle"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/bt_shape"
+        android:stateListAnimator="@drawable/state_list_animator_z"
+        android:layout_width="48dp"
+        android:layout_height="36dp"
+        android:text="新增"
+        android:textSize="@dimen/btn_custom"
+        android:textColor="#b3b3b3"
+        >
+    </Button>
+    <Button
+        android:id="@+id/bt_delete"
+        style="@style/BtnCustomStyle"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/bt_shape"
+        android:stateListAnimator="@drawable/state_list_animator_z"
+        android:layout_width="48dp"
+        android:layout_height="36dp"
+        android:text="删除"
+        android:textSize="@dimen/btn_custom"
+        android:textColor="#b3b3b3"
+        >
+    </Button>
+
+</LinearLayout>

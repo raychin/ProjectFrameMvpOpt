@@ -34,12 +34,41 @@ public abstract class AppDatabase extends RoomDatabase {
         if (instance == null) {
             synchronized (AppDatabase.class) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DB_NAME)
-                            .addMigrations()
+                    instance = Room.databaseBuilder(
+                                    context.getApplicationContext(),
+                                    AppDatabase.class,
+                                    DB_NAME
+                            ).addMigrations()
                             .addCallback(roomCallback)
                             // 默认不允许在主线程中连接数据库
-//                             .allowMainThreadQueries()
+//                            .allowMainThreadQueries()
                             .build();
+
+                    /*
+                     * 1. 假如要在User中添加phoneNum
+                        @ColumnInfo(name = "phone_num")
+                        private String phoneNum;
+                     * 2. 把上面的版本号自增version = 2
+                     * 3. 添加一个
+                        static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+                            @Override
+                            public void migrate(SupportSQLiteDatabase database) {
+                                database.execSQL("ALTER TABLE department "
+                                    + " ADD COLUMN phone_num TEXT");
+                            }
+                        };
+                     * 4. 把migration添加到databaseBuilder中
+                        Room.databaseBuilder(
+                                context.getApplicationContext(),
+                                AppDatabase.class,
+                                DB_NAME
+                            ).addMigrations(MIGRATION_1_2)
+                            .addCallback(roomCallback)
+                            .allowMainThreadQueries()
+                            // 默认不允许在主线程中连接数据库
+//                            .allowMainThreadQueries()
+                            .build();
+                     */
                 }
             }
         }

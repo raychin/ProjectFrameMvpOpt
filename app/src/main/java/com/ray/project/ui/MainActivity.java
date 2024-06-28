@@ -47,27 +47,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
     @Override
     public void initData() {
         setSelect(0);
-
-//        com.ray.project.entity.User user = new com.ray.project.entity.User();
-//        user.firstName = "Ray";
-//        user.lastName = "Chin";
-////        AppDatabase.getInstance(this).userDao().insertUser(user);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                AppDatabase.getInstance(MainActivity.this).userDao().insertUser(user);
-//                Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().toString());
-//                if (AppDatabase.getInstance(MainActivity.this).userDao().getAll().size() > 0) {
-//                    Logger.e(TAG, AppDatabase.getInstance(MainActivity.this).userDao().getAll().get(0).firstName);
-//                }
-//            }
-//        }).start();
-////        db.runInTransaction(new Runnable() {
-////            @Override
-////            public void run() {
-////                db.userDao().insertUser(user);
-////            }
-////        });
     }
 
     @Override

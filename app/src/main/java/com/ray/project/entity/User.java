@@ -20,7 +20,7 @@ public class User extends BaseBean {
     // 主键，自动增长
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "uid")
-    public int uid;
+    public long uid;
 
     // 与 tableName 属性类似，Room 将字段名称用作数据库中的列名称
     // 如果希望列具有不同的名称，请将 @ColumnInfo 注释添加到字段【个人建议】

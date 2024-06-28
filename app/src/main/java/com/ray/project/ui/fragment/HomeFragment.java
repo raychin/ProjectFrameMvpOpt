@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
+import com.ray.project.commons.Loading;
 import com.ray.project.commons.Logger;
 import com.ray.project.commons.ToastUtils;
 import com.ray.project.databinding.FragmentHomeBinding;
@@ -43,12 +44,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             add(map);
 
             map = new HashMap<>();
-            map.put("name", "Shiply Upgrade");
+            map.put("name", "Shiply检查更新");
             map.put("type", "shiplyUpgrade");
             add(map);
 
             map = new HashMap<>();
-            map.put("name", "Shiply Hot fix");
+            map.put("name", "Shiply热更新");
             map.put("type", "intent");
             map.put("activity", RFixDevActivity.class);
             add(map);
@@ -58,6 +59,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             map.put("type", "intentFragment");
             map.put("activity", FragmentContainerActivity.class);
             map.put("fragment", "com.ray.project.ui.sample.fragment.LocationFragment");
+            add(map);
+
+            map = new HashMap<>();
+            map.put("name", "本地持久化");
+            map.put("type", "intentFragment");
+            map.put("activity", FragmentContainerActivity.class);
+            map.put("fragment", "com.ray.project.ui.sample.fragment.PersistenceFragment");
             add(map);
         }
     };
@@ -84,7 +92,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
 
     @Override
     protected void initView(View view) {
-        setTitleText("首页");
+        setTitleText(getString(R.string.app_name));
         for (int i = 0; i < mData.size(); i ++) {
             HashMap<String, Object> map = mData.get(i);
             Button button = new Button(mActivity);
@@ -105,28 +113,34 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
                             mActivity.nextActivity((Class<?>) map.get("activity"));
                             break;
                         case "shiplyUpgrade":
+                            Loading.getInstance().show(mActivity, "检查更新中...");
                             UpgradeManager.getInstance().checkUpgrade(true, null, new UpgradeReqCallbackForUserManualCheck() {
                                 @Override
                                 public void onReceiveStrategy(UpgradeStrategy upgradeStrategy) {
                                     super.onReceiveStrategy(upgradeStrategy);
                                     Logger.e(TAG, upgradeStrategy.toString());
+                                    Loading.getInstance().dismiss();
                                 }
 
                                 @Override
                                 public void onFail(int i, String s) {
                                     super.onFail(i, s);
                                     Logger.e(TAG, i + " " + s);
+                                    Loading.getInstance().dismiss();
                                 }
 
                                 @Override
                                 public void onReceivedNoStrategy() {
                                     super.onReceivedNoStrategy();
+                                    Loading.getInstance().dismiss();
+                                    ToastUtils.showCustomToast(mActivity, "已经是最新版本了", Toast.LENGTH_SHORT);
                                 }
 
                                 @Override
                                 public void tryPopUpgradeDialog(UpgradeStrategy upgradeStrategy) {
                                     super.tryPopUpgradeDialog(upgradeStrategy);
                                     Logger.e(TAG, upgradeStrategy.toString());
+                                    Loading.getInstance().dismiss();
                                 }
                             });
                             break;
