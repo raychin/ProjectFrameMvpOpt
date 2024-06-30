@@ -54,6 +54,23 @@ public class RayWebViewClient extends WebViewClient {
         //String lonAndLatS="javascript:getLonAndLat('" + lonAndLat + "')";
         //
         //webView.loadUrl(lonAndLatS);
+
+        String js = "javascript:";
+        js += "var videos = document.getElementsByTagName('video');";
+        js += "var video_last;";
+        js += "var video = videos[videos.length-1];";
+        js += "if (video != undefined && video != video_last) {";
+        {
+            js += "video_last = video;";
+            js += "function video_start() {";
+            {
+                js += "_VideoEnabledWebView.notifyVideoStart();";
+            }
+            js += "}";
+            js += "video.addEventListener('play', video_start);";
+        }
+        js += "}";
+        webView.loadUrl(js);
     }
 
     @Override
