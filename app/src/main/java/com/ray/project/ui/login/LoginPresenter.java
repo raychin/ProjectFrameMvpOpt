@@ -34,6 +34,29 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
     @Override
     public void clear() {
 
+
+        Subscription subscription = Net.getService().getToken1("1", "2", "3")
+                // 指定网络请求在io后台线程中进行
+                .subscribeOn(Schedulers.io())
+                // 指定observer回调在UI主线程中进行
+                // 可使用RxAndroid中的AndroidSchedulers.mainThread()，需要添加RxAndroid依赖
+                .observeOn(AndroidScheduler.mainThread())
+                .subscribe(new RxObserver(getActivity(), new RxObserver.RxResult<Result<LoginModel>>() {
+                    @Override
+                    public void onResult(Result<LoginModel> data) {
+                        LoginModel loginModel = data.data;
+                        if (!loginModel.loginCode.equals("00")) {
+                            ToastUtils.showToast(getActivity(), loginModel.loginMsg, Toast.LENGTH_SHORT);
+                            return;
+                        }
+                        ResultEvent event = new ResultEvent();
+                        event.setCode(0);
+                        event.setObj(data.data);
+                        getView().updateView(event);
+                    }
+                }));
+        subscriptions.put("getToken1", subscription);
+        RxApiManager.get().add("getToken1", subscription);
     }
 
     @Override

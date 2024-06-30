@@ -31,4 +31,11 @@ public interface ApiService {
             @Query("userid") String user,
             @Query("password") String password
     );
+
+    @GET("http//192.168.1.33:8080/ksj_api/getToken")
+    rx.Observable<Result<LoginModel>> getToken1(
+            @Query("user") String user,
+            @Query("secret") String secret,
+            @Query("time") String time
+    );
 }

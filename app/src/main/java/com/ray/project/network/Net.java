@@ -22,6 +22,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -48,7 +49,6 @@ public class Net {
     private static final int READ_TIME_OUT = 20;
     private static final int WRITE_TIME_OUT = 20;
 
-//    public static final String BASE_API = "http://10.200.66.39:9000/";
     public static final String BASE_API = "http://192.168.102.8:8005";
     private static Retrofit retrofit;
     private static ApiService apiService;
@@ -64,19 +64,34 @@ public class Net {
             final String token = "";
             Request request = chain.request();
             long startTime = System.currentTimeMillis();
-            Response response = chain.proceed(chain.request());
+
+            Request.Builder builder = request.newBuilder()
+                    .addHeader("token", token)
+                    .addHeader("platform", "1");
+            // TODO RAY 这里可动态判断url设置新请求，也可以新加一个retrofit实例设置新的BaseUrl；也可参照https://developer.aliyun.com/article/1264345
+            if (request.url().toString().contains("192.168.1.33")) {
+                HttpUrl newUrl = request.url().newBuilder()
+//                        .scheme("https")
+                        .host("192.168.1.33")
+                        .build();
+                builder = request.newBuilder()
+                        .url(newUrl)
+                        .addHeader("exToken", "exToken");
+            }
+            Response response = chain.proceed(builder.build());
+//            Response response = chain.proceed(request);
+//            Response response = chain.proceed(chain.request());
+
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
             MediaType mediaType = response.body().contentType();
             String content = response.body().string();
             Logger.e("Net", "----------Request Start----------------");
-            Logger.e("Net", "| " + request.toString() + request.headers().toString());
+            Logger.e("Net", "| " + request + request.headers());
             Logger.e("Net", "| Response:" + content);
             Logger.e("Net", "----------Request End:" + duration + "毫秒----------");
             return response.newBuilder()
                     .body(ResponseBody.create(mediaType, content))
-                    .addHeader("token", token)
-                    .addHeader("platform", "1")
                     .build();
         }
     };

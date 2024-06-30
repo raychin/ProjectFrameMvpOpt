@@ -118,6 +118,7 @@
                 </Button>
             </RelativeLayout>
             <TextView
+                android:id="@+id/tv_forgot"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#9a9a9a"

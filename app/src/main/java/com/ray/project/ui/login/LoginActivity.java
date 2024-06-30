@@ -63,6 +63,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginPrese
             startActivity(new Intent(this, RegisterActivity.class), options.toBundle());
         });
 
+        mBinding.tvForgot.setOnClickListener(v -> {
+            Loading.getInstance().show(this, "登录中...");
+            presenter.clear();
+        });
+
         mBinding.btGo.setOnClickListener(v -> {
             String user = mBinding.etUsername.getText().toString().trim();
             String password = mBinding.etPassword.getText().toString().trim();

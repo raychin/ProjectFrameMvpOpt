@@ -1,6 +1,7 @@
 package com.ray.project.network;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ public class RxObserver<T> implements Observer<T> {
     private final Context mContext;
     private final RxResult<T> mResult;
     private Dispatcher dispatcher;
-    private boolean isNeedError;
+    private boolean needError;
     SwipeRefreshLayout mSr;
     Button mBtn;
 
@@ -46,10 +47,10 @@ public class RxObserver<T> implements Observer<T> {
         this.mBtn = btn;
     }
 
-    public RxObserver(Context context, RxResult<T> result, boolean isNeedError) {
+    public RxObserver(Context context, RxResult<T> result, boolean needError) {
         this.mContext = context;
         this.mResult = result;
-        this.isNeedError = isNeedError;
+        this.needError = needError;
     }
 
     @Override
@@ -59,11 +60,15 @@ public class RxObserver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-        e.printStackTrace();
+        Logger.e(TAG, "error:" + e.getMessage());
         Loading.getInstance().dismiss();
         if (mSr != null) { mSr.setRefreshing(false); }
         if (mBtn != null) { mBtn.setEnabled(true); }
-        ToastUtils.showToast(mContext, "网络异常", Toast.LENGTH_SHORT);
+        StringBuilder msg = new StringBuilder("请求失败");
+        if (!TextUtils.isEmpty(e.getMessage())) {
+            msg.append(": ").append(e.getMessage());
+        }
+        ToastUtils.showToast(mContext, msg.toString(), Toast.LENGTH_SHORT);
     }
 
     @Override
@@ -71,6 +76,14 @@ public class RxObserver<T> implements Observer<T> {
         if(t instanceof Result) {
             if (((Result<?>) t).code == 200) {
                 mResult.onResult(t);
+            } else {
+                if (needError) {
+                    mResult.onResult(t);
+                    return;
+                }
+                if (mSr != null) { mSr.setRefreshing(false); }
+                if (mBtn != null) { mBtn.setEnabled(true); }
+                ToastUtils.showToast(mContext, ((Result<?>) t).retMsg, Toast.LENGTH_SHORT);
             }
         }
         /*
@@ -101,13 +114,6 @@ public class RxObserver<T> implements Observer<T> {
 //                intent.putExtra("Type", 1);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                mContext.startActivity(intent);
-            } else {
-                if (isNeedError) {
-                    mResult.onResult(t);
-                    return;
-                }
-                if (mBtn != null) { mBtn.setEnabled(true); }
-                ToastUtils.showToast(mContext, ((Result) t).getMsg(), Toast.LENGTH_SHORT);
             }
         }
         */
