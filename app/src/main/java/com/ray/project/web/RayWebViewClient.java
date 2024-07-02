@@ -81,7 +81,6 @@ public class RayWebViewClient extends WebViewClient {
         }
     }
 
-
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
         // 重写此方法表明点击网页里面的链接还是在当前的WebView里跳转，不另跳浏览器

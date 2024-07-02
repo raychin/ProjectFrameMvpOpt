@@ -18,10 +18,26 @@ public class RayWebViewChromeClient extends WebChromeClient {
     private BaseActivity mActivity;
     private CordovaDialogsHelper dialogsHelper;
 
+    private OnWebViewChromeClientListener mListener;
+
     public RayWebViewChromeClient(BaseActivity activity) {
         mActivity = activity;
         dialogsHelper = new CordovaDialogsHelper(mActivity);
 
+    }
+
+    public RayWebViewChromeClient(BaseActivity activity, OnWebViewChromeClientListener listener) {
+        mActivity = activity;
+        dialogsHelper = new CordovaDialogsHelper(mActivity);
+        mListener = listener;
+    }
+
+    @Override
+    public void onProgressChanged(WebView view, int newProgress) {
+        // 页面加载进度
+        if (null != mListener) {
+            mListener.onReceivedProgress(view, newProgress);
+        }
     }
 
     /**
@@ -86,5 +102,9 @@ public class RayWebViewChromeClient extends WebChromeClient {
         WebCameraHelper.getInstance().mUploadCallbackAboveL = uploadMsg;
         WebCameraHelper.getInstance().showOptions(mActivity);
         return true;
+    }
+
+    public interface OnWebViewChromeClientListener {
+        void onReceivedProgress(WebView view, int newProgress);
     }
 }

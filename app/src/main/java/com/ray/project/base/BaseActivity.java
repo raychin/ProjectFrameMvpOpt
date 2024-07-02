@@ -69,7 +69,7 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
             Titanic titanic = new Titanic();
             titanic.start(tvLoading);
         }
-//        tvLoading.bringToFront();
+        tvLoading.bringToFront();
         int flag = tvLoading.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
         tvLoading.setVisibility(flag);
     }

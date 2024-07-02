@@ -76,10 +76,16 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
                 }
             }
         ), JsInteraction.JS_INTERFACE);
-        webView.setWebChromeClient(new RayWebViewChromeClient(mActivity));
+        webView.setWebChromeClient(new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
+            @Override
+            public void onReceivedProgress(WebView view, int newProgress) {
+                mBinding.progressWeb.setProgress(newProgress);
+            }
+        }));
         webView.setWebViewClient(new RayWebViewClient(mActivity, new RayWebViewClient.OnWebViewClientListener() {
             @Override
             public void onReceivedStart(WebView view, String url, Bitmap favicon) {
+                mBinding.progressWeb.setVisibility(View.VISIBLE);
                 if (null != mActivity) {
                     mActivity.pageLoading();
 //                    Loading.getInstance().show(mActivity);
@@ -88,6 +94,7 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
 
             @Override
             public void onReceivedFinish(WebView webView, String url) {
+                mBinding.progressWeb.setVisibility(View.GONE);
                 if (null != mActivity) {
                     mActivity.pageLoading();
 //                    Loading.getInstance().dismiss();

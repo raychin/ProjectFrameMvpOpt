@@ -2,6 +2,7 @@
     <!-- dp -->
     <dimen name="title_bar_height">45dp</dimen>
     <dimen name="btn_custom_height">48dp</dimen>
+    <dimen name="progress_bar_height">1dp</dimen>
 
     <!-- sp 字体大小 -->
     <dimen name="title_bar_text_size">20sp</dimen>

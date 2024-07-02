@@ -3,8 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/progressWeb"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_height"
+        android:max="100"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/bg_progressbar"/>
+
     <WebView
         android:id="@+id/webView"
+        android:layout_below="@id/progressWeb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"/>
