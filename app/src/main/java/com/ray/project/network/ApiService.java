@@ -32,7 +32,7 @@ public interface ApiService {
             @Query("password") String password
     );
 
-    @GET("http//192.168.1.33:8080/ksj_api/getToken")
+    @GET("http//192.168.101.180:8005/ksj_api/getToken")
     rx.Observable<Result<LoginModel>> getToken1(
             @Query("user") String user,
             @Query("secret") String secret,
