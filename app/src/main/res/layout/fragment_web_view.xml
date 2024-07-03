@@ -11,11 +11,23 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:progressDrawable="@drawable/bg_progressbar"/>
 
-    <WebView
-        android:id="@+id/webView"
+    <RelativeLayout
+        android:id="@+id/main_rl_non_video"
         android:layout_below="@id/progressWeb"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"/>
+        android:layout_height="match_parent" >
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/main_rl_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </RelativeLayout>
+
+<!--    <WebView-->
+<!--        android:id="@+id/webView"-->
+<!--        android:layout_below="@id/progressWeb"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scrollbars="none"/>-->
 
 </RelativeLayout>

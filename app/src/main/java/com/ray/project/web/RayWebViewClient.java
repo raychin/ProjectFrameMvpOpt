@@ -64,12 +64,13 @@ public class RayWebViewClient extends WebViewClient {
             js += "video_last = video;";
             js += "function video_start() {";
             {
-                js += "_VideoEnabledWebView.notifyVideoStart();";
+                js += "_RayWebView.notifyVideoStart();";
             }
             js += "}";
             js += "video.addEventListener('play', video_start);";
         }
         js += "}";
+        Logger.e("ray js = ", js);
         webView.loadUrl(js);
     }
 

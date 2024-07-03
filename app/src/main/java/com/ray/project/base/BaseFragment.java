@@ -258,7 +258,7 @@ public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresent
     /**
      * 添加状态栏占位视图
      */
-    private void setStatusViewWithColor(int color) {
+    protected void setStatusViewWithColor(int color) {
         if (null != mActivity) {
             mActivity.setStatusViewWithColor(color);
         }

@@ -1,21 +1,26 @@
 package com.ray.project.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.Loading;
+import com.ray.project.commons.Logger;
 import com.ray.project.databinding.FragmentWebViewBinding;
 import com.ray.project.web.JsInteraction;
+import com.ray.project.web.RayWebView;
 import com.ray.project.web.RayWebViewChromeClient;
 import com.ray.project.web.RayWebViewClient;
 
@@ -25,7 +30,8 @@ import com.ray.project.web.RayWebViewClient;
  * @date 2018/07/03
  */
 public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePresenter> {
-    private WebView webView;
+//    private WebView webView;
+    private RayWebView webView;
     private String webUrl = "file:///android_asset/web/ray-template/index.html";
 
     @Override
@@ -40,8 +46,13 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
 
     @Override
     protected void initView(View view) {
-        webView = mBinding.webView;
-//        webView = mContentView.findViewById(R.id.webView);
+//        webView = mBinding.webView;
+
+        webView = new RayWebView(mActivity);
+        webView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        // add the webview instance to the main layout
+        mBinding.mainRlNonVideo.addView(webView);
     }
 
     @Override
@@ -56,6 +67,7 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
         initWebView();
     }
 
+    // TODO RAY 这里还要判断RayWebViewChromeClient.onBackPressed
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
@@ -76,12 +88,48 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
                 }
             }
         ), JsInteraction.JS_INTERFACE);
-        webView.setWebChromeClient(new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
+//        webView.setWebChromeClient(new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
+//            @Override
+//            public void onReceivedProgress(WebView view, int newProgress) {
+//                mBinding.progressWeb.setProgress(newProgress);
+//            }
+//        }));
+        RayWebViewChromeClient rayWebViewChromeClient = new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
             @Override
             public void onReceivedProgress(WebView view, int newProgress) {
                 mBinding.progressWeb.setProgress(newProgress);
             }
-        }));
+        }, mBinding.mainRlNonVideo, mBinding.mainRlVideo, null, webView);
+        rayWebViewChromeClient.setOnToggledFullscreen(new RayWebViewChromeClient.ToggledFullscreenCallback() {;
+            @Override
+            public void toggledFullscreen(boolean fullscreen) {
+                Logger.d("toggledFullscreen", String.valueOf(fullscreen));
+                if (null != mActivity) {
+                    if (fullscreen) {
+                        // // 设置全屏
+                        // mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        mActivity.setStatusView(0);
+                        // 设置横屏
+                        int requestedOrientation = mActivity.getRequestedOrientation();
+                        if (requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE) {
+                            // 反横屏下设置跟随传感器
+                            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                        } else {
+                            // 其他情况设置横屏
+                            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        }
+                    } else {
+                        // 恢复为用户方向
+                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+                        setStatusViewWithColor(statusColor());
+                        setTitleNavigationShow(showTitleNavigation());
+                        if (isImmersiveStatusHeight()) { setImmersiveStatusHeight(); }
+                    }
+                }
+            }
+        });
+        webView.setWebChromeClient(rayWebViewChromeClient);
+
         webView.setWebViewClient(new RayWebViewClient(mActivity, new RayWebViewClient.OnWebViewClientListener() {
             @Override
             public void onReceivedStart(WebView view, String url, Bitmap favicon) {

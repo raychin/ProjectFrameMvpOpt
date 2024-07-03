@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 	<!-- 填充色 -->　
-	<solid android:color="#f0fcff"/>
+	<solid android:color="#a98175"/>
 	<!-- 边框颜色 -->
 	<stroke android:width="1dp"
-		android:color="#f0fcff" />
+		android:color="#a98175" />
 	<padding android:left="15dp"
 		android:top="10dp"
 		android:right="15dp"

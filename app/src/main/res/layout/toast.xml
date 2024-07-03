@@ -8,5 +8,5 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/toast_size"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 </LinearLayout>

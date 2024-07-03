@@ -69,7 +69,7 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
             Titanic titanic = new Titanic();
             titanic.start(tvLoading);
         }
-        tvLoading.bringToFront();
+        // tvLoading.bringToFront();
         int flag = tvLoading.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
         tvLoading.setVisibility(flag);
     }
@@ -154,8 +154,9 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         super.onCreate(savedInstanceState);
         // 设置全屏
         if(isFullScreen()) {
+            // 全屏，去掉状态栏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);    // 全屏，去掉状态栏
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         // 透明化状态栏
         if(isTransparentStatus()) { setTransparentStatus(); }
@@ -407,6 +408,17 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         if(statusBarView == null) { return; }
         ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
         lp.height = ProjectApplication.get().getStatusBarHeight();
+        statusBarView.setLayoutParams(lp);
+    }
+
+    /**
+     * 设置状态栏占位视图
+     */
+    public void setStatusView(int height) {
+        View statusBarView = mConainerView.findViewById(R.id.status);
+        if(statusBarView == null) { return; }
+        ViewGroup.LayoutParams lp = statusBarView.getLayoutParams();
+        lp.height = height;
         statusBarView.setLayoutParams(lp);
     }
 
