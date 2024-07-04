@@ -5,10 +5,8 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
@@ -16,7 +14,6 @@ import android.widget.LinearLayout;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
-import com.ray.project.commons.Loading;
 import com.ray.project.commons.Logger;
 import com.ray.project.databinding.FragmentWebViewBinding;
 import com.ray.project.web.JsInteraction;
@@ -67,16 +64,23 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
         initWebView();
     }
 
-    // TODO RAY 这里还要判断RayWebViewChromeClient.onBackPressed
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-            webView.goBack(); // 后退
-            return true;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 这里还要判断RayWebViewChromeClient.onBackPressed()方法，退出全屏
+            if (null != rayWebViewChromeClient && rayWebViewChromeClient.isVideoFullscreen()) {
+                rayWebViewChromeClient.onHideCustomView();
+                return true;
+            }
+            if (webView.canGoBack()) {
+                webView.goBack(); // 后退
+                return true;
+            }
         }
         return false;
     }
 
+    RayWebViewChromeClient rayWebViewChromeClient;
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView () {
         WebView.setWebContentsDebuggingEnabled(true);
@@ -94,7 +98,7 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
 //                mBinding.progressWeb.setProgress(newProgress);
 //            }
 //        }));
-        RayWebViewChromeClient rayWebViewChromeClient = new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
+        rayWebViewChromeClient = new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
             @Override
             public void onReceivedProgress(WebView view, int newProgress) {
                 mBinding.progressWeb.setProgress(newProgress);

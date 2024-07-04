@@ -1,6 +1,7 @@
 package com.ray.project.ui.sample.fragment;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -8,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.ray.project.R;
@@ -19,7 +20,6 @@ import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.Loading;
 import com.ray.project.commons.LocationUtils;
 import com.ray.project.commons.Logger;
-import com.ray.project.commons.ToastUtils;
 import com.ray.project.databinding.FragmentSampleBinding;
 
 /**
@@ -83,11 +83,25 @@ public class LocationFragment extends BaseFragment<FragmentSampleBinding, BasePr
         buttonParams.setMargins(20, 20, 20, 20);
         buttonParams.topToBottom = textView.getId();
         button.setOnClickListener(viewTitle -> {
-            Loading.getInstance().show(mActivity, "定位中...");
+            // 添加权限判断
+            if (ActivityCompat.checkSelfPermission(mActivity,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(mActivity,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                mActivity.checkPermissions(
+                        new String[] {
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                        }
+                );
+                return;
+            }
+
+//            Loading.getInstance().show(mActivity, "定位中...");
             StringBuffer sb = new StringBuffer();
             sb.append("定位");
             textView.setText(sb.toString());
-            //注意6.0及以上版本需要在申请完权限后调用方法
+            // 注意6.0及以上版本需要在申请完权限后调用方法
             LocationUtils.getInstance(mActivity).setAddressCallback(new LocationUtils.AddressCallback() {
                 @Override
                 public void onGetAddress(Address address) {

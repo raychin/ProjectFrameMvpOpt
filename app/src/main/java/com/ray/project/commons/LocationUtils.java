@@ -102,6 +102,9 @@ public class LocationUtils {
         // 2.获取位置提供器，GPS或是NetWork
         // 获取所有可用的位置提供器
         List<String> providerList = locationManager.getProviders(true);
+        if (providerList.isEmpty()) {
+            return;
+        }
         String locationProvider;
         if (providerList.contains(LocationManager.GPS_PROVIDER)) {
             // GPS 定位的精准度比较高，但是非常耗电。
@@ -164,7 +167,7 @@ public class LocationUtils {
         try {
             List<Address> locationList = gc.getFromLocation(latitude, longitude, 1);
 
-            if (locationList != null) {
+            if (locationList != null && !locationList.isEmpty()) {
                 Address address = locationList.get(0);
                 // 国家
                 String countryName = address.getCountryName();
@@ -237,6 +240,9 @@ public class LocationUtils {
         }
         LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+        if (null == location) {
+            return;
+        }
         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         showLocation();
     }
