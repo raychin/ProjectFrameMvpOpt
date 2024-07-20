@@ -32,10 +32,12 @@ public interface ApiService {
             @Query("password") String password
     );
 
-    @GET("http//192.168.101.180:8005/ksj_api/getToken")
+    @POST("https://rioweb.szns.gov.cn/zsdsjdy/zzapi/geosocial-sso-manage/user/loginNoCap")
+    @Headers({
+            "Content-Type: application/x-www-form-urlencoded"
+    })
     rx.Observable<Result<LoginModel>> getToken1(
-            @Query("user") String user,
-            @Query("secret") String secret,
-            @Query("time") String time
+            @Query("userid") String userid,
+            @Query("password") String password
     );
 }

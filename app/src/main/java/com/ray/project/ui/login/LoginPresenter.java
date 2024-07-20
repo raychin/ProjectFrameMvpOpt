@@ -35,7 +35,7 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter {
     public void clear() {
 
 
-        Subscription subscription = Net.getService().getToken1("1", "2", "3")
+        Subscription subscription = Net.getService().getToken1("1", "2")
                 // 指定网络请求在io后台线程中进行
                 .subscribeOn(Schedulers.io())
                 // 指定observer回调在UI主线程中进行

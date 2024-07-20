@@ -69,10 +69,10 @@ public class Net {
                     .addHeader("token", token)
                     .addHeader("platform", "1");
             // TODO RAY 这里可动态判断url设置新请求，也可以新加一个retrofit实例设置新的BaseUrl；也可参照https://developer.aliyun.com/article/1264345
-            if (request.url().toString().contains("192.168.101.180")) {
+            if (request.url().toString().contains("rioweb.szns.gov.cn")) {
                 HttpUrl newUrl = request.url().newBuilder()
 //                        .scheme("https")
-                        .host("192.168.101.180")
+                        .host("rioweb.szns.gov.cn")
                         .build();
                 builder = request.newBuilder()
                         .url(newUrl)
