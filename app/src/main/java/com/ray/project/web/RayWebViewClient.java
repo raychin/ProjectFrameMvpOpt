@@ -5,6 +5,8 @@ import static com.ray.project.commons.AppTools.hasInstalled;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -83,13 +85,18 @@ public class RayWebViewClient extends WebViewClient {
     }
 
     @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        // 忽略SSL证书错误，继续加载页面
+        handler.proceed();
+    }
+
+    @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
         // 重写此方法表明点击网页里面的链接还是在当前的WebView里跳转，不另跳浏览器
         // 在2.3上面不加这句话，可以加载出页面，在4.0上面必须要加入，不然出现白屏
-        Logger.e("xxxxx url = ", url);
+        Logger.e("www url = ", url);
 //        if (url.startsWith("http://") || url.startsWith("https://")) {
 //            webView.loadUrl(url);
-//            webView.stopLoading();
 //            return true;
 //        }
         if (url.startsWith("mailto:")) {

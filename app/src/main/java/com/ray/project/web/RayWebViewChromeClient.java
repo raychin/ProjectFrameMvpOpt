@@ -186,6 +186,8 @@ public class RayWebViewChromeClient extends WebChromeClient implements MediaPlay
             activityNonVideoView.setVisibility(View.INVISIBLE);
             activityVideoView.addView(videoViewContainer, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             activityVideoView.setVisibility(View.VISIBLE);
+            // 设置隐藏虚拟按键/导航键(避免造成全屏时布局不满)
+            activityVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
             if (focusedChild instanceof android.widget.VideoView) {
                 // android.widget.VideoView (typically API level <11)
@@ -245,6 +247,8 @@ public class RayWebViewChromeClient extends WebChromeClient implements MediaPlay
 
         if (isVideoFullscreen) {
             // Hide the video view, remove it, and show the non-video view
+            // 恢复虚拟键
+            activityVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
             activityVideoView.setVisibility(View.INVISIBLE);
             activityVideoView.removeView(videoViewContainer);
             activityNonVideoView.setVisibility(View.VISIBLE);

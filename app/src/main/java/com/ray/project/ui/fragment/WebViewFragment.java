@@ -163,10 +163,13 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         // 设置允许开启多窗口
         webSettings.setSupportMultipleWindows(true);
+        // 设置自适应任意大小网页
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
 
         /**
          * LOAD_CACHE_ONLY: 不使用网络，只读取本地缓存数据
-         * LOAD_DEFAULT: （默认）根据cache-control决定是否从网络上取数据。
+         * LOAD_DEFAULT: （默认）根据cache-cosetLoadWithOverviewModentrol决定是否从网络上取数据。
          * LOAD_NO_CACHE: 不使用缓存，只从网络获取数据.
          * LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
          * 不使用缓存，只从网络获取数据.
