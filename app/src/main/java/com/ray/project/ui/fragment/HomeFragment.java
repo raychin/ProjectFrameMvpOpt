@@ -67,6 +67,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             map.put("activity", FragmentContainerActivity.class);
             map.put("fragment", "com.ray.project.ui.sample.fragment.PersistenceFragment");
             add(map);
+
+            map = new HashMap<>();
+            map.put("name", "地图");
+            map.put("type", "intentFragment");
+            map.put("activity", FragmentContainerActivity.class);
+            map.put("fragment", "com.ray.project.ui.fragment.MapViewFragment");
+            add(map);
         }
     };
 

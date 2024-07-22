@@ -22,6 +22,7 @@ buildscript {
         buglyVersion = "4.0.0"
         shiplyVersion = "2.0.0-RC01"
         shiplyHotFixVersion = "2.0.0-beta2"
+        osmdroidVersion = "6.1.18"
     }
     
     repositories {

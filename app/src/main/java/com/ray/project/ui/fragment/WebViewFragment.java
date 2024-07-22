@@ -22,7 +22,7 @@ import com.ray.project.web.RayWebViewChromeClient;
 import com.ray.project.web.RayWebViewClient;
 
 /**
- * 更多功能界面fragment
+ * WebView界面fragment
  * @author ray
  * @date 2018/07/03
  */

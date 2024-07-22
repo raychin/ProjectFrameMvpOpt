@@ -203,6 +203,11 @@ dependencies {
 
     // shiply 全量更新、灰度更新、配置与开关发布
     implementation "com.tencent.shiply:upgrade:${rootProject.ext.shiplyVersion}"
+
+    // osmdroid地图组件
+    implementation "org.osmdroid:osmdroid-android:${rootProject.ext.osmdroidVersion}"
+    // Adds basic support for WMS servers, specifically GeoServer
+    implementation "org.osmdroid:osmdroid-wms:${rootProject.ext.osmdroidVersion}"
 }
 
 // 接入RFix补丁组件

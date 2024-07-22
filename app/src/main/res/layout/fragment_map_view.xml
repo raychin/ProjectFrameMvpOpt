@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressMap"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/progress_bar_height"
+        android:max="100"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/bg_progressbar"/>
+
+    <RelativeLayout
+        android:id="@+id/main_rl_non_map"
+        android:layout_below="@id/progressMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/main_rl_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </RelativeLayout>
+
+<!--    <org.osmdroid.views.MapView-->
+<!--        android:id="@+id/mapView"-->
+<!--        android:layout_below="@id/progressMap"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
+
+</RelativeLayout>
