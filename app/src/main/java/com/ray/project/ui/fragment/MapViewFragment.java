@@ -1,6 +1,7 @@
 package com.ray.project.ui.fragment;
 
-import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,10 +12,9 @@ import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.Logger;
+import com.ray.project.commons.map.CustomsOsmdroidMapConfig;
 import com.ray.project.databinding.FragmentMapViewBinding;
 
-import org.osmdroid.config.Configuration;
-import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TMSOnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -22,8 +22,8 @@ import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.MapTileIndex;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.OverlayManager;
-import org.osmdroid.views.overlay.TilesOverlay;
+import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 /**
  * MapView界面fragment
@@ -81,7 +81,9 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
         // 设置地图类型
 //        mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
-        mapView.setMinZoomLevel(0.00);
+
+        CustomsOsmdroidMapConfig.getInstance().InitMapOverlays(mapView, mActivity);
+        mapView.setMinZoomLevel(6.00);
         mapView.setMaxZoomLevel(20.00);
 
         // 设置让瓦片适应不同像素密度:默认地图显示的字体小，图片像素高，可设置以下代码，使地图适应不同像素密度，更美观
@@ -91,26 +93,14 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
         mapView.setBuiltInZoomControls(true);
         mapView.setMultiTouchControls(true);
 
-
-//        mapView?.overlayManager?.tilesOverlay?.isEnabled = true
-//        mapView?.isSelected = true
-//        var dm = resources.displayMetrics
-//        //指南针
-//        var mCompassOverlay = CompassOverlay(
-//                this, InternalCompassOrientationProvider(this),
-//                mapView
-//        )
-//        mCompassOverlay.enableCompass()
-//        mapView?.getOverlays()?.add(mCompassOverlay)
-//        //比例尺配置
-//        var mScaleBarOverlay = ScaleBarOverlay(mapView)
-//        mScaleBarOverlay.setScaleBarOffset(dm.widthPixels / 2, 10)
-//        mapView?.getOverlays()?.add(mScaleBarOverlay)
-//        mapView?.overlays?.add(mScaleBarOverlay)
-//        //定位
-//        var mLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(this), mapView)
-//        mapView?.overlays?.add(mLocationOverlay)
-//        mLocationOverlay.enableMyLocation()
+//        GeoPoint overlayPosition = new GeoPoint(0, 0);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+//        GroundOverlay groundOverlay = new GroundOverlay();
+//        groundOverlay.setPosition(overlayPosition, overlayPosition);
+//        groundOverlay.setImage(bitmap);
+//        mapView.getOverlays().add(groundOverlay);
+//        // 刷新地图显示
+//        mapView.invalidate();
 
         // 设置地图中心经纬度和缩放级别
         mapView.getController().setCenter(new GeoPoint(22.5464293, 114.0528185));
@@ -120,11 +110,30 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
 
 //        mapView.setTileSource(iServerMapsSource);
         mapView.setTileSource(wprdMapsSource);
+
 //        mapView.setTileSource(szMapsSource);
 //        mapView.setTileSource(tianDiTuImgTileSource);
 //        mapView.setTileSource(tianDiTuImg2TileSource);
 //        TilesOverlay tilesOverlay = new TilesOverlay(new MapTileProviderBasic(mActivity, tianDiTuCiaTileSource), mActivity);
 //        mapView.getOverlayManager().add(tilesOverlay);
+
+        // 刷新地图显示
+        mapView.invalidate();
+
+        // 如果你想要在地图中心自动移动到用户当前位置，可以调用：
+        CustomsOsmdroidMapConfig.getInstance().getLocationOverlay().runOnFirstFix(new Runnable() {
+             public void run() {
+                 mActivity.runOnUiThread(new Runnable() {
+                     public void run() {
+                         mapView.getController().animateTo(CustomsOsmdroidMapConfig.getInstance().getLocationOverlay().getMyLocation());
+                     }
+                 });
+             }
+         });
+
+        // 更新位置，通常在定位服务的回调中调用
+//        locationOverlay.onLocationChanged(Location location);
+
     }
 
 
@@ -279,5 +288,17 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
 //        if (mapView != null) {
 //            mapView = null;
 //        }
+    }
+
+    private class MyCustomLocation extends MyLocationNewOverlay {
+        public MyCustomLocation(MapView mapView) {
+            super(mapView);
+        }
+
+        public MyCustomLocation(IMyLocationProvider myLocationProvider, MapView mapView) {
+            super(myLocationProvider, mapView);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            this.setPersonIcon(bitmap);
+        }
     }
 }
