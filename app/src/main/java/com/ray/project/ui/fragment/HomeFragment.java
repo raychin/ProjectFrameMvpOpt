@@ -38,7 +38,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
     private final List<HashMap<String, Object>> mData = new ArrayList<HashMap<String, Object>>() {
         {
             HashMap<String, Object> map = new HashMap<>();
-            map.put("name", "WebView");
+            map.put("name", "WebView「影视入口」");
             map.put("type", "intent");
             map.put("activity", WebViewActivity.class);
             add(map);

@@ -96,7 +96,7 @@
 
 
 
-### 2024年06月26日集成
+### 2024年06月26日集成更新功能
 
 -   集成腾讯bugly错误日志功能框架
     https://bugly.qq.com/
@@ -136,6 +136,13 @@
         LocationUtils.getInstance(mActivity).clearAddressCallback();
     }
     ```
+
+
+
+### 2024年07月24日集成osmdroid开源地图加载功能
+
+实现定位显示，后续添加轨迹绘制、面绘制等功能
+<img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/ca1a03708239b517849150467a54837a_720.jpg" alt="ca1a03708239b517849150467a54837a_720" style="zoom: 25%;" />
 
 
 

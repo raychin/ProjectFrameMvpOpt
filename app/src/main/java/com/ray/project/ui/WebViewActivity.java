@@ -24,8 +24,9 @@ import butterknife.OnClick;
  */
 public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePresenter> {
 //    private String webUrl = "https://subaibai.vip";
+    private String webUrl = "https://www.ingbo.tv";
 //    private String webUrl = "https://www.czzy.top";
-    private String webUrl = "https://cz01.vip";
+//    private String webUrl = "https://cz01.vip";
 
     @Override
     protected boolean isImmersiveStatus() {
