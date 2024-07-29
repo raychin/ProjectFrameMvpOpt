@@ -21,6 +21,8 @@ import com.tencent.upgrade.callback.Logger;
 import com.tencent.upgrade.core.DefaultUpgradeStrategyRequestCallback;
 import com.tencent.upgrade.core.UpgradeManager;
 
+import org.osmdroid.config.Configuration;
+
 import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
@@ -53,6 +55,8 @@ public class ProjectApplication extends Application {
         Net.init(this);
         MMKVManager.getInstance();
         handleSSLHandshake();
+
+        Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
 
         // bugly初始化
         final String buglyId = getPlaceHolderValue("BUGLY_APPID");

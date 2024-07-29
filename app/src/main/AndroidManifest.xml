@@ -40,7 +40,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:name="com.ray.project.config.ProjectApplication">
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:largeHeap="true"
+        android:name="com.ray.project.config.ProjectApplication"
+        tools:targetApi="n">
 
         <!-- 多渠道打包 -->
         <meta-data

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.ray.project.commons.map.TileSourceFactory;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
@@ -17,7 +18,7 @@ import com.ray.project.databinding.FragmentMapViewBinding;
 
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TMSOnlineTileSourceBase;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+//import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.MapTileIndex;
@@ -80,7 +81,9 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
     private void initMapView () {
         // 设置地图类型
 //        mapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
-        mapView.setTileSource(TileSourceFactory.MAPNIK);
+//        mapView.setTileSource(TileSourceFactory.MAPNIK);
+//        mapView.setTileSource(TileSourceFactory.OpenTopo);
+//        mapView.setTileSource(TileSourceFactory.USGS_SAT);
 
         CustomsOsmdroidMapConfig.getInstance().InitMapOverlays(mapView, mActivity);
         mapView.setMinZoomLevel(6.00);
@@ -137,44 +140,51 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
     }
 
 
-    static String wz = "tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&tk=6cda6bd921b61ce58c7cece2f3ba578c";
+//    static String wz = "tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&tk=6cda6bd921b61ce58c7cece2f3ba578c";
+    static String wz = "tianditu.gov.cn/img_w/wmts?service=WMTS&version=1.0.0&request=GetTile&layer=img&style=default&tilematrixset=w&format=tiles&tk=6cda6bd921b61ce58c7cece2f3ba578c";
     // 影像地图 _W是墨卡托投影  _c是国家2000的坐标系
-    public static OnlineTileSourceBase tianDiTuImgTileSource = new XYTileSource("Tian Di Tu Img", 0, 18, 256, "",
+    public static OnlineTileSourceBase tianDiTuImgTileSource = new XYTileSource("TianDiTuImg", 0, 18, 256, "",
             new String[] {
-                    "https://t0." + wz,
-                    "https://t1." + wz,
-                    "https://t2." + wz,
-                    "https://t3." + wz,
-                    "https://t4." + wz,
-                    "https://t5." + wz,
-                    "https://t6." + wz,
-                    "https://t7." + wz
+                    "http://t0." + wz,
+                    "http://t1." + wz,
+                    "http://t2." + wz,
+                    "http://t3." + wz,
+                    "http://t4." + wz,
+                    "http://t5." + wz,
+                    "http://t6." + wz,
+                    "http://t7." + wz
     }) {
         @Override
         public String getTileURLString(final long pMapTileIndex) {
             Logger.d("url", getBaseUrl()
-                    + "&TILEROW=" + MapTileIndex.getY(pMapTileIndex)
-                    + "&TILECOL=" + MapTileIndex.getX(pMapTileIndex)
-                    + "&TILEMATRIX=" + MapTileIndex.getZoom(pMapTileIndex)
+//                    + "&TILEROW=" + MapTileIndex.getY(pMapTileIndex)
+//                    + "&TILECOL=" + MapTileIndex.getX(pMapTileIndex)
+//                    + "&TILEMATRIX=" + MapTileIndex.getZoom(pMapTileIndex)
+                    + "&tilerow=" + MapTileIndex.getY(pMapTileIndex)
+                    + "&tilecol=" + MapTileIndex.getX(pMapTileIndex)
+                    + "&tilematrix=" + MapTileIndex.getZoom(pMapTileIndex)
                     + mImageFilenameEnding
             );
             return getBaseUrl()
-                    + "&TILEROW=" + MapTileIndex.getY(pMapTileIndex)
-                    + "&TILECOL=" + MapTileIndex.getX(pMapTileIndex)
-                    + "&TILEMATRIX=" + MapTileIndex.getZoom(pMapTileIndex)
+//                    + "&TILEROW=" + MapTileIndex.getY(pMapTileIndex)
+//                    + "&TILECOL=" + MapTileIndex.getX(pMapTileIndex)
+//                    + "&TILEMATRIX=" + MapTileIndex.getZoom(pMapTileIndex)
+                    + "&tilerow=" + MapTileIndex.getY(pMapTileIndex)
+                    + "&tilecol=" + MapTileIndex.getX(pMapTileIndex)
+                    + "&tilematrix=" + MapTileIndex.getZoom(pMapTileIndex)
                     + mImageFilenameEnding;
         }
     };
 
     // 影像地图 _W是墨卡托投影  _c是国家2000的坐标系
-    OnlineTileSourceBase tianDiTuImg2TileSource = new XYTileSource("Tian Di Tu Img", 1, 18, 256, "",
+    OnlineTileSourceBase tianDiTuImg2TileSource = new XYTileSource("TianDiTuImg2", 1, 18, 768, "",
             new String[] {
-                    "http://t1.tianditu.com/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t2.tianditu.com/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t3.tianditu.com/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t4.tianditu.com/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t5.tianditu.com/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t6.tianditu.com/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c"
+                    "https://t1.tianditu.gov.cn/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t2.tianditu.gov.cn/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t3.tianditu.gov.cn/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t4.tianditu.gov.cn/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t5.tianditu.gov.cn/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t6.tianditu.gov.cn/DataServer?T=img_w&tk=6cda6bd921b61ce58c7cece2f3ba578c"
     }) {
         @Override
         public String getTileURLString(final long pMapTileIndex){
@@ -193,14 +203,14 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
     };
 
     // 影像标注 _W是墨卡托投影  _c是国家2000的坐标系
-    OnlineTileSourceBase tianDiTuCiaTileSource = new OnlineTileSourceBase("Tian Di Tu Cia", 0, 18, 256, "",
-            new String[]{
-                    "http://t1.tianditu.com/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t2.tianditu.com/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t3.tianditu.com/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t4.tianditu.com/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t5.tianditu.com/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
-                    "http://t6.tianditu.com/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c"
+    OnlineTileSourceBase tianDiTuCiaTileSource = new OnlineTileSourceBase("TianDiTuCia", 1, 18, 768, "",
+            new String[] {
+                    "https://t1.tianditu.gov.cn/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t2.tianditu.gov.cn/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t3.tianditu.gov.cn/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t4.tianditu.gov.cn/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t5.tianditu.gov.cn/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c",
+                    "https://t6.tianditu.gov.cn/DataServer?T=cia_w&tk=6cda6bd921b61ce58c7cece2f3ba578c"
     }) {
         @Override
         public String getTileURLString(final long pMapTileIndex){
@@ -236,8 +246,8 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
         }
     };
 
-    // 已验证
-    OnlineTileSourceBase wprdMapsSource = new TMSOnlineTileSourceBase("wprd map", 0, 18, 256, "",
+    // 已验证，高德地图
+    OnlineTileSourceBase wprdMapsSource = new TMSOnlineTileSourceBase("AutoNavi-Vector", 0, 18, 256, "",
             new String[] {
                     "http://wprd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scl=1&style=7",
                     "http://wprd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scl=1&style=7",
@@ -260,7 +270,8 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
     };
 
     OnlineTileSourceBase szMapsSource = new OnlineTileSourceBase("sz map", 0, 18, 256, "",
-//            new String[] {"http://pnr.sz.gov.cn/d-suplicmap/tilemap_1/rest/services/SZMAP_BASEMAP_GK2K/MapServer/tile/{z}/{y}/{x}",
+//            new String[] {
+//            "http://pnr.sz.gov.cn/d-suplicmap/tilemap_1/rest/services/SZMAP_BASEMAP_GK2K/MapServer/tile/{z}/{y}/{x}",
             new String[] {
                     "http://pnr.sz.gov.cn/d-suplicmap/tilemap_1/rest/services/SZMAP_BASEMAP_GK2K/MapServer/tile/",
             }) {

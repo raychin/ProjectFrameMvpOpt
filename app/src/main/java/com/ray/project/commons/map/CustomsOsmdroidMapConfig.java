@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.ray.project.config.MMKVManager;
-
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
