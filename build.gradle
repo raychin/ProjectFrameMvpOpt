@@ -14,7 +14,6 @@ buildscript {
         junitVersion = '4.13.2'
         testRunnerVerion = '1.0.2'
         testEspressoVersion = '3.0.2'
-        butterknifeVersion = '10.2.3'
         gradleVersion = '3.6.3'
         // java8版本支持，不可升级
         roomVersion = "2.3.0"
@@ -36,7 +35,6 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
-        classpath "com.jakewharton:butterknife-gradle-plugin:$butterknifeVersion"
         classpath "com.tencent.rfix:RFix-gradle-plugin:$shiplyHotFixVersion"
 
         // NOTE: Do not place your application dependencies here; they belong

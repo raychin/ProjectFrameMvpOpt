@@ -22,9 +22,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * fragment抽象类
  * @author ray
@@ -123,7 +120,6 @@ public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresent
         super.onCreate(savedInstanceState);
     }
 
-    private Unbinder bind;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -148,8 +144,6 @@ public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresent
         if (mActivity.scale != 1) {
             RelayoutTool.relayoutViewHierarchy(mContentView, mActivity.scale);
         }
-
-        bind = ButterKnife.bind(this, mContentView);
 
         setStatusViewWithColor(statusColor());
         setTitleNavigationShow(showTitleNavigation());
@@ -196,7 +190,6 @@ public abstract class BaseFragment<VB extends ViewBinding, P extends BasePresent
     @Override
     public void onDestroy() {
         super.onDestroy();
-        bind.unbind();
         mBinding = null;
     }
 

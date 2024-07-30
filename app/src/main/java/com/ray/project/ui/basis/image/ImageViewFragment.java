@@ -2,10 +2,7 @@ package com.ray.project.ui.basis.image;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -14,12 +11,8 @@ import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.databinding.FragmentImageViewBinding;
 
-import butterknife.BindView;
-
 public class ImageViewFragment extends BaseFragment<FragmentImageViewBinding, BasePresenter> {
 
-    @BindView(R.id.image_view)
-    ImageView imageView;
     String url;
 
     public void setUrl(String url) {
@@ -52,7 +45,7 @@ public class ImageViewFragment extends BaseFragment<FragmentImageViewBinding, Ba
         RequestOptions options = new RequestOptions();
         options.centerCrop()
                 .error(R.drawable.icon_loadfail);
-        Glide.with(mActivity).load(url).apply(options).into(imageView);
+        Glide.with(mActivity).load(url).apply(options).into(mBinding.imageView);
     }
 
     @Override
