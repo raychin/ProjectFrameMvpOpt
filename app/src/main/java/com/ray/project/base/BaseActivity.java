@@ -45,9 +45,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * activity抽象类
  * @author ray
@@ -145,8 +142,6 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         mConainerView.findViewById(R.id.titleRl).setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    private Unbinder bind;
-
     protected VB mBinding;
 
     @Override
@@ -170,7 +165,6 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         // 设置布局
         setContentView(initLayout());
 
-        bind = ButterKnife.bind(this);
         if(isImmersiveStatus()) { setStatusViewWithColor(statusColor()); }
 
 //        if (showTitleNavigation()) { setTitleNavigationShow(); }
@@ -463,7 +457,6 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         lifecycleShow(new Object(){}.getClass().getEnclosingMethod().getName());
         if(presenter != null) { presenter.onDestroy(); }
         // 释放持有，防止泄露
-        bind.unbind();
         mBinding = null;
         AppManager.getAppManager().finishActivity(this);
     }

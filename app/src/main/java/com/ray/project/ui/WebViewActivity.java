@@ -3,8 +3,6 @@ package com.ray.project.ui;
 import android.Manifest;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -14,8 +12,6 @@ import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.databinding.ActivityWebViewBinding;
-
-import butterknife.OnClick;
 
 /**
  * WebView主界面
@@ -52,10 +48,6 @@ public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePr
     @Override
     public void updateView(ResultEvent event) {
         super.updateView(event);
-    }
-
-    @OnClick({})
-    public void onClick(View view) {
     }
 
     @SuppressWarnings("rawtypes")

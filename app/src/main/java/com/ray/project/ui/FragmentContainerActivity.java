@@ -1,7 +1,6 @@
 package com.ray.project.ui;
 
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -13,8 +12,6 @@ import com.ray.project.base.BasePresenter;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.commons.ToastUtils;
 import com.ray.project.databinding.ActivityWebViewBinding;
-
-import butterknife.OnClick;
 
 /**
  * fragment container activity
@@ -50,9 +47,6 @@ public class FragmentContainerActivity extends BaseActivity<ActivityWebViewBindi
         super.updateView(event);
     }
 
-    @OnClick({})
-    public void onClick(View view) {
-    }
 
     @SuppressWarnings("rawtypes")
     private BaseFragment viewFragment;

@@ -14,8 +14,6 @@ import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
 import com.ray.project.ui.login.LoginPresenter;
 
-import butterknife.OnClick;
-
 /**
  * 应用主界面
  * @author ray
@@ -42,6 +40,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
                 Manifest.permission.ACCESS_FINE_LOCATION
             }
         );
+
+        mBinding.tabFirstButton.setOnClickListener(this::onClick);
+        mBinding.tabSecondButton.setOnClickListener(this::onClick);
+        mBinding.tabThirdButton.setOnClickListener(this::onClick);
+        mBinding.tabForthButton.setOnClickListener(this::onClick);
     }
 
     @Override
@@ -54,8 +57,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
         return true;
     }
 
-    @OnClick({R.id.tabFirstButton, R.id.tabSecondButton, R.id.tabThirdButton, R.id.tabForthButton})
-    public void onClick(View view) {
+    private void onClick(View view) {
         int pos = -1;
         if (view.getId() == R.id.tabFirstButton) {
             pos = 0;

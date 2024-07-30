@@ -171,8 +171,6 @@ dependencies {
     testImplementation "junit:junit:${rootProject.ext.junitVersion}"
     androidTestImplementation "com.android.support.test:runner:${rootProject.ext.testRunnerVerion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.testEspressoVersion}"
-    implementation "com.jakewharton:butterknife:${rootProject.ext.butterknifeVersion}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.ext.butterknifeVersion}"
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     // Retrofit通过GSON将结果转换为Bean对象
