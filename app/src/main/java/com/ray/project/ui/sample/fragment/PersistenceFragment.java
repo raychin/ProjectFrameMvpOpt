@@ -164,14 +164,10 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
         }
         mmkvAdapter.notifyDataSetChanged();
     }
-    private static class MMKVAdapter extends BaseAdapter<SampleAdapterMmkvBinding> {
+    private static class MMKVAdapter extends BaseAdapter<HashMap<String, String>, SampleAdapterMmkvBinding> {
 
-        private BaseActivity mActivity;
-        private List<HashMap<String, String>> mData;
-        private ViewBinding mBinding;
         public MMKVAdapter(BaseActivity activity, List<HashMap<String, String>> data) {
-            this.mData = data;
-            this.mActivity = activity;
+            super(activity, data);
         }
 
         @Override
@@ -217,11 +213,6 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
                 recyclerView.scrollToPosition(mData.size() - 1);
             });
         }
-
-        @Override
-        public int getItemCount() {
-            return mData.size();
-        }
     }
 
     private static RecyclerView recyclerView1;
@@ -242,14 +233,10 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
             roomDbAdapter.notifyDataSetChanged();
         }).start();
     }
-    private static class RoomDbAdapter extends BaseAdapter<SampleAdapterMmkvBinding> {
+    private static class RoomDbAdapter extends BaseAdapter<User, SampleAdapterMmkvBinding> {
 
-        private BaseActivity mActivity;
-        private List<User> mData;
-        private ViewBinding mBinding;
         public RoomDbAdapter(BaseActivity activity, List<User> data) {
-            this.mData = data;
-            this.mActivity = activity;
+            super(activity, data);
         }
 
         @Override
@@ -330,11 +317,6 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
                 notifyItemInserted(mData.size() - 1);
                 recyclerView1.scrollToPosition(mData.size() - 1);
             });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mData.size();
         }
     }
 }

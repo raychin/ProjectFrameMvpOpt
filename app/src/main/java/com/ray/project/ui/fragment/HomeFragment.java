@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewbinding.ViewBinding;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
@@ -162,8 +161,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             @Override
             public void run() {
                 mData.addAll(originData);
-//                mData.addAll(originData);
-//                mData.addAll(originData);
                 // 注意事项：当完成数据更新后一定要调用 setRefreshing(false)，不然刷新图标会一直转圈，不会消失
                 mBinding.swipeRefreshLayout.setRefreshing(false);
             }
@@ -177,21 +174,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                mData.addAll(originData);
                 isLoading = false;
             }
         }, 1000);
     }
 
 
-    private static class HomeAdapter extends BaseAdapter<SampleAdapterHomeBinding> {
+    private static class HomeAdapter extends BaseAdapter<HashMap<String, Object>, SampleAdapterHomeBinding> {
 
-        private BaseActivity mActivity;
-        private List<HashMap<String, Object>> mData;
-        private ViewBinding mBinding;
         public HomeAdapter(BaseActivity activity, List<HashMap<String, Object>> data) {
-            this.mData = data;
-            this.mActivity = activity;
+            super(activity, data);
         }
 
         @Override
@@ -254,11 +246,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
                     ToastUtils.showCustomToast(mActivity, "暂未实现", Toast.LENGTH_SHORT);
                 }
             });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mData.size();
         }
     }
 
