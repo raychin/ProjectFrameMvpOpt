@@ -108,7 +108,7 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
             mData.clear();
         }
 
-        new Handler().postDelayed(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < 20; i++) {
@@ -119,6 +119,7 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
             }
         }, 3000);
     }
+    private Handler mHandler = new Handler();
 
     /**
      * 上拉加载更多
@@ -126,7 +127,7 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
     private void loadMoreData() {
         int pos = mData.size();
         Logger.e("loadMoreData", "loadMoreData");
-        new Handler().postDelayed(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < 20; i++) {
@@ -143,6 +144,11 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
         }, 3000);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 
     private static class SampleAdapter extends BaseAdapter<String, SampleAdapterRecyclerViewItemBinding> {
 
