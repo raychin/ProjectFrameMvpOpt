@@ -1,9 +1,11 @@
 package com.ray.project.base;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 
@@ -65,9 +67,22 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull BindingViewHolder<VB> holder, int position) {
         if (getItemCount() - 1 == position) {
-            // TODO RAY 可以设置底部显示文本内容
+            // 设置底部显示文本内容
             RecyclerFooterViewBinding footerBinding = (RecyclerFooterViewBinding) holder.getBinding();
-//            footerBinding.footerTv.setText("加载更多...");
+            switch (loadState) {
+                case LOADING:
+                    footerBinding.footerTv.setText("正在加载...");
+                    footerBinding.footerPb.setVisibility(View.VISIBLE);
+                    break;
+                case LOADING_COMPLETE:
+                    footerBinding.footerTv.setText("加载更多");
+                    footerBinding.footerPb.setVisibility(View.GONE);
+                    break;
+                case LOADING_END:
+                    footerBinding.footerTv.setText("没有更多了~~");
+                    footerBinding.footerPb.setVisibility(View.GONE);
+                    break;
+            }
             return;
         }
         onConvert(holder.getBinding(), position);
@@ -75,4 +90,38 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
 
     protected abstract void onConvert(VB binding, int position);
 
+
+    // 当前加载状态，默认为加载完成
+    private int loadState = 2;
+    // 正在加载
+    public final int LOADING = 1;
+    // 加载完成
+    public final int LOADING_COMPLETE = 2;
+    // 加载到底
+    public final int LOADING_END = 3;
+    /**
+     * 设置上拉加载状态
+     *
+     * @param loadState 0.正在加载 1.加载完成 2.加载到底
+     */
+    public void setLoadState(int loadState) {
+        this.loadState = loadState;
+        notifyItemChanged(getItemCount() - 1);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {
+            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    // 如果当前是footer的位置，那么该item占据2个单元格，正常情况下占据1个单元格
+                    return getItemViewType(position) == TYPE_FOOTER ? gridManager.getSpanCount() : 1;
+                }
+            });
+        }
+    }
 }

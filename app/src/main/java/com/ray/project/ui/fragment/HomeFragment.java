@@ -80,6 +80,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             map.put("activity", FragmentContainerActivity.class);
             map.put("fragment", "com.ray.project.ui.fragment.MapViewFragment");
             add(map);
+
+            map = new HashMap<>();
+            map.put("name", "RecyclerView下拉刷新&上拉加载");
+            map.put("type", "intentFragment");
+            map.put("activity", FragmentContainerActivity.class);
+            map.put("fragment", "com.ray.project.ui.sample.fragment.RefreshRecyclerViewFragment");
+            add(map);
         }
     };
 
@@ -195,6 +202,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
         @Override
         protected void onConvert(SampleAdapterHomeBinding binding, int position) {
             HashMap<String, Object> itemData = mData.get(position);
+            binding.btJump.setTransformationMethod(null);
             binding.btJump.setText(Objects.requireNonNull((String) itemData.get("name")));
 
             binding.btJump.setOnClickListener(viewTitle -> {
