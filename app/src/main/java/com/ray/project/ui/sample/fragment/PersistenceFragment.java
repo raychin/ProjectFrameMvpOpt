@@ -16,7 +16,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
@@ -26,7 +25,7 @@ import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.LocationUtils;
 import com.ray.project.commons.ToastUtils;
 import com.ray.project.config.MMKVManager;
-import com.ray.project.databinding.FragmentSampleBinding;
+import com.ray.project.databinding.FragmentConstraintEmptyBinding;
 import com.ray.project.databinding.SampleAdapterMmkvBinding;
 import com.ray.project.db.AppDatabase;
 import com.ray.project.entity.User;
@@ -40,7 +39,7 @@ import java.util.List;
  * @author ray
  * @date 2024/06/27
  */
-public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, BasePresenter> {
+public class PersistenceFragment extends BaseFragment<FragmentConstraintEmptyBinding, BasePresenter> {
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -59,7 +58,7 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_constraint_empty;
     }
 
     @Override
