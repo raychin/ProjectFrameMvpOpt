@@ -129,22 +129,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             }
         });
 
-        mBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                // 检查是否到达底部
-                if (!recyclerView.canScrollVertically(1) && !isLoading) {
-                    // 加载更多数据
-                    loadMoreData();
-                    isLoading = true;
-                }
-            }
-        });
     }
 
-    private boolean isLoading = false;
     private List<HashMap<String, Object>> mData;
     private HomeAdapter homeAdapter;
 
@@ -174,23 +160,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
         }, 3000);
     }
 
-    /**
-     * 上拉加载更多
-     */
-    private void loadMoreData() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                isLoading = false;
-            }
-        }, 1000);
-    }
-
 
     private static class HomeAdapter extends BaseAdapter<HashMap<String, Object>, SampleAdapterHomeBinding> {
 
         public HomeAdapter(BaseActivity activity, List<HashMap<String, Object>> data) {
             super(activity, data);
+        }
+
+        @Override
+        protected Boolean showFooter() {
+            return false;
         }
 
         @Override

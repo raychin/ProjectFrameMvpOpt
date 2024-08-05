@@ -29,12 +29,24 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
         this.mActivity = activity;
     }
 
+    protected Boolean showFooter () {
+        return true;
+    }
+
     @Override
     public int getItemCount() {
+        int count = 0;
         if (null == mData) {
-            return 1;
+            if (showFooter()) {
+                count = 1;
+            }
+            return count;
         }
-        return mData.size() + 1;
+        count = mData.size();
+        if (showFooter()) {
+            count += 1;
+        }
+        return count;
     }
 
     private final static int TYPE_FOOTER = 1000000;
@@ -51,7 +63,7 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
-        if (getItemCount() - 1 == position) {
+        if (showFooter() && (getItemCount() - 1 == position)) {
             return TYPE_FOOTER;
         } else {
             return TYPE_NORMAL;
@@ -66,7 +78,7 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull BindingViewHolder<VB> holder, int position) {
-        if (getItemCount() - 1 == position) {
+        if (showFooter() && (getItemCount() - 1 == position)) {
             // 设置底部显示文本内容
             RecyclerFooterViewBinding footerBinding = (RecyclerFooterViewBinding) holder.getBinding();
             switch (loadState) {
@@ -105,6 +117,9 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
      * @param loadState 0.正在加载 1.加载完成 2.加载到底
      */
     public void setLoadState(int loadState) {
+        if (!showFooter()) {
+            return;
+        }
         this.loadState = loadState;
         notifyItemChanged(getItemCount() - 1);
     }
