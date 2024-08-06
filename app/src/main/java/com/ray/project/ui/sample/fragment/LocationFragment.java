@@ -20,14 +20,14 @@ import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.Loading;
 import com.ray.project.commons.LocationUtils;
 import com.ray.project.commons.Logger;
-import com.ray.project.databinding.FragmentSampleBinding;
+import com.ray.project.databinding.FragmentConstraintEmptyBinding;
 
 /**
  * 定位功能fragment
  * @author ray
  * @date 2024/06/27
  */
-public class LocationFragment extends BaseFragment<FragmentSampleBinding, BasePresenter> {
+public class LocationFragment extends BaseFragment<FragmentConstraintEmptyBinding, BasePresenter> {
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -46,7 +46,7 @@ public class LocationFragment extends BaseFragment<FragmentSampleBinding, BasePr
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_constraint_empty;
     }
 
     @Override

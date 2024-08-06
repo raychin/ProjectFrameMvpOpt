@@ -11,14 +11,14 @@ import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.commons.ToastUtils;
-import com.ray.project.databinding.ActivityWebViewBinding;
+import com.ray.project.databinding.ActivityFragmentContainerBinding;
 
 /**
  * fragment container activity
  * @author ray
  * @date 2018/07/03
  */
-public class FragmentContainerActivity extends BaseActivity<ActivityWebViewBinding, BasePresenter> {
+public class FragmentContainerActivity extends BaseActivity<ActivityFragmentContainerBinding, BasePresenter> {
 
     public static final String FRAGMENT_PATH = "fragmentPath";
     private String fragmentPath = "";

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/conRl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_round_white">
+
+    <Button
+        android:id="@+id/bt_jump"
+        style="@style/BtnCustomStyle"
+        android:background="@drawable/bt_shape_blue"
+        android:stateListAnimator="@drawable/state_list_animator_z"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:textSize="@dimen/btn_custom"
+        android:textColor="@color/white"
+        >
+    </Button>
+
+</LinearLayout>

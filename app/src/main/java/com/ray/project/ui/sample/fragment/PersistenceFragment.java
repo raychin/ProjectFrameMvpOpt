@@ -16,17 +16,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
 import com.ray.project.base.BaseAdapter;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
-import com.ray.project.commons.LocationUtils;
 import com.ray.project.commons.ToastUtils;
 import com.ray.project.config.MMKVManager;
-import com.ray.project.databinding.FragmentSampleBinding;
+import com.ray.project.databinding.FragmentConstraintEmptyBinding;
 import com.ray.project.databinding.SampleAdapterMmkvBinding;
 import com.ray.project.db.AppDatabase;
 import com.ray.project.entity.User;
@@ -40,7 +38,7 @@ import java.util.List;
  * @author ray
  * @date 2024/06/27
  */
-public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, BasePresenter> {
+public class PersistenceFragment extends BaseFragment<FragmentConstraintEmptyBinding, BasePresenter> {
 
     @Override
     protected boolean isImmersiveStatusHeight() {
@@ -59,7 +57,7 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_constraint_empty;
     }
 
     @Override
@@ -131,7 +129,6 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
     @Override
     public void onStop() {
         super.onStop();
-        LocationUtils.getInstance(mActivity).clearAddressCallback();
     }
 
     @Override
@@ -164,14 +161,10 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
         }
         mmkvAdapter.notifyDataSetChanged();
     }
-    private static class MMKVAdapter extends BaseAdapter<SampleAdapterMmkvBinding> {
+    private static class MMKVAdapter extends BaseAdapter<HashMap<String, String>, SampleAdapterMmkvBinding> {
 
-        private BaseActivity mActivity;
-        private List<HashMap<String, String>> mData;
-        private ViewBinding mBinding;
         public MMKVAdapter(BaseActivity activity, List<HashMap<String, String>> data) {
-            this.mData = data;
-            this.mActivity = activity;
+            super(activity, data);
         }
 
         @Override
@@ -217,11 +210,6 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
                 recyclerView.scrollToPosition(mData.size() - 1);
             });
         }
-
-        @Override
-        public int getItemCount() {
-            return mData.size();
-        }
     }
 
     private static RecyclerView recyclerView1;
@@ -242,14 +230,10 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
             roomDbAdapter.notifyDataSetChanged();
         }).start();
     }
-    private static class RoomDbAdapter extends BaseAdapter<SampleAdapterMmkvBinding> {
+    private static class RoomDbAdapter extends BaseAdapter<User, SampleAdapterMmkvBinding> {
 
-        private BaseActivity mActivity;
-        private List<User> mData;
-        private ViewBinding mBinding;
         public RoomDbAdapter(BaseActivity activity, List<User> data) {
-            this.mData = data;
-            this.mActivity = activity;
+            super(activity, data);
         }
 
         @Override
@@ -330,11 +314,6 @@ public class PersistenceFragment extends BaseFragment<FragmentSampleBinding, Bas
                 notifyItemInserted(mData.size() - 1);
                 recyclerView1.scrollToPosition(mData.size() - 1);
             });
-        }
-
-        @Override
-        public int getItemCount() {
-            return mData.size();
         }
     }
 }
