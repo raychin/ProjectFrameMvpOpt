@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ray.project.R;
@@ -21,7 +20,6 @@ import com.ray.project.base.BaseActivity;
 import com.ray.project.base.BaseAdapter;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
-import com.ray.project.commons.LocationUtils;
 import com.ray.project.commons.Logger;
 import com.ray.project.databinding.FragmentRefreshRecyclerViewBinding;
 import com.ray.project.databinding.SampleAdapterRecyclerViewItemBinding;
@@ -181,7 +179,6 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
     @Override
     public void onStop() {
         super.onStop();
-        LocationUtils.getInstance(mActivity).clearAddressCallback();
     }
 
     @Override

@@ -22,7 +22,6 @@ import com.ray.project.base.BaseActivity;
 import com.ray.project.base.BaseAdapter;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
-import com.ray.project.commons.LocationUtils;
 import com.ray.project.commons.ToastUtils;
 import com.ray.project.config.MMKVManager;
 import com.ray.project.databinding.FragmentConstraintEmptyBinding;
@@ -130,7 +129,6 @@ public class PersistenceFragment extends BaseFragment<FragmentConstraintEmptyBin
     @Override
     public void onStop() {
         super.onStop();
-        LocationUtils.getInstance(mActivity).clearAddressCallback();
     }
 
     @Override
