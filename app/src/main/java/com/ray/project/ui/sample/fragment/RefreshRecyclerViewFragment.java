@@ -6,13 +6,17 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ray.project.R;
@@ -27,6 +31,7 @@ import com.ray.project.widget.recyclerView.RayRecyclerOnScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * RecyclerView下拉刷新&上拉加载fragment
@@ -60,16 +65,15 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
         super.onCreate(savedInstanceState);
     }
 
+    protected RecyclerView.LayoutManager mLayoutManager;
     @Override
     protected void initView(View view) {
         setTitleText("RecyclerView下拉刷新&下拉加载");
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mBinding.recyclerView.setLayoutManager(layoutManager);
         mData = new ArrayList<>();
         mAdapter = new SampleAdapter(mActivity, mData);
         mBinding.recyclerView.setAdapter(mAdapter);
+
         // 设置下拉刷新的监听器
         mBinding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,6 +95,50 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
                 loadMoreData();
             }
         });
+
+        mBinding.radioGroupRecyclerView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                Logger.e("onCheckedChanged", radioGroup.getId() + ", " + i);
+                if (i == mBinding.rbLinearLayoutManager.getId()) {
+                    setRecyclerViewLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER);
+                } else if (i == mBinding.rbGridLayoutManager.getId()) {
+                    setRecyclerViewLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER);
+                } else if (i == mBinding.rbStaggeredGridLayoutManager.getId()) {
+                    setRecyclerViewLayoutManager(LayoutManagerType.STAGGERED_GRID_LAYOUT_MANAGER);
+                }
+            }
+        });
+    }
+
+    private enum LayoutManagerType {
+        GRID_LAYOUT_MANAGER,
+        LINEAR_LAYOUT_MANAGER,
+        STAGGERED_GRID_LAYOUT_MANAGER,
+    }
+    private final static int SPAN_COUNT = 2;
+
+    private void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
+        switch (layoutManagerType) {
+            case GRID_LAYOUT_MANAGER:
+                mLayoutManager = new GridLayoutManager(mActivity, SPAN_COUNT);
+                break;
+            case LINEAR_LAYOUT_MANAGER:
+                mLayoutManager = new LinearLayoutManager(mActivity);
+                ((LinearLayoutManager) mLayoutManager).setOrientation(LinearLayoutManager.VERTICAL);
+                break;
+            case STAGGERED_GRID_LAYOUT_MANAGER:
+                mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
+                break;
+        }
+
+        mBinding.recyclerView.setLayoutManager(mLayoutManager);
+        mAdapter.onAttachedToRecyclerView(mBinding.recyclerView);
+
+//        if (null == mData || mData.size() == 0) {
+            mBinding.swipeRefreshLayout.setRefreshing(true);
+            refreshData();
+//        }
     }
 
     private List<String> mData;
@@ -163,14 +211,25 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
         @Override
         protected void onConvert(SampleAdapterRecyclerViewItemBinding binding, int position) {
 //            String itemData = mData.get(position);
-
+            binding.con.removeAllViews();
             TextView textView = new TextView(mActivity);
-            textView.setBackgroundResource(R.drawable.bt_shape_blue);
-            textView.setTextColor(ContextCompat.getColor(mActivity, R.color.white));
+            textView.setBackgroundResource(R.drawable.bt_shape);
+            textView.setTextColor(ContextCompat.getColor(mActivity, R.color.text_black));
             textView.setText("第" + (position + 1) + "个元素");
             textView.setAllCaps(false);
             textView.setPadding(20, 60, 20, 60);
             ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (manager instanceof StaggeredGridLayoutManager) {
+                // 初始化随机数生成器
+                Random rand = new Random();
+
+                // 定义5个数字
+                int[] numbers = {360, 490, 1000, 1200, 1350};
+
+                // 从数组中随机选择一个数字
+                int randomIndex = rand.nextInt(numbers.length);
+                params.height = numbers[randomIndex];
+            }
             binding.con.addView(textView, params);
 
         }
@@ -183,8 +242,7 @@ public class RefreshRecyclerViewFragment extends BaseFragment<FragmentRefreshRec
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        mBinding.swipeRefreshLayout.setRefreshing(true);
-        refreshData();
+        mBinding.rbLinearLayoutManager.setChecked(true);
     }
 
     @Override

@@ -4,6 +4,6 @@
     android:id="@+id/con"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="5dp"
     android:background="@color/app_background">
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewbinding.ViewBinding;
 
+import com.ray.project.commons.Logger;
 import com.ray.project.databinding.RecyclerFooterViewBinding;
 
 import java.util.List;
@@ -49,8 +51,8 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
         return count;
     }
 
-    private final static int TYPE_FOOTER = 1000000;
-    private final static int TYPE_NORMAL = 1000001;
+    public final static int TYPE_FOOTER = 1000000;
+    public final static int TYPE_NORMAL = 1000001;
     @NonNull
     @Override
 //    public BindingViewHolder<VB> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -124,19 +126,36 @@ public abstract class BaseAdapter<T, VB extends ViewBinding> extends RecyclerVie
         notifyItemChanged(getItemCount() - 1);
     }
 
+    protected RecyclerView mRecyclerView;
+    protected RecyclerView.LayoutManager manager;
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        mRecyclerView = recyclerView;
+        manager = recyclerView.getLayoutManager();
+        Logger.e("onAttachedToRecyclerView", "manager = " + manager);
         if (manager instanceof GridLayoutManager) {
             final GridLayoutManager gridManager = ((GridLayoutManager) manager);
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
+                    Logger.e("getSpanSize", "position = " + position + ", getItemViewType(position) = " + getItemViewType(position));
                     // 如果当前是footer的位置，那么该item占据2个单元格，正常情况下占据1个单元格
                     return getItemViewType(position) == TYPE_FOOTER ? gridManager.getSpanCount() : 1;
                 }
             });
+        }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull BindingViewHolder<VB> holder) {
+        super.onViewAttachedToWindow(holder);
+        Logger.e("onViewAttachedToWindow", "manager = " + manager);
+        if (manager instanceof StaggeredGridLayoutManager) {
+            if (getItemViewType(holder.getAdapterPosition()) == TYPE_FOOTER) {
+                StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+                params.setFullSpan(true);
+            }
         }
     }
 }

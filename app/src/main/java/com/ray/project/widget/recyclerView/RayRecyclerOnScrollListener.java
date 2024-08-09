@@ -3,6 +3,7 @@ package com.ray.project.widget.recyclerView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.ray.project.commons.Logger;
 
@@ -19,8 +20,35 @@ public abstract class RayRecyclerOnScrollListener extends RecyclerView.OnScrollL
     @Override
     public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
-        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
         Logger.e("onScrollStateChanged", "newState = " + newState);
+
+        RecyclerView.LayoutManager rManager = recyclerView.getLayoutManager();
+        if (rManager instanceof StaggeredGridLayoutManager) {
+            StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) rManager;
+            // 当不滑动时
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                int lastItemPosition = -1;
+                int[] lastVisibleItems = staggeredGridLayoutManager.findLastVisibleItemPositions(new int[staggeredGridLayoutManager.getSpanCount()]);
+                // 获取最后一个完全显示的itemPosition
+                if (staggeredGridLayoutManager.getSpanCount() == 1) {
+                    lastItemPosition = lastVisibleItems[0];
+                } else if (staggeredGridLayoutManager.getSpanCount() == 2) {
+                    lastItemPosition = Math.max(lastVisibleItems[0], lastVisibleItems[1]);
+                } else if (staggeredGridLayoutManager.getSpanCount() == 3) {
+                    lastItemPosition = Math.max(Math.max(lastVisibleItems[0], lastVisibleItems[1]), lastVisibleItems[2]);
+                }
+
+                int itemCount = staggeredGridLayoutManager.getItemCount();
+
+                // 判断是否滑动到了最后一个item，并且是向上滑动
+                if (lastItemPosition == (itemCount - 1) && isSlidingUpward) {
+                    // 加载更多
+                    onLoadMore();
+                }
+            }
+            return;
+        }
+        LinearLayoutManager manager = (LinearLayoutManager) rManager;
         // 当不滑动时
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
             // 获取最后一个完全显示的itemPosition

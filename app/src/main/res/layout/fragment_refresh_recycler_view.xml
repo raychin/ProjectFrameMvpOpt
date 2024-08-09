@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/con"
+    android:id="@+id/refreshRecyclerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
+    android:orientation="vertical"
     android:background="@color/app_background">
+
+    <RadioGroup
+        android:id="@+id/radioGroupRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rbLinearLayoutManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="一维列表" />
+        <RadioButton
+            android:id="@+id/rbGridLayoutManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="网格列表" />
+        <RadioButton
+            android:id="@+id/rbStaggeredGridLayoutManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="瀑布流" />
+    </RadioGroup>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -18,4 +41,4 @@
             android:layout_height="match_parent"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
