@@ -1,6 +1,7 @@
 package com.ray.project.ui;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -19,8 +20,7 @@ import com.ray.project.databinding.ActivityWebViewBinding;
  * @date 2018/07/03
  */
 public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePresenter> {
-//    private String webUrl = "https://subaibai.vip";
-    private String webUrl = "https://www.ingbo.tv";
+    private String webUrl = "file:///android_asset/web/ray-template/index.html";
 //    private String webUrl = "https://www.czzy.top";
 //    private String webUrl = "https://cz01.vip";
 
@@ -42,6 +42,10 @@ public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePr
 
     @Override
     public void initData() {
+        Intent intent = getIntent();
+        if (null != intent && !TextUtils.isEmpty(intent.getStringExtra(BaseFragment.WEB_VIEW_URL_KEY))) {
+            webUrl = intent.getStringExtra(BaseFragment.WEB_VIEW_URL_KEY);
+        }
         setSelect();
     }
 

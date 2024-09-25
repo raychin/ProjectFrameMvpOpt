@@ -29,7 +29,8 @@ import com.ray.project.web.RayWebViewClient;
 public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePresenter> {
 //    private WebView webView;
     private RayWebView webView;
-    private String webUrl = "file:///android_asset/web/ray-template/index.html";
+    private String webUrl = "https://www.examcoo.com/";
+//    private String webUrl = "file:///android_asset/web/ray-template/index.html";
 
     @Override
     protected boolean isImmersiveStatusHeight() {

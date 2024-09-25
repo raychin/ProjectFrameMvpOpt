@@ -1,7 +1,9 @@
 package com.ray.project.web;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Message;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,13 @@ import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import com.ray.project.base.BaseActivity;
+import com.ray.project.base.BaseFragment;
 import com.ray.project.commons.Logger;
+import com.ray.project.ui.WebViewActivity;
 
 /**
  * description ： WebView chrome client
@@ -300,6 +305,27 @@ public class RayWebViewChromeClient extends WebChromeClient implements MediaPlay
     public boolean onError(MediaPlayer mp, int what, int extra) {
         // By returning false, onCompletion() will be called
         return false;
+    }
+
+    @Override
+    public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+//        return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg);
+        WebView newWebView = new WebView(webView.getContext());
+        newWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Logger.i("====", "shouldOverrideUrlLoading: " + url);
+                // 跳转系统自带浏览器
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+//                mActivity.startActivity(intent);
+                mActivity.nextActivity(WebViewActivity.class, true, BaseFragment.WEB_VIEW_URL_KEY, url);
+                return true;
+            }
+        });
+        WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+        transport.setWebView(newWebView);
+        resultMsg.sendToTarget();
+        return true;
     }
 
     /**

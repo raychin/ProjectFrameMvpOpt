@@ -44,7 +44,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
     private final List<HashMap<String, Object>> originData = new ArrayList<HashMap<String, Object>>() {
         {
             HashMap<String, Object> map = new HashMap<>();
-            map.put("name", "WebView「影视入口」");
+            map.put("name", "WebView");
             map.put("type", "intent");
             map.put("activity", WebViewActivity.class);
             add(map);
@@ -157,7 +157,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
                 // 注意事项：当完成数据更新后一定要调用 setRefreshing(false)，不然刷新图标会一直转圈，不会消失
                 mBinding.swipeRefreshLayout.setRefreshing(false);
             }
-        }, 3000);
+        }, 1500);
     }
 
 
