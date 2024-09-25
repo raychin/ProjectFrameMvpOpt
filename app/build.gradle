@@ -65,9 +65,9 @@ android {
             //outputFileName = "app_v${defaultConfig.versionName}(${defaultConfig.versionCode})_${variant.productFlavors[0].name}.apk"
 
             if(variant.buildType.name == ('release')) {
-                outputFileName = "app${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.productFlavors[0].name}_${releaseTime()}.apk"
+                outputFileName = "${variant.productFlavors[0].name}_app${defaultConfig.versionName}_${defaultConfig.versionCode}_${releaseTime()}.apk"
             } else if(variant.buildType.name == ('debug')) {
-                outputFileName = "app${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.productFlavors[0].name}_debug.apk"
+                outputFileName = "${variant.productFlavors[0].name}_app${defaultConfig.versionName}_${defaultConfig.versionCode}_debug.apk"
             }
         }
     }
