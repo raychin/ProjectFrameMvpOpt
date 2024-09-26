@@ -20,6 +20,17 @@
         android:src="@mipmap/ic_launcher"
         />
 
+    <ImageView
+        android:id="@+id/iv_tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        />
+
     <Button
         android:layout_marginTop="300dp"
         android:layout_gravity="center_horizontal"

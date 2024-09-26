@@ -87,4 +87,8 @@
         <item name="android:textSize">@dimen/btn_custom</item>
     </style>
 
+    <style name="PopupMenuAnimationPreview">
+        <item name="android:windowEnterAnimation">@anim/popup_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_fade_out</item>
+    </style>
 </resources>

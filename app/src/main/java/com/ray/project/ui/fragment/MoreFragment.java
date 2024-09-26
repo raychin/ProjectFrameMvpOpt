@@ -18,6 +18,7 @@ import com.ray.project.databinding.FragmentMoreBinding;
 import com.ray.project.model.LoginModel;
 import com.ray.project.ui.login.LoginActivity;
 import com.ray.project.widget.CommonDialog;
+import com.ray.project.widget.PopupMenu;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -63,6 +64,11 @@ public class MoreFragment extends BaseFragment<FragmentMoreBinding, BasePresente
 
         mBinding.btToLogin.setOnClickListener(v -> {
             mActivity.nextActivity(LoginActivity.class);
+        });
+
+        mBinding.ivTools.setOnClickListener(v -> {
+            PopupMenu popWindow = new PopupMenu(mActivity);
+            popWindow.showPopupWindow(mBinding.ivTools);
         });
     }
 
