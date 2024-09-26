@@ -67,8 +67,7 @@ public class MoreFragment extends BaseFragment<FragmentMoreBinding, BasePresente
         });
 
         mBinding.ivTools.setOnClickListener(v -> {
-            PopupMenu popWindow = new PopupMenu(mActivity);
-            popWindow.showPopupWindow(mBinding.ivTools);
+            PopupMenu.getInstance(mActivity).showPopupWindow(mBinding.ivTools);
         });
     }
 

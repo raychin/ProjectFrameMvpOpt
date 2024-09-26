@@ -22,4 +22,6 @@
     <string name="sure">确定</string>
 
     <string name="tip_login_success">登录成功</string>
+
+    <string name="popup_menu_scan">扫一扫</string>
 </resources>
