@@ -1,0 +1,31 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="cn.ray.qrcode.core" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="23"
+6-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml
+7        android:targetSdkVersion="28" />
+7-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml
+8
+9    <uses-permission android:name="android.permission.CAMERA" />
+9-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:4:5-65
+9-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:4:22-62
+10    <uses-permission android:name="android.permission.FLASHLIGHT" />
+10-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:5:5-69
+10-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:5:22-66
+11
+12    <uses-feature
+12-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:7:5-9:36
+13        android:name="android.hardware.camera.autofocus"
+13-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:8:9-57
+14        android:required="false" />
+14-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:9:9-33
+15    <uses-feature
+15-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:10:5-12:36
+16        android:name="android.hardware.camera.flash"
+16-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:11:9-53
+17        android:required="false" />
+17-->/Users/Files/workspace/git/ProjectFrameMvpOpt/qrcodecore/src/main/AndroidManifest.xml:12:9-33
+18
+19</manifest>

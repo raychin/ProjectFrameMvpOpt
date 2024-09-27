@@ -206,6 +206,9 @@ dependencies {
     implementation "org.osmdroid:osmdroid-android:${rootProject.ext.osmdroidVersion}"
     // Adds basic support for WMS servers, specifically GeoServer
     implementation "org.osmdroid:osmdroid-wms:${rootProject.ext.osmdroidVersion}"
+
+//    implementation 'com.github.bingoogolapple.BGAQRCode-Android:zxing:1.3.8'
+    implementation project(':zxing')
 }
 
 // 接入RFix补丁组件

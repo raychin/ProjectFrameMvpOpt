@@ -13,6 +13,7 @@ import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
 import com.ray.project.config.MMKVManager;
 import com.ray.project.databinding.PopupMenuBinding;
+import com.ray.project.ui.FragmentContainerActivity;
 
 /**
  * @Description: 自定义下拉菜单
@@ -68,7 +69,9 @@ public class PopupMenu {
 
             @Override
             public void onClick(View arg0) {
-                //do something you need here
+                // do something you need here
+
+                mActivity.nextActivity(FragmentContainerActivity.class, FragmentContainerActivity.FRAGMENT_PATH, "com.ray.project.ui.fragment.qrCode.ScanFragment");
                 popupWindow.dismiss();
             }
         });

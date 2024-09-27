@@ -1,0 +1,11 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="cn.ray.qrcode.zxing" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="23"
+6-->/Users/Files/workspace/git/ProjectFrameMvpOpt/zxing/src/main/AndroidManifest.xml
+7        android:targetSdkVersion="28" />
+7-->/Users/Files/workspace/git/ProjectFrameMvpOpt/zxing/src/main/AndroidManifest.xml
+8
+9</manifest>
