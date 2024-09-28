@@ -42,4 +42,17 @@
         app:qrcv_toolbarHeight="56dp"
         app:qrcv_topOffset="65dp"
         app:qrcv_verticalBias="-1" />
+
+    <TextView
+        android:id="@+id/choose_qr_code_from_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="@dimen/btn_custom"
+        android:textColor="@color/c_f8f4e6"
+        android:textStyle="bold"
+        android:text="@string/qr_code_from_gallery"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp" />
 </RelativeLayout>

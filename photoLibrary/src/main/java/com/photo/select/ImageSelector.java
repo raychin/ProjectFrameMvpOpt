@@ -31,7 +31,7 @@ public class ImageSelector {
 
 
         Intent intent = new Intent(activity, ImageSelectorActivity.class);
-        intent.putExtra("config",config);
+        intent.putExtra("config", config);
         activity.startActivityForResult(intent, config.getRequestCode());
     }
 

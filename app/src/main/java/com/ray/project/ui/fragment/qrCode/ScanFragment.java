@@ -1,21 +1,31 @@
 package com.ray.project.ui.fragment.qrCode;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
+import com.photo.select.ImageConfig;
+import com.photo.select.ImageSelector;
+import com.photo.select.ImageSelectorActivity;
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
+import com.ray.project.commons.GlideLoader;
 import com.ray.project.commons.Logger;
 import com.ray.project.databinding.FragmentScanZxingBinding;
 import com.ray.project.ui.WebViewActivity;
 
-//import cn.bingoogolapple.qrcode.core.QRCodeView;
+import java.util.ArrayList;
+
 import cn.ray.qrcode.core.QRCodeView;
 
 /**
@@ -56,10 +66,47 @@ public class ScanFragment extends BaseFragment<FragmentScanZxingBinding, BasePre
         );
     }
 
+    private ImageConfig imageConfig;
+    private ArrayList<String> selected = new ArrayList<>();
+    private final static int RESULT_PHOTO_CODE = 101;
     @Override
     protected void initView(View view) {
         setTitleText("扫一扫");
         mBinding.zXingView.setDelegate(this);
+
+        imageConfig = new ImageConfig.Builder(
+                new GlideLoader())
+                .steepToolBarColor(getResources().getColor(R.color.actionbar))
+                .titleBgColor(getResources().getColor(R.color.actionbar))
+                .titleSubmitTextColor(getResources().getColor(R.color.material_white))
+                .titleTextColor(getResources().getColor(R.color.material_white))
+                // 单选
+                .singleSelect()
+                // 已选择的图片路径
+                .pathList(selected)
+                // 拍照后存放的图片路径（默认 /temp/picture）
+                //.filePath("/temp")
+                // 开启拍照功能（默认关闭）
+                // .showCamera()
+                .requestCode(RESULT_PHOTO_CODE)
+                .build();
+
+        mBinding.chooseQrCodeFromGallery.setOnClickListener(v -> {
+            ImageSelector.open(mActivity, imageConfig);
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // 显示扫描框，并开始识别
+        mBinding.zXingView.startSpotAndShowRect();
+
+        if (resultCode == RESULT_OK && requestCode == RESULT_PHOTO_CODE) {
+            selected = data.getStringArrayListExtra(ImageSelectorActivity.EXTRA_RESULT);
+            if (null != selected && !selected.isEmpty()) {
+                // 本来就用到 QRCodeView 时可直接调 QRCodeView 的方法，走通用的回调
+                mBinding.zXingView.decodeQRCode(selected.get(0));
+            }
+        }
     }
 
     @Override
@@ -107,6 +154,10 @@ public class ScanFragment extends BaseFragment<FragmentScanZxingBinding, BasePre
     @Override
     public void onScanQRCodeSuccess(String result) {
         vibrate();
+
+        if (TextUtils.isEmpty(result)) {
+            return;
+        }
 
         if (result.startsWith("http://") || result.startsWith("https://")) {
             mActivity.nextActivity(WebViewActivity.class, true, BaseFragment.WEB_VIEW_URL_KEY, result);

@@ -3,11 +3,14 @@ package com.ray.project.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
+
+import androidx.core.widget.PopupWindowCompat;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseActivity;
@@ -85,7 +88,8 @@ public class PopupMenu {
     public void showPopupWindow(View parent) {
         if (!popupWindow.isShowing()) {
             // 以下拉方式显示popupwindow
-            popupWindow.showAsDropDown(parent, parent.getLayoutParams().width / 3, 5);
+//            popupWindow.showAsDropDown(parent, parent.getLayoutParams().width / 3, 5);
+            PopupWindowCompat.showAsDropDown(popupWindow, parent, parent.getLayoutParams().width / 3, -40, Gravity.START);
         } else {
             popupWindow.dismiss();
         }

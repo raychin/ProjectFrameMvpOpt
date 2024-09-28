@@ -1,6 +1,5 @@
 package com.photo.select;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

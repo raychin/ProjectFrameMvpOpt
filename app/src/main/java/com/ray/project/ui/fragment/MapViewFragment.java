@@ -40,7 +40,7 @@ public class MapViewFragment extends BaseFragment<FragmentMapViewBinding, BasePr
 
     @Override
     protected int initLayout() {
-        return R.layout.fragment_web_view;
+        return R.layout.fragment_map_view;
     }
 
     @Override

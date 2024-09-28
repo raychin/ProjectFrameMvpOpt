@@ -24,4 +24,5 @@
     <string name="tip_login_success">登录成功</string>
 
     <string name="popup_menu_scan">扫一扫</string>
+    <string name="qr_code_from_gallery">从图片中选取</string>
 </resources>

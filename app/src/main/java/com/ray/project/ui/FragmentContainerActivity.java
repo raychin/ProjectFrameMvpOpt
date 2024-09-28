@@ -1,8 +1,10 @@
 package com.ray.project.ui;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.ray.project.R;
@@ -75,6 +77,16 @@ public class FragmentContainerActivity extends BaseActivity<ActivityFragmentCont
     private void hideFragment(FragmentTransaction transaction) {
         if (viewFragment != null) {
             transaction.hide(viewFragment);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        BaseFragment current = getVisibleFragment();
+        if (null != current) {
+            current.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

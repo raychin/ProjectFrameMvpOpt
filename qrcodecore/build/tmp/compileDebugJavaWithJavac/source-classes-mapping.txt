@@ -1,11 +1,17 @@
-cn/ray/qrcode/core/ScanResult.java
- cn.ray.qrcode.core.ScanResult
-cn/ray/qrcode/core/ProcessDataTask.java
- cn.ray.qrcode.core.ProcessDataTask
+cn/ray/qrcode/core/BuildConfig.java
+ cn.ray.qrcode.core.BuildConfig
+cn/ray/qrcode/core/BGAQRCodeUtil.java
+ cn.ray.qrcode.core.BGAQRCodeUtil
 cn/ray/qrcode/core/CameraPreview.java
  cn.ray.qrcode.core.CameraPreview
  cn.ray.qrcode.core.CameraPreview$1
  cn.ray.qrcode.core.CameraPreview$Delegate
+cn/ray/qrcode/core/CameraConfigurationManager.java
+ cn.ray.qrcode.core.CameraConfigurationManager
+cn/ray/qrcode/core/ScanResult.java
+ cn.ray.qrcode.core.ScanResult
+cn/ray/qrcode/core/ProcessDataTask.java
+ cn.ray.qrcode.core.ProcessDataTask
 cn/ray/qrcode/core/QRCodeView.java
  cn.ray.qrcode.core.QRCodeView
  cn.ray.qrcode.core.QRCodeView$1
@@ -14,13 +20,7 @@ cn/ray/qrcode/core/QRCodeView.java
  cn.ray.qrcode.core.QRCodeView$4
  cn.ray.qrcode.core.QRCodeView$5
  cn.ray.qrcode.core.QRCodeView$Delegate
-cn/ray/qrcode/core/BGAQRCodeUtil.java
- cn.ray.qrcode.core.BGAQRCodeUtil
 cn/ray/qrcode/core/BarcodeType.java
  cn.ray.qrcode.core.BarcodeType
-cn/ray/qrcode/core/CameraConfigurationManager.java
- cn.ray.qrcode.core.CameraConfigurationManager
 cn/ray/qrcode/core/ScanBoxView.java
  cn.ray.qrcode.core.ScanBoxView
-cn/ray/qrcode/core/BuildConfig.java
- cn.ray.qrcode.core.BuildConfig

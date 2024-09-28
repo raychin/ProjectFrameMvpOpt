@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!--
+        实现应用背景颜色渐变
+        android:angle="0"//效果是：是从左到右，按照开始颜色到结束颜色来渲染的
+        android:angle="90"//效果是：是从下到上，按照开始颜色到结束颜色来渲染的
+        android:angle="180"//效果是：是从右到左，按照开始颜色到结束颜色来渲染的
+        android:angle="270"//效果是：是从上到下，按照开始颜色到结束颜色来渲染的
+    -->
+<!--    <gradient-->
+<!--        android:startColor="#bacac6"-->
+<!--        android:endColor="#896c39"-->
+<!--        android:angle="270" />-->
+
+    <solid android:color="@color/transparent_half" />
+    <corners android:radius="4dp" />
+<!--    <stroke android:color="@color/transparent_half" android:width="1dp" />-->
+</shape>

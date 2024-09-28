@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:src="@drawable/icon_tools"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="5dp"
         android:paddingTop="5dp"
