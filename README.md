@@ -6,7 +6,7 @@
 
 基于android平台，采用mvp架构，实现androidx项目基本框架。
 
-集成包括androidx、retrofit2、glide4.5、Luban1.8、mmkv1.3.5、room2.3.0等开源框架，
+集成包括jetpack功能、基于ZXing二维码扫描功能、retrofit2、glide4.5、Luban1.8、mmkv1.3.5、room2.3.0等开源框架，
 [主下载地址](https://common.shiply-cdn.qq.com/gray/c6097cfbf6/prod/1719479273/app1.0.4_4_ray_2024-06-27.apk)
 
 <div>
@@ -153,9 +153,6 @@
 ### 2024年08月05日SwipeRefreshView和RecyclerView实现上拉加载和下拉刷新
 
 <div>
-    
-</div>
-
 <div>
     <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240805171234992.png" alt="image-20240805171234992" style="zoom: 25%;" />
     <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240805171313760.png" alt="image-20240805171313760" style="zoom:25%;" />
@@ -300,3 +297,8 @@ xml添加布局文件
     }
 ```
 
+
+
+### 2024年10月8日集成基于ZXxing二维码扫描功能
+
+<img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/2e9e4631e1464e1f43810d5c3e528216_720.jpg" alt="2e9e4631e1464e1f43810d5c3e528216_720" style="zoom:25%;" />
