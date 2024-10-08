@@ -1,8 +1,0 @@
-cn/ray/qrcode/zxing/BuildConfig.java
- cn.ray.qrcode.zxing.BuildConfig
-cn/ray/qrcode/zxing/QRCodeEncoder.java
- cn.ray.qrcode.zxing.QRCodeEncoder
-cn/ray/qrcode/zxing/QRCodeDecoder.java
- cn.ray.qrcode.zxing.QRCodeDecoder
-cn/ray/qrcode/zxing/ZXingView.java
- cn.ray.qrcode.zxing.ZXingView
