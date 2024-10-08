@@ -2,9 +2,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    
+    <LinearLayout
+        android:id="@+id/hrefLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:visibility="gone">
+        <AutoCompleteTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:id="@+id/web_view_href"
+            android:hint="@string/web_view_href_hint"
+            android:completionThreshold="2"
+            android:singleLine="true"
+            android:textSize="@dimen/input_custom"
+            android:textColor="@color/black"
+            android:textColorHint="@color/c_666666"
+            android:dropDownHeight="wrap_content"
+            android:background="@drawable/bg_web_view_href"
+            android:dropDownWidth="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_web_view_load"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:contentDescription="@string/web_view_href_hint"
+            android:src="@drawable/icon_web_view_load"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="5dp"
+            />
+        <ImageView
+            android:id="@+id/iv_web_view_refresh"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:contentDescription="@string/web_view_href_hint"
+            android:src="@drawable/icon_web_view_refresh"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="5dp"
+            />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressWeb"
+        android:layout_below="@id/hrefLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/progress_bar_height"
         android:max="100"

@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.ray.project.databinding.SampleAdapterHomeBinding;
 import com.ray.project.ui.FragmentContainerActivity;
 import com.ray.project.ui.WebViewActivity;
 import com.ray.project.ui.sample.RFixDevActivity;
+import com.ray.project.widget.PopupMenu;
 import com.tencent.upgrade.bean.UpgradeStrategy;
 import com.tencent.upgrade.core.UpgradeManager;
 import com.tencent.upgrade.core.UpgradeReqCallbackForUserManualCheck;
@@ -114,6 +116,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
     protected void initView(View view) {
         setTitleText(getString(R.string.app_name));
 
+        ImageButton rightBtn = (ImageButton) mActivity.getView(R.id.right);
+        if (null != rightBtn) {
+            rightBtn.setVisibility(View.VISIBLE);
+            rightBtn.setImageResource(R.drawable.icon_tools);
+            rightBtn.setOnClickListener(v -> {
+                PopupMenu.getInstance(mActivity).showPopupWindow(rightBtn);
+            });
+        }
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.recyclerView.setLayoutManager(layoutManager);
@@ -144,22 +155,38 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
      * 下拉刷新
      */
     private void refreshData() {
+        if (mBinding == null) {
+            return;
+        }
         if (mData == null) {
             mData = new ArrayList<>();
         } else {
             mData.clear();
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mData.addAll(originData);
-                // 注意事项：当完成数据更新后一定要调用 setRefreshing(false)，不然刷新图标会一直转圈，不会消失
-                mBinding.swipeRefreshLayout.setRefreshing(false);
-            }
-        }, 1500);
+        if (null == mHandler) {
+            mHandler = new Handler();
+        }
+
+        mHandler.postDelayed(mRunnable, 1500);
     }
 
+    private Handler mHandler;
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mData.addAll(originData);
+            // 注意事项：当完成数据更新后一定要调用 setRefreshing(false)，不然刷新图标会一直转圈，不会消失
+            mBinding.swipeRefreshLayout.setRefreshing(false);
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(mRunnable);
+        mHandler = null;
+    }
 
     private static class HomeAdapter extends BaseAdapter<HashMap<String, Object>, SampleAdapterHomeBinding> {
 

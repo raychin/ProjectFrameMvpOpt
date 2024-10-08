@@ -21,7 +21,7 @@
     <!-- 公用颜色按颜色命名 -->
     <color name="blue">#33a1c9</color>
     <color name="gray">#888888</color>
-    <color name="black">#595959</color>
+    <color name="black">#333333</color>
     <color name="white">#ffffffff</color>
     <color name="orange">#FF9676</color>
     <color name="yellow">#F5A506</color>

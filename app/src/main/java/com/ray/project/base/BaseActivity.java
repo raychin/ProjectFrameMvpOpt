@@ -71,6 +71,10 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
         tvLoading.setVisibility(flag);
     }
 
+    public View getView (int id) {
+        return mConainerView.findViewById(id);
+    }
+
     /**
      * 获取TAG的activity名称
      */

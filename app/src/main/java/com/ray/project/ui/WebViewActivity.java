@@ -13,6 +13,7 @@ import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.base.ResultEvent;
 import com.ray.project.databinding.ActivityWebViewBinding;
+import com.ray.project.ui.fragment.WebViewFragment;
 
 /**
  * WebView主界面
@@ -69,6 +70,14 @@ public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePr
             if (!TextUtils.isEmpty(webUrl)) {
                 args.putString(BaseFragment.WEB_VIEW_URL_KEY, webUrl);
             }
+
+            if (webUrl.startsWith("file:///")) {
+                // 设置不显示浏览器顶部导航，可以根据实际情况设置
+                args.putInt(WebViewFragment.WEB_VIEW_SHOW_NAVI_KEY, WebViewFragment.WEB_VIEW_SHOW_NAVI_GONE);
+            } else {
+                args.putInt(WebViewFragment.WEB_VIEW_SHOW_NAVI_KEY, WebViewFragment.WEB_VIEW_SHOW_NAVI_SHOW);
+            }
+
             webViewFragment.setArguments(args);
             transaction.add(R.id.fragment_container, webViewFragment);
         } else {

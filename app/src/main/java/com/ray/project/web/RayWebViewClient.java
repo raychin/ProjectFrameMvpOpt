@@ -128,6 +128,8 @@ public class RayWebViewClient extends WebViewClient {
             intentNavigation.setData(Uri.parse(url));
             mActivity.startActivity(intentNavigation);
             return true;
+        } else if (url.startsWith("baiduboxapp:") ) {
+            return false;
         }
         else {
             webView.loadUrl(url);
