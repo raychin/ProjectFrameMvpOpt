@@ -21,7 +21,8 @@ import com.ray.project.ui.fragment.WebViewFragment;
  * @date 2018/07/03
  */
 public class WebViewActivity extends BaseActivity<ActivityWebViewBinding, BasePresenter> {
-    private String webUrl = "file:///android_asset/web/ray-template/index.html";
+    private String webUrl = "";
+//    private String webUrl = "file:///android_asset/web/ray-template/index.html";
 //    private String webUrl = "https://www.czzy.top";
 //    private String webUrl = "https://cz01.vip";
 

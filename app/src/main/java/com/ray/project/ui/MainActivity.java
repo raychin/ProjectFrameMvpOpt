@@ -12,6 +12,7 @@ import com.ray.project.base.BaseFragment;
 import com.ray.project.databinding.ActivityMainBinding;
 import com.ray.project.ui.fragment.HomeFragment;
 import com.ray.project.ui.fragment.MoreFragment;
+import com.ray.project.ui.fragment.WebViewFragment;
 import com.ray.project.ui.login.LoginPresenter;
 
 /**
@@ -105,8 +106,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
             case 2:
                 if (mTab03 == null) {
                     Bundle args = new Bundle();
-//                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "http://www.baidu.com/");
-//                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "https://www.myd03.com");
+                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "file:///android_asset/web/ray-template/index.html");
+                    args.putInt(WebViewFragment.WEB_VIEW_SHOW_NAVI_KEY, WebViewFragment.WEB_VIEW_SHOW_NAVI_GONE);
                     mTab03 = BaseFragment.newInstance("com.ray.project.ui.fragment.WebViewFragment");
                     mTab03.setArguments(args);
                     transaction.add(R.id.fragment_container, mTab03);
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, LoginPresent
             case 3:
                 if (mTab04 == null) {
                     Bundle args = new Bundle();
-                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "http://www.baidu.com/");
+//                    args.putString(BaseFragment.WEB_VIEW_URL_KEY, "http://www.baidu.com/");
                     mTab04 = BaseFragment.newInstance(MoreFragment.class, args);
                     transaction.add(R.id.fragment_container, mTab04);
                 } else {

@@ -184,8 +184,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
     @Override
     public void onPause() {
         super.onPause();
-        mHandler.removeCallbacks(mRunnable);
-        mHandler = null;
+        if (null != mHandler) {
+            mHandler.removeCallbacks(mRunnable);
+            mHandler = null;
+        }
     }
 
     private static class HomeAdapter extends BaseAdapter<HashMap<String, Object>, SampleAdapterHomeBinding> {
