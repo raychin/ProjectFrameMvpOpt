@@ -13,6 +13,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.DecodeHintType;
 import com.photo.select.ImageConfig;
 import com.photo.select.ImageSelector;
 import com.photo.select.ImageSelectorActivity;
@@ -21,11 +23,17 @@ import com.ray.project.base.BaseFragment;
 import com.ray.project.base.BasePresenter;
 import com.ray.project.commons.GlideLoader;
 import com.ray.project.commons.Logger;
+import com.ray.project.config.MMKVManager;
 import com.ray.project.databinding.FragmentScanZxingBinding;
+import com.ray.project.ui.FragmentContainerActivity;
 import com.ray.project.ui.WebViewActivity;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
+import cn.ray.qrcode.core.BarcodeType;
 import cn.ray.qrcode.core.QRCodeView;
 
 /**
@@ -113,6 +121,24 @@ public class ScanFragment extends BaseFragment<FragmentScanZxingBinding, BasePre
     public void onStart() {
         super.onStart();
 
+//        Map<DecodeHintType, Object> hintMap = new EnumMap<>(DecodeHintType.class);
+//        List<BarcodeFormat> formatList = new ArrayList<>();
+//        formatList.add(BarcodeFormat.QR_CODE);
+//        formatList.add(BarcodeFormat.UPC_A);
+//        formatList.add(BarcodeFormat.EAN_13);
+//        formatList.add(BarcodeFormat.CODE_128);
+//        // 可能的编码格式
+//        hintMap.put(DecodeHintType.POSSIBLE_FORMATS, formatList);
+//        // 精度，花更多的时间用于寻找图上的编码，优化准确性，但不优化速度
+//        hintMap.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+//        // 复杂模式
+//        hintMap.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
+//        // 编码字符集
+//        hintMap.put(DecodeHintType.CHARACTER_SET, "utf-8");
+//        // 自定义识别的类型
+//        mBinding.zXingView.setType(BarcodeType.CUSTOM, hintMap);
+//        mBinding.zXingView.setType(BarcodeType.ALL, null);
+
         // 打开后置摄像头开始预览，但是并未开始识别
         mBinding.zXingView.startCamera();
         // 打开前置摄像头开始预览，但是并未开始识别
@@ -164,9 +190,12 @@ public class ScanFragment extends BaseFragment<FragmentScanZxingBinding, BasePre
             return;
         }
 
-        setTitleText("扫描结果为：" + result);
-        // 开始识别
-        mBinding.zXingView.startSpot();
+//        setTitleText("扫描结果为：" + result);
+//        // 开始识别
+//        mBinding.zXingView.startSpot();
+
+        MMKVManager.getInstance().encode("scanResult", result);
+        mActivity.nextActivity(FragmentContainerActivity.class, FragmentContainerActivity.FRAGMENT_PATH, "com.ray.project.ui.fragment.qrCode.ScanResultFragment");
     }
 
     @Override

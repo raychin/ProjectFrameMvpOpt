@@ -5,7 +5,6 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -123,6 +122,8 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
                 "https://qq.com",
                 "https://www.examcoo.com/",
                 "https://m.zhibo8.com/",
+                "https://yigeg.com/",
+                "https://m.toutiao.com/",
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_dropdown_item_1line, suggestions);
         mBinding.webViewHref.setAdapter(adapter);
