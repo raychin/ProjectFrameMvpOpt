@@ -52,21 +52,22 @@ public class PopupMenu {
         // 设置SelectPicPopupWindow的View
         popupWindow.setContentView(menuBinding.getRoot());
         // 设置SelectPicPopupWindow弹出窗体的宽
-        popupWindow.setWidth(w / 3 + 40);
+//        popupWindow.setWidth(w / 3);
+        popupWindow.setWidth(LayoutParams.WRAP_CONTENT);
         // 设置SelectPicPopupWindow弹出窗体的高
         popupWindow.setHeight(LayoutParams.WRAP_CONTENT);
         // 设置SelectPicPopupWindow弹出窗体可点击
         popupWindow.setFocusable(true);
         // 设置外部可点击
         popupWindow.setOutsideTouchable(true);
-        // 刷新状态
-        popupWindow.update();
         // 实例化一个ColorDrawable颜色为半透明
-        ColorDrawable dw = new ColorDrawable(0000000000);
-        // 点back键和其他地方使其消失,设置了这个才能触发OnDismisslistener ，设置其他控件变化等操作
+        ColorDrawable dw = new ColorDrawable(mActivity.getColor(R.color.transparent));
+        // 点back键和其他地方使其消失,设置了这个才能触发OnDismissListener ，设置其他控件变化等操作
         popupWindow.setBackgroundDrawable(dw);
-        // 设置SelectPicPopupWindow弹出窗体动画效果
+//        // 设置SelectPicPopupWindow弹出窗体动画效果
 //        popupWindow.setAnimationStyle(R.style.PopupMenuAnimationPreview);
+//        // 刷新状态
+//        popupWindow.update();
 
         menuBinding.scanText.setOnClickListener(new OnClickListener() {
 
@@ -89,7 +90,8 @@ public class PopupMenu {
         if (!popupWindow.isShowing()) {
             // 以下拉方式显示popupwindow
 //            popupWindow.showAsDropDown(parent, parent.getLayoutParams().width / 3, 5);
-            PopupWindowCompat.showAsDropDown(popupWindow, parent, parent.getLayoutParams().width / 3, -40, Gravity.START);
+//            PopupWindowCompat.showAsDropDown(popupWindow, parent, parent.getLayoutParams().width / 3, -40, Gravity.START);
+            PopupWindowCompat.showAsDropDown(popupWindow, parent, -150, -20, Gravity.START);
         } else {
             popupWindow.dismiss();
         }

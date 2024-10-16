@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/transparent">
+<LinearLayout
     android:id="@+id/popupMenuLayout"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/bg_popup_menu">
+    android:background="@drawable/bg_popup_9">
 
     <TextView
         android:id="@+id/scanText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
         android:text="@string/popup_menu_scan"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:textColor="@color/white"
         app:drawableStartCompat="@drawable/icon_scan_layer" />
 
+</LinearLayout>
 </LinearLayout>
