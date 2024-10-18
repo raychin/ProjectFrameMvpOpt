@@ -66,12 +66,14 @@
         android:id="@+id/main_rl_non_video"
         android:layout_below="@id/progressWeb"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
     </RelativeLayout>
+    <!-- 全屏播放息屏问题 -->
     <RelativeLayout
         android:id="@+id/main_rl_video"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:keepScreenOn="true">
     </RelativeLayout>
 
 <!--    <WebView-->

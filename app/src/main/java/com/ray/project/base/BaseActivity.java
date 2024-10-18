@@ -110,7 +110,7 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
      * 设置了导航栏颜色时可以修改setStatusBar方法
      * @return 默认深色主题
      */
-    protected boolean isConvertStatusBarColor() { return true; }
+    public boolean isConvertStatusBarColor() { return true; }
 
     /**
      * 设置标题栏背景色
@@ -342,7 +342,7 @@ public abstract class BaseActivity<VB extends ViewBinding, P extends BasePresent
     protected boolean useThemeStatusBarColor = false;
     // 是否使用状态栏文字和图标为暗色，如果状态栏采用了白色系，则需要使状态栏和图标为暗色，android6.0以上可以设置
     protected boolean useStatusBarColor = true;
-    protected void setStatusBar() {
+    public void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // 5.0及以上
             View decorView = getWindow().getDecorView();

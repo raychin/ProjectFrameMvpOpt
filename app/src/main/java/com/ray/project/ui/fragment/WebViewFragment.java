@@ -5,16 +5,25 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.ray.project.R;
 import com.ray.project.base.BaseFragment;
@@ -56,18 +65,59 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
         String url = String.valueOf(mBinding.webViewHref.getText());
         if (!TextUtils.isEmpty((url)) && (TextUtils.isEmpty(webView.getUrl()) || !url.equals(webView.getUrl()))) {
 
+            String startUrl = "";
             if (url.startsWith("http://") || url.startsWith("https://")) {
-                webView.loadUrl(url);
+                startUrl = url;
             } else if (url.startsWith("www.") || url.startsWith("m.")) {
-                webView.loadUrl("https://" + url);
+                startUrl = "https://" + url;
+            }
+            webView.loadUrl(startUrl);
+            if (null != rayWebViewClient) {
+                rayWebViewClient.initHistory();
             }
 
         }
     }
     @Override
     protected void initView(View view) {
-//        webView = mBinding.webView;
+        win = mActivity.getWindow();
+        windowInsetsControllerCompat = WindowCompat.getInsetsController(win, win.getDecorView());
 
+//        mBinding.mainRlVideo.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+//            @Override
+//            public void onSystemUiVisibilityChange(int i) {
+//                Logger.e("onSystemUiVisibilityChange ray", "onSystemUiVisibilityChange = " + i);
+//            }
+//        });
+//
+//        ViewCompat.setOnApplyWindowInsetsListener(
+//                win.getDecorView(),
+//                (v, windowInsets) -> {
+//                    // You can hide the caption bar even when the other system bars are visible.
+//                    // To account for this, explicitly check the visibility of navigationBars()
+//                    // and statusBars() rather than checking the visibility of systemBars().
+//                    if (windowInsets.isVisible(WindowInsetsCompat.Type.navigationBars())
+//                            || windowInsets.isVisible(WindowInsetsCompat.Type.statusBars())) {
+//                        mBinding.mainRlVideo.setOnClickListener(view1 -> {
+//                            // Hide both the status bar and the navigation bar.
+//                            if (ScreenStatus.VIDEO_FULL_SCREEN != screenStatus) {
+//                                return;
+//                            }
+//                            windowInsetsControllerCompat.hide(WindowInsetsCompat.Type.systemBars());
+//                        });
+//                    } else {
+//                        mBinding.mainRlVideo.setOnClickListener(view1 -> {
+//                            // Show both the status bar and the navigation bar.
+//                            if (ScreenStatus.VIDEO_FULL_SCREEN != screenStatus) {
+//                                return;
+//                            }
+//                            windowInsetsControllerCompat.show(WindowInsetsCompat.Type.systemBars());
+//                        });
+//                    }
+//                    return ViewCompat.onApplyWindowInsets(view, windowInsets);
+//                });
+
+        //        webView = mBinding.webView;
         webView = new RayWebView(mActivity);
         webView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -128,11 +178,15 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_dropdown_item_1line, suggestions);
         mBinding.webViewHref.setAdapter(adapter);
 
+        initWebView();
+
+
         if (!TextUtils.isEmpty(webUrl)) {
             webView.loadUrl(webUrl);
+            if (null != rayWebViewClient) {
+                rayWebViewClient.initHistory();
+            }
         }
-
-        initWebView();
 
     }
 
@@ -145,15 +199,66 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
                 return true;
             }
             if (webView.canGoBack()) {
-                // 后退
-                webView.goBack();
-                return true;
+                if (null != rayWebViewClient) {
+                    /*
+                     * 返回功能使用记录浏览链接历史判断
+                     */
+                    if (!rayWebViewClient.getHistories().isEmpty()) {
+                        // 后退加载非重定向页面
+                        rayWebViewClient.removeHistory(rayWebViewClient.getHistories().size() - 1);
+                        if (rayWebViewClient.getHistories().isEmpty()) {
+                            // 这里也可以回到空白页
+                            return false;
+                        }
+                        String reloadUrl = rayWebViewClient.getHistories().get(rayWebViewClient.getHistories().size() - 1);
+                        if (reloadUrl.startsWith("file:///")) {
+                            webView.goBack();
+                        } else {
+                            webView.loadUrl(reloadUrl);
+                        }
+
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                else {
+                    // 后退
+                    webView.goBack();
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    RayWebViewChromeClient rayWebViewChromeClient;
+    /**
+     * 显示状态栏，并设置为透明背景，白色文字
+     */
+    protected void changeSystemBars () {
+        if (mActivity.isConvertStatusBarColor()) {
+            win.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            win.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION     // 占用底部导航栏
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            win.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            win.setStatusBarColor(Color.TRANSPARENT);
+        }
+
+    }
+
+    private Window win;
+    private WindowInsetsControllerCompat windowInsetsControllerCompat;
+    private RayWebViewChromeClient rayWebViewChromeClient;
+    private RayWebViewClient rayWebViewClient;
+
+    private enum ScreenStatus {
+        VIDEO_FULL_SCREEN,
+        VIDEO_NORMAL_SCREEN
+    }
+    private ScreenStatus screenStatus = ScreenStatus.VIDEO_NORMAL_SCREEN;
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView () {
         WebView.setWebContentsDebuggingEnabled(true);
@@ -165,12 +270,6 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
                 }
             }
         ), JsInteraction.JS_INTERFACE);
-//        webView.setWebChromeClient(new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
-//            @Override
-//            public void onReceivedProgress(WebView view, int newProgress) {
-//                mBinding.progressWeb.setProgress(newProgress);
-//            }
-//        }));
         rayWebViewChromeClient = new RayWebViewChromeClient(mActivity, new RayWebViewChromeClient.OnWebViewChromeClientListener() {
             @Override
             public void onReceivedProgress(WebView view, int newProgress) {
@@ -181,9 +280,13 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
             @Override
             public void toggledFullscreen(boolean fullscreen) {
                 Logger.d("toggledFullscreen", String.valueOf(fullscreen));
+
                 if (null != mActivity) {
                     if (fullscreen) {
-                        // // 设置全屏
+                        // 全屏
+                        screenStatus = ScreenStatus.VIDEO_FULL_SCREEN;
+
+                        // 设置全屏
                         // mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                         mActivity.setStatusView(0);
                         // 设置横屏
@@ -195,19 +298,34 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
                             // 其他情况设置横屏
                             mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                         }
+
+//                        win.getDecorView().setSystemUiVisibility(View.INVISIBLE);
+                        changeSystemBars();
+
+//                        assert windowInsetsControllerCompat != null;
+//                        windowInsetsControllerCompat.hide(WindowInsetsCompat.Type.systemBars());
                     } else {
+                        screenStatus = ScreenStatus.VIDEO_NORMAL_SCREEN;
                         // 恢复为用户方向
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
                         setStatusViewWithColor(statusColor());
                         setTitleNavigationShow(showTitleNavigation());
                         if (isImmersiveStatusHeight()) { setImmersiveStatusHeight(); }
+
+                        if (mActivity.isConvertStatusBarColor()) {
+                            win.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                            mActivity.setStatusBar();
+                        }
+
+//                        assert windowInsetsControllerCompat != null;
+//                        windowInsetsControllerCompat.show(WindowInsetsCompat.Type.systemBars());
                     }
                 }
             }
         });
         webView.setWebChromeClient(rayWebViewChromeClient);
 
-        webView.setWebViewClient(new RayWebViewClient(mActivity, new RayWebViewClient.OnWebViewClientListener() {
+        rayWebViewClient = new RayWebViewClient(mActivity, new RayWebViewClient.OnWebViewClientListener() {
             @Override
             public void onReceivedStart(WebView view, String url, Bitmap favicon) {
                 closeSoftInput(mBinding.webViewHref);
@@ -233,7 +351,8 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
 //                    Loading.getInstance().dismiss();
                 }
             }
-        }));
+        });
+        webView.setWebViewClient(rayWebViewClient);
 
         WebSettings webSettings = webView.getSettings();
         // 允许使用js
@@ -288,11 +407,10 @@ public class WebViewFragment extends BaseFragment<FragmentWebViewBinding, BasePr
 //        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         // 支持屏幕缩放
-        //        webSettings.setSupportZoom(true);
-        //        webSettings.setBuiltInZoomControls(true);
-
+//        webSettings.setSupportZoom(true);
+//        webSettings.setBuiltInZoomControls(true);
         // 不显示webview缩放按钮
-        //        webSettings.setDisplayZoomControls(false);
+//        webSettings.setDisplayZoomControls(false);
     }
 
     /**

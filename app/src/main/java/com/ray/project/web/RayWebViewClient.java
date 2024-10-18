@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.text.TextUtils;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -13,6 +14,8 @@ import android.webkit.WebViewClient;
 import com.ray.project.base.BaseActivity;
 import com.ray.project.commons.Logger;
 import com.ray.project.commons.ToastUtils;
+
+import java.util.ArrayList;
 
 /**
  * description ：  WebView client
@@ -24,6 +27,23 @@ public class RayWebViewClient extends WebViewClient {
     private BaseActivity mActivity;
     private OnWebViewClientListener mListener;
 
+    /**
+     * 浏览记录集合管理，重定向链接不记录
+     */
+    private ArrayList<String> histories = new ArrayList<>();
+    public void initHistory () {
+        histories.clear();
+    }
+    public void addHistory (String url) {
+        histories.add(url);
+    }
+    public void removeHistory (int position) {
+        histories.remove(position);
+    }
+    public ArrayList<String> getHistories () {
+        return histories;
+    }
+
     public RayWebViewClient(BaseActivity activity) {
         mActivity = activity;
     }
@@ -33,7 +53,19 @@ public class RayWebViewClient extends WebViewClient {
         mListener = listener;
     }
 
+    /**
+     * shouldOverrideUrlLoading加载次数
+     */
+    private int loadCount = 0;
     @Override public void onPageFinished(WebView webView, String url) {
+        Logger.e("rayCount", "finished = " + loadCount);
+        /**
+         * 判断是否重定向链接
+         */
+        if (!TextUtils.isEmpty(url) && !histories.contains(url) && loadCount < 1) {
+            addHistory(url);
+        }
+
         // 页面加载完成
         if (null != mListener) {
             mListener.onReceivedFinish(webView, url);
@@ -78,6 +110,8 @@ public class RayWebViewClient extends WebViewClient {
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        loadCount = 0;
+        Logger.e("rayCount", "started = " + loadCount);
         // 页面开始加载
         if (null != mListener) {
             mListener.onReceivedStart(view, url, favicon);
@@ -92,9 +126,15 @@ public class RayWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+        Logger.e("rayWebView url = ", url);
         // 重写此方法表明点击网页里面的链接还是在当前的WebView里跳转，不另跳浏览器
         // 在2.3上面不加这句话，可以加载出页面，在4.0上面必须要加入，不然出现白屏
-        Logger.e("www url = ", url);
+//        if (!histories.contains(url)) {
+//            addHistory(url);
+//        }
+        loadCount ++;
+        Logger.e("rayCount", "shouldOverrideUrlLoading = " + loadCount);
+
 //        if (url.startsWith("http://") || url.startsWith("https://")) {
 //            webView.loadUrl(url);
 //            return true;
