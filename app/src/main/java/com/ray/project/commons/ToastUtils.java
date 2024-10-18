@@ -26,7 +26,8 @@ public class ToastUtils {
      * @param duration
      */
     public static void showToast(Context context, String msg, int duration) {
-        if (!msg.equals(oldMsg)) { // 当显示的内容不一样时，即断定为不是同一个Toast
+        if (!msg.equals(oldMsg)) {
+            // 当显示的内容不一样时，即断定为不是同一个Toast
             Toast.makeText(context, msg, duration).show();
             time = System.currentTimeMillis();
         } else {
