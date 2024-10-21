@@ -59,8 +59,11 @@ public class ScanResultFragment extends BaseFragment<FragmentConstraintEmptyBind
         textView.setId(View.generateViewId());
         ConstraintLayout.LayoutParams textParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         textParams.setMargins(20, 20, 20, 20);
-        textView.setPadding(10, 10, 10, 10);
+        textView.setPadding(15, 15, 15, 15);
+        textView.setMinHeight(320);
         textView.setText(result);
+        textView.setLongClickable(true);
+        textView.setTextIsSelectable(true);
         mBinding.con.addView(textView, textParams);
 
     }

@@ -137,10 +137,14 @@ public class ScanFragment extends BaseFragment<FragmentScanZxingBinding, BasePre
 //        hintMap.put(DecodeHintType.CHARACTER_SET, "utf-8");
 //        // 自定义识别的类型
 //        mBinding.zXingView.setType(BarcodeType.CUSTOM, hintMap);
-//        mBinding.zXingView.setType(BarcodeType.ALL, null);
+
+        // 识别所有类型的码
+        mBinding.zXingView.setType(BarcodeType.ALL, null);
+        // 识别整个屏幕中的码
+        mBinding.zXingView.getScanBoxView().setOnlyDecodeScanBoxArea(false);
 
         // 打开后置摄像头开始预览，但是并未开始识别
-        mBinding.zXingView.startCamera();
+//        mBinding.zXingView.startCamera();
         // 打开前置摄像头开始预览，但是并未开始识别
 //        mBinding.zXingView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
 

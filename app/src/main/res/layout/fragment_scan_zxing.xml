@@ -43,16 +43,35 @@
         app:qrcv_topOffset="65dp"
         app:qrcv_verticalBias="-1" />
 
-    <TextView
-        android:id="@+id/choose_qr_code_from_gallery"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="@dimen/btn_custom"
-        android:textColor="@color/c_f8f4e6"
-        android:textStyle="bold"
-        android:text="@string/qr_code_from_gallery"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp">
+        <TextView
+            android:id="@+id/choose_qr_code_from_gallery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textSize="@dimen/btn_custom"
+            android:textColor="@color/c_f8f4e6"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/qr_code_from_gallery" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/type_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textSize="@dimen/btn_custom"
+            android:textColor="@color/c_f8f4e6"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/type_code_bar" />
+    </LinearLayout>
 </RelativeLayout>
