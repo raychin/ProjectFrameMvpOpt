@@ -5,24 +5,41 @@
     android:layout_width="wrap_content"
     android:orientation="vertical"
     android:background="@color/transparent">
-<LinearLayout
-    android:id="@+id/popupMenuLayout"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/bg_popup_9">
-
-    <TextView
-        android:id="@+id/scanText"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/popupMenuLayout"
         android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp"
-        android:text="@string/popup_menu_scan"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:textColor="@color/white"
-        app:drawableStartCompat="@drawable/icon_scan_layer" />
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_popup_9">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/scanText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/popup_menu_scan"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            app:drawableStartCompat="@drawable/icon_scan_layer" />
+
+        <TextView android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@color/gray" />
+
+        <TextView
+            android:id="@+id/scanZbarText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/popup_menu_scan_zbar"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            app:drawableStartCompat="@drawable/icon_scan_zbar_layer" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.ray.project.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -79,6 +78,17 @@ public class PopupMenu {
                 popupWindow.dismiss();
             }
         });
+
+        menuBinding.scanZbarText.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // do something you need here
+
+                mActivity.nextActivity(FragmentContainerActivity.class, FragmentContainerActivity.FRAGMENT_PATH, "com.ray.project.ui.fragment.qrCode.ScanZBarFragment");
+                popupWindow.dismiss();
+            }
+        });
     }
 
     /**
@@ -91,7 +101,7 @@ public class PopupMenu {
             // 以下拉方式显示popupwindow
 //            popupWindow.showAsDropDown(parent, parent.getLayoutParams().width / 3, 5);
 //            PopupWindowCompat.showAsDropDown(popupWindow, parent, parent.getLayoutParams().width / 3, -40, Gravity.START);
-            PopupWindowCompat.showAsDropDown(popupWindow, parent, -150, -20, Gravity.START);
+            PopupWindowCompat.showAsDropDown(popupWindow, parent, -260, -20, Gravity.START);
         } else {
             popupWindow.dismiss();
         }
