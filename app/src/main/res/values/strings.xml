@@ -4,7 +4,7 @@
 
     <string name="tab_index_text">首页</string>
     <string name="tab_contact_text">通讯录</string>
-    <string name="tab_web_view_text">浏览器</string>
+    <string name="tab_web_view_text">H5应用</string>
     <string name="tab_more_text">更多</string>
 
     <string name="service_label">Ray自动安装</string>
