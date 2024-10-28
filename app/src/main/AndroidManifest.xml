@@ -27,8 +27,22 @@
     <!--后台位置信息 Android 10 (API level 29) 或更高版本 -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
+    <!-- 使用蓝牙所需要的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <!-- 使用扫描和设置蓝牙的权限（申明这一个权限必须申明上面一个权限） -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!--
+        在Android5.0之前，是默认申请GPS硬件功能的。而在Android 5.0 之后，需要在manifest 中申明GPS硬件模块功能的使用
+        Needed only if your app targets Android 5.0 (API level 21) or higher.
+    -->
+    <uses-feature android:name="android.hardware.location.gps" />
+    <!--
+        在 Android 6.0 及以上，还需要打开位置权限android.permission.ACCESS_COARSE_LOCATION。
+        如果应用没有位置权限，蓝牙扫描功能不能使用（其它蓝牙操作例如连接蓝牙设备和写入数据不受影响）。
+    -->
+
 <!--    <uses-feature android:name="android.hardware.telephony" android:required="false" />-->
-<!--    <uses-permission android:name="android.com.baidu.lbsapipermission.REQUEST_INSTALL_PACKAGES"/>-->
+<!--    <uses-permission android:name="android.com.baidu.misapprehension.REQUEST_INSTALL_PACKAGES"/>-->
 <!--    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>-->
 <!--    <uses-permission android:name="android.permission.READ_PROFILE"/>-->
 <!--    <uses-permission android:name="android.permission.READ_CONTACTS"/>-->

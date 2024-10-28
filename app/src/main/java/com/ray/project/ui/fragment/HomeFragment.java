@@ -89,6 +89,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, BasePresente
             map.put("activity", FragmentContainerActivity.class);
             map.put("fragment", "com.ray.project.ui.sample.fragment.RefreshRecyclerViewFragment");
             add(map);
+
+            map = new HashMap<>();
+            map.put("name", "蓝牙功能");
+            map.put("type", "intentFragment");
+            map.put("activity", FragmentContainerActivity.class);
+            map.put("fragment", "com.ray.project.ui.fragment.BluetoothFragment");
+            add(map);
         }
     };
 
