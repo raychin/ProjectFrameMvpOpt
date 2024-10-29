@@ -144,7 +144,7 @@
 实现定位显示，后续添加轨迹绘制、面绘制等功能
 
 <div>
-<img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/ca1a03708239b517849150467a54837a_720.jpg" alt="ca1a03708239b517849150467a54837a_720" style="zoom: 15%;" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/ca1a03708239b517849150467a54837a_720.jpg" alt="ca1a03708239b517849150467a54837a_720" width="15%" height="15%" />
 </div>
 
 
@@ -154,8 +154,8 @@
 ### 2024年08月05日SwipeRefreshView和RecyclerView实现上拉加载和下拉刷新
 
 <div>
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240805171234992.png" alt="image-20240805171234992" style="zoom: 15%;" />
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240805171313760.png" alt="image-20240805171313760" style="zoom:15%;" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240805171234992.png" alt="image-20240805171234992" width="15%" height="15%" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/image-20240805171313760.png" alt="image-20240805171313760" width="15%" height="15%" />
 </div>
 
 
@@ -303,5 +303,5 @@ xml添加布局文件
 ### 2024年10月8日集成基于ZXing和ZBar二维码扫描功能
 
 <div>
-    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/2e9e4631e1464e1f43810d5c3e528216_720.jpg" alt="2e9e4631e1464e1f43810d5c3e528216_720" style="zoom:15%;" />
+    <img src="https://gitee.com/KingsRay/gitee-image-host/raw/master/image/2e9e4631e1464e1f43810d5c3e528216_720.jpg" alt="2e9e4631e1464e1f43810d5c3e528216_720" width="15%" height="15%" />
 </div>
